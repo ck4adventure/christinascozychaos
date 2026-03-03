@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <!-- Moon gradient -->
+    <radialGradient id="moonGrad" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#F5EAE0"/>
+      <stop offset="60%" stop-color="#E8D5C4"/>
+      <stop offset="100%" stop-color="#C49A7A"/>
+    </radialGradient>
+
+    <!-- Amber glow filter -->
+    <filter id="amberGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft glow for moon -->
+    <filter id="moonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Crescent moon -->
+  <g filter="url(#moonGlow)">
+    <circle cx="95" cy="100" r="38" fill="url(#moonGrad)"/>
+    <!-- Cut-out circle to form crescent — uses plum so it works on dark bg -->
+    <!-- Using a mask instead so it works on any background -->
+  </g>
+
+  <!-- Crescent using mask for true transparency -->
+  <defs>
+    <mask id="crescentMask">
+      <circle cx="95" cy="100" r="38" fill="white"/>
+      <circle cx="112" cy="90" r="30" fill="black"/>
+    </mask>
+  </defs>
+
+  <g filter="url(#moonGlow)">
+    <circle cx="95" cy="100" r="38" fill="url(#moonGrad)" mask="url(#crescentMask)"/>
+  </g>
+
+  <!-- Subtle plum inner shadow on crescent edge -->
+  <circle cx="112" cy="90" r="30" fill="none" stroke="#9B6090" stroke-width="1.5" opacity="0.2" mask="url(#crescentMask)"/>
+
+  <!-- Large 4-point star top right -->
+  <g filter="url(#amberGlow)" transform="translate(152, 60)">
+    <path d="M0,-11 L2.5,-2.5 L11,0 L2.5,2.5 L0,11 L-2.5,2.5 L-11,0 L-2.5,-2.5 Z" fill="#E8A020"/>
+  </g>
+
+  <!-- Medium star bottom left -->
+  <g filter="url(#amberGlow)" transform="translate(52, 142)">
+    <path d="M0,-7 L1.8,-1.8 L7,0 L1.8,1.8 L0,7 L-1.8,1.8 L-7,0 L-1.8,-1.8 Z" fill="#E8A020" opacity="0.9"/>
+  </g>
+
+  <!-- Small star upper left -->
+  <g filter="url(#amberGlow)" transform="translate(65, 55)">
+    <path d="M0,-5 L1.2,-1.2 L5,0 L1.2,1.2 L0,5 L-1.2,1.2 L-5,0 L-1.2,-1.2 Z" fill="#E8A020" opacity="0.8"/>
+  </g>
+
+  <!-- Tiny dot stars -->
+  <circle cx="143" cy="112" r="2" fill="#E8A020" opacity="0.7"/>
+  <circle cx="132" cy="152" r="1.5" fill="#E8A020" opacity="0.55"/>
+  <circle cx="68" cy="115" r="1.3" fill="#F5EAE0" opacity="0.65"/>
+  <circle cx="158" cy="85" r="1.2" fill="#F5EAE0" opacity="0.5"/>
+  <circle cx="58" cy="78" r="1.1" fill="#E8A020" opacity="0.5"/>
+  <circle cx="150" cy="138" r="1.6" fill="#E8A020" opacity="0.5"/>
+  <circle cx="78" cy="158" r="1.1" fill="#F5EAE0" opacity="0.4"/>
+  <circle cx="120" cy="48" r="1" fill="#F5EAE0" opacity="0.45"/>
+
+  <!-- Comet streak -->
+  <line x1="122" y1="70" x2="145" y2="50" stroke="#E8A020" stroke-width="1.2" stroke-linecap="round" opacity="0.55"/>
+  <line x1="122" y1="70" x2="147" y2="54" stroke="#E8A020" stroke-width="0.5" stroke-linecap="round" opacity="0.3"/>
+</svg>
