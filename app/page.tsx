@@ -1,6 +1,17 @@
 "use client";
 
+
 import { useEffect, useState } from "react";
+import { generateSparks } from "./utils/sparks";
+
+type Spark = {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  delay: number;
+  duration: number;
+};
 
 const floatingOrbs = [
   { size: 320, x: 10, y: 15, delay: 0, duration: 18 },
@@ -10,17 +21,14 @@ const floatingOrbs = [
   { size: 100, x: 20, y: 50, delay: 4, duration: 25 },
 ];
 
-const sparks = Array.from({ length: 18 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 3 + 1,
-  delay: Math.random() * 5,
-  duration: Math.random() * 4 + 3,
-}));
-
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const [sparks, setSparks] = useState<Spark[]>([]);
+
+  useEffect(() => {
+    setMounted(true);
+    setSparks(generateSparks(18));
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -321,20 +329,21 @@ export default function Home() {
           />
         ))}
 
-        {sparks.map((spark) => (
-          <div
-            key={spark.id}
-            className="spark"
-            style={{
-              width: spark.size,
-              height: spark.size,
-              left: `${spark.x}%`,
-              top: `${spark.y}%`,
-              animationDelay: `${spark.delay}s`,
-              animationDuration: `${spark.duration}s`,
-            }}
-          />
-        ))}
+        {sparks.length > 0 &&
+          sparks.map((spark) => (
+            <div
+              key={spark.id}
+              className="spark"
+              style={{
+                width: spark.size,
+                height: spark.size,
+                left: `${spark.x}%`,
+                top: `${spark.y}%`,
+                animationDelay: `${spark.delay}s`,
+                animationDuration: `${spark.duration}s`,
+              }}
+            />
+          ))}
 
         <div className={`content ${mounted ? "visible" : ""}`}>
           <p className="eyebrow">Welcome to</p>
