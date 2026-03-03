@@ -225,7 +225,7 @@ export default function Home() {
         }
 
         .content.visible .subtext {
-          opacity: 0.9;
+          opacity: 1.0;
         }
 
         /* Coming soon chips */
@@ -357,7 +357,7 @@ export default function Home() {
 
           <p className="tagline">
             A personal little corner of the internet,<br />
-            equal parts organized and wonderfully unhinged.
+            somewhat organized and wonderfully random.
           </p>
 
           <p className="subtext">Apps, recipes & everyday chaos — coming together</p>
@@ -366,11 +366,11 @@ export default function Home() {
             <span className="chip">🍜 Recipe Box</span>
             <span className="chip">🥣 Bowl Calculator</span>
             <span className="chip">✅ Chore Tracker</span>
-            <span className="chip">✨ More Chaos Soon</span>
+            <span className="chip">✨ More Randomness Soon!</span>
           </div>
 
           <p className="signature">
-            Built with love & <span>a little disorder</span> by Christina
+            Built with love & <span>more than a few detours</span> by Christina
           </p>
         </div>
 

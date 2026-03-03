@@ -101,7 +101,7 @@ export default function BowlTrackerPage() {
   // ----- UI -----
 
   return (
-    <div style={{ padding: 30, fontFamily: "Arial, sans-serif" }}>
+    <div style={{ padding: 30, fontFamily: "Arial, sans-serif", maxWidth: "800px" }}>
       <h1 style={{ textAlign: "center" }}>Bowl Calorie Tracker</h1>
 
       <h2 style={{ textAlign: "center", fontSize: 28 }}>
