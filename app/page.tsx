@@ -77,10 +77,10 @@ export default function Home() {
           <p className="subtext">Apps, recipes & everyday chaos — coming together</p>
 
           <div className="chips">
-            <span className="chip">🍜 Recipe Box</span>
+            {/* <span className="chip">🍜 Recipe Box</span> */}
             <Link href="/repeatable-meal" className="chip">🥣 Bowl Calculator</Link>
             <Link href="/blossom" className="chip">✅ Chore Tracker</Link>
-            <span className="chip">✨ More Randomness Soon!</span>
+            {/* <span className="chip">✨ More Randomness Soon!</span> */}
           </div>
 
           <p className="signature">
