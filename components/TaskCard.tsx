@@ -103,7 +103,7 @@ export default function TaskCard({ task, onToggle, onEdit, onDelete }: TaskCardP
         }}>
           <span style={{ fontSize: '0.78rem' }}>{cat.icon}</span>
           <span style={{
-            fontFamily: "'Josefin Sans', sans-serif",
+            fontFamily: "var(--font-josefin), sans-serif",
             fontSize: '0.95rem',
             fontWeight: 400,
             color: task.completedToday ? 'rgba(232,213,196,0.65)' : '#E8D5C4',
@@ -119,7 +119,7 @@ export default function TaskCard({ task, onToggle, onEdit, onDelete }: TaskCardP
           </span>
         </div>
         <span style={{
-          fontFamily: "'Josefin Sans', sans-serif",
+          fontFamily: "var(--font-josefin), sans-serif",
           fontSize: '0.68rem',
           fontWeight: 200,
           letterSpacing: '0.15em',
@@ -188,7 +188,7 @@ export default function TaskCard({ task, onToggle, onEdit, onDelete }: TaskCardP
                   background: 'none',
                   border: 'none',
                   textAlign: 'left',
-                  fontFamily: "'Josefin Sans', sans-serif",
+                  fontFamily: "var(--font-josefin), sans-serif",
                   fontSize: '0.8rem',
                   letterSpacing: '0.05em',
                   color: danger ? '#e87070' : '#E8D5C4',

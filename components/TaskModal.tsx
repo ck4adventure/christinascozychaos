@@ -54,7 +54,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
     borderRadius: '10px',
     padding: '10px 14px',
     color: '#E8D5C4',
-    fontFamily: "'Josefin Sans', sans-serif",
+    fontFamily: "var(--font-josefin), sans-serif",
     fontSize: '0.9rem',
     letterSpacing: '0.04em',
     outline: 'none',
@@ -96,7 +96,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
         }} />
 
         <h2 style={{
-          fontFamily: "'Cormorant Garamond', serif",
+          fontFamily: "var(--font-cormorant), serif",
           fontSize: '1.4rem',
           fontWeight: 400,
           color: '#E8D5C4',
@@ -120,7 +120,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                   border: tab === t ? '1px solid rgba(232,160,32,0.5)' : '1px solid rgba(123,63,110,0.3)',
                   background: tab === t ? 'rgba(232,160,32,0.1)' : 'transparent',
                   color: tab === t ? '#E8A020' : 'rgba(232,213,196,0.5)',
-                  fontFamily: "'Josefin Sans', sans-serif",
+                  fontFamily: "var(--font-josefin), sans-serif",
                   fontSize: '0.75rem',
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase',
@@ -138,7 +138,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
         {(tab === 'custom' || editingTask) && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div>
-              <label style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '6px' }}>
+              <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '6px' }}>
                 Task Name
               </label>
               <input
@@ -151,7 +151,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
             </div>
 
             <div>
-              <label style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
+              <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
                 Category
               </label>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
@@ -165,7 +165,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                       border: category === c ? '1px solid rgba(232,160,32,0.6)' : '1px solid rgba(123,63,110,0.35)',
                       background: category === c ? 'rgba(232,160,32,0.12)' : 'transparent',
                       color: category === c ? '#E8A020' : 'rgba(232,213,196,0.55)',
-                      fontFamily: "'Josefin Sans', sans-serif",
+                      fontFamily: "var(--font-josefin), sans-serif",
                       fontSize: '0.75rem',
                       cursor: 'pointer',
                       transition: 'all 0.2s',
@@ -178,7 +178,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
             </div>
 
             <div>
-              <label style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
+              <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
                 Frequency
               </label>
               <div style={{ display: 'flex', gap: '8px' }}>
@@ -193,7 +193,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                       border: frequency === f ? '1px solid rgba(232,160,32,0.5)' : '1px solid rgba(123,63,110,0.3)',
                       background: frequency === f ? 'rgba(232,160,32,0.1)' : 'transparent',
                       color: frequency === f ? '#E8A020' : 'rgba(232,213,196,0.5)',
-                      fontFamily: "'Josefin Sans', sans-serif",
+                      fontFamily: "var(--font-josefin), sans-serif",
                       fontSize: '0.75rem',
                       letterSpacing: '0.1em',
                       textTransform: 'capitalize',
@@ -219,7 +219,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                   ? 'linear-gradient(135deg, #C46A00, #E8A020)'
                   : 'rgba(123,63,110,0.25)',
                 color: name.trim() ? '#1A0820' : 'rgba(232,213,196,0.3)',
-                fontFamily: "'Josefin Sans', sans-serif",
+                fontFamily: "var(--font-josefin), sans-serif",
                 fontSize: '0.85rem',
                 fontWeight: 400,
                 letterSpacing: '0.2em',
@@ -248,7 +248,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                     border: libraryFilter === c ? '1px solid rgba(232,160,32,0.55)' : '1px solid rgba(123,63,110,0.3)',
                     background: libraryFilter === c ? 'rgba(232,160,32,0.1)' : 'transparent',
                     color: libraryFilter === c ? '#E8A020' : 'rgba(232,213,196,0.5)',
-                    fontFamily: "'Josefin Sans', sans-serif",
+                    fontFamily: "var(--font-josefin), sans-serif",
                     fontSize: '0.7rem',
                     letterSpacing: '0.1em',
                     cursor: 'pointer',
@@ -263,7 +263,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
             </div>
 
             {filteredLibrary.length === 0 ? (
-              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', color: 'rgba(155,96,144,0.7)', textAlign: 'center', padding: '24px 0' }}>
+              <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', color: 'rgba(155,96,144,0.7)', textAlign: 'center', padding: '24px 0' }}>
                 You&apos;ve added everything in this category! 🌸
               </p>
             ) : (
@@ -287,10 +287,10 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                     }}
                   >
                     <span style={{ fontSize: '1.1rem' }}>{CATEGORY_CONFIG[item.category].icon}</span>
-                    <span style={{ flex: 1, fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.88rem', color: '#E8D5C4', letterSpacing: '0.03em' }}>
+                    <span style={{ flex: 1, fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.88rem', color: '#E8D5C4', letterSpacing: '0.03em' }}>
                       {item.name}
                     </span>
-                    <span style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.7)' }}>
+                    <span style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.7)' }}>
                       {item.frequency}
                     </span>
                     <span style={{ color: '#E8A020', fontSize: '1rem' }}>+</span>

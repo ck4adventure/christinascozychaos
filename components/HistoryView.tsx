@@ -36,7 +36,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
   return (
     <div style={{ padding: '0 0 100px' }}>
       <h1 style={{
-        fontFamily: "'Cormorant Garamond', serif",
+        fontFamily: "var(--font-cormorant), serif",
         fontSize: '1.7rem',
         fontWeight: 400,
         fontStyle: 'italic',
@@ -59,7 +59,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
               border: filterCategory === c ? '1px solid rgba(232,160,32,0.55)' : '1px solid rgba(123,63,110,0.3)',
               background: filterCategory === c ? 'rgba(232,160,32,0.1)' : 'transparent',
               color: filterCategory === c ? '#E8A020' : 'rgba(232,213,196,0.5)',
-              fontFamily: "'Josefin Sans', sans-serif",
+              fontFamily: "var(--font-josefin), sans-serif",
               fontSize: '0.7rem',
               letterSpacing: '0.1em',
               cursor: 'pointer',
@@ -75,7 +75,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
 
       {Object.keys(grouped).length === 0 ? (
         <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-          <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: '1.1rem', color: 'rgba(155,96,144,0.7)' }}>
+          <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', fontSize: '1.1rem', color: 'rgba(155,96,144,0.7)' }}>
             Nothing logged yet. Go complete something! 🌸
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
         Object.entries(grouped).map(([dateLabel, entries]) => (
           <div key={dateLabel} style={{ marginBottom: '24px' }}>
             <p style={{
-              fontFamily: "'Josefin Sans', sans-serif",
+              fontFamily: "var(--font-josefin), sans-serif",
               fontSize: '0.68rem',
               fontWeight: 300,
               letterSpacing: '0.2em',
@@ -113,7 +113,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
                     <span style={{ fontSize: '1rem' }}>{cat.icon}</span>
                     <span style={{
                       flex: 1,
-                      fontFamily: "'Josefin Sans', sans-serif",
+                      fontFamily: "var(--font-josefin), sans-serif",
                       fontSize: '0.88rem',
                       color: '#E8D5C4',
                       letterSpacing: '0.03em',
@@ -121,7 +121,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
                       {log.task.name}
                     </span>
                     <span style={{
-                      fontFamily: "'Josefin Sans', sans-serif",
+                      fontFamily: "var(--font-josefin), sans-serif",
                       fontSize: '0.68rem',
                       fontWeight: 200,
                       letterSpacing: '0.1em',

@@ -47,8 +47,7 @@ export default function TrackerPage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Josefin+Sans:wght@200;300;400&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: #1A0820; }
         ::-webkit-scrollbar { width: 0; }
       `}</style>
@@ -79,7 +78,7 @@ export default function TrackerPage() {
               {/* Header */}
               <div style={{ marginBottom: '24px' }}>
                 <p style={{
-                  fontFamily: "'Josefin Sans', sans-serif",
+                  fontFamily: "var(--font-josefin), sans-serif",
                   fontSize: '0.68rem',
                   fontWeight: 200,
                   letterSpacing: '0.3em',
@@ -90,7 +89,7 @@ export default function TrackerPage() {
                   {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                 </p>
                 <h1 style={{
-                  fontFamily: "'Cormorant Garamond', serif",
+                  fontFamily: "var(--font-cormorant), serif",
                   fontSize: '2rem',
                   fontWeight: 300,
                   fontStyle: 'italic',
@@ -108,11 +107,11 @@ export default function TrackerPage() {
                       justifyContent: 'space-between',
                       marginBottom: '6px',
                     }}>
-                      <span style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.7rem', letterSpacing: '0.15em', color: 'rgba(155,96,144,0.8)' }}>
+                      <span style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.15em', color: 'rgba(155,96,144,0.8)' }}>
                         {completedCount} of {totalCount} done
                       </span>
                       {completedCount === totalCount && totalCount > 0 && (
-                        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: '0.85rem', color: '#E8A020' }}>
+                        <span style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', fontSize: '0.85rem', color: '#E8A020' }}>
                           All done! 🌸
                         </span>
                       )}
@@ -138,7 +137,7 @@ export default function TrackerPage() {
               {/* Task list */}
               {tasksWithStatus.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '60px 0' }}>
-                  <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', fontSize: '1.15rem', color: 'rgba(155,96,144,0.7)', lineHeight: 1.6 }}>
+                  <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', fontSize: '1.15rem', color: 'rgba(155,96,144,0.7)', lineHeight: 1.6 }}>
                     No tasks yet.<br />Tap <span style={{ color: '#E8A020' }}>＋ Add</span> below to get started.
                   </p>
                 </div>

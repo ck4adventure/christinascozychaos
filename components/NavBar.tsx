@@ -55,7 +55,7 @@ export default function NavBar({ active, onChange }: NavBarProps) {
               {icon}
             </span>
             <span style={{
-              fontFamily: "'Josefin Sans', sans-serif",
+              fontFamily: "var(--font-josefin), sans-serif",
               fontSize: '0.62rem',
               fontWeight: isActive ? 400 : 300,
               letterSpacing: '0.15em',

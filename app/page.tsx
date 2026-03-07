@@ -1,17 +1,9 @@
 "use client";
-
+import { Spark } from "./utils/sparks";
 
 import { useEffect, useState } from "react";
 import { generateSparks } from "./utils/sparks";
 
-type Spark = {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  delay: number;
-  duration: number;
-};
 
 const floatingOrbs = [
   { size: 320, x: 10, y: 15, delay: 0, duration: 18 },
@@ -30,16 +22,10 @@ export default function Home() {
     setSparks(generateSparks(18));
   }, []);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@200;300;400&display=swap');
-
-        :root {
+:root {
           --plum-deep: #2A0E30;
           --plum-mid: #7B3F6E;
           --plum-light: #9B6090;
@@ -66,7 +52,7 @@ export default function Home() {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          font-family: 'Josefin Sans', sans-serif;
+          font-family: var(--font-josefin), sans-serif;
         }
 
         /* Noise texture overlay */
@@ -143,7 +129,7 @@ export default function Home() {
         }
 
         .eyebrow {
-          font-family: 'Josefin Sans', sans-serif;
+          font-family: var(--font-josefin), sans-serif;
           font-size: 0.7rem;
           font-weight: 300;
           letter-spacing: 0.35em;
@@ -161,7 +147,7 @@ export default function Home() {
         }
 
         .title {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-size: clamp(3rem, 8vw, 6.5rem);
           font-weight: 300;
           line-height: 1.05;
@@ -197,7 +183,7 @@ export default function Home() {
         }
 
         .tagline {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-size: clamp(1.1rem, 2.5vw, 1.5rem);
           font-weight: 300;
           font-style: italic;
@@ -213,7 +199,7 @@ export default function Home() {
         }
 
         .subtext {
-          font-family: 'Josefin Sans', sans-serif;
+          font-family: var(--font-josefin), sans-serif;
           font-size: 0.78rem;
           font-weight: 200;
           letter-spacing: 0.2em;
@@ -246,7 +232,7 @@ export default function Home() {
         }
 
         .chip {
-          font-family: 'Josefin Sans', sans-serif;
+          font-family: var(--font-josefin), sans-serif;
           font-size: 0.68rem;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -267,7 +253,7 @@ export default function Home() {
 
         /* Signature */
         .signature {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-cormorant), serif;
           font-size: 0.85rem;
           font-style: italic;
           font-weight: 300;
