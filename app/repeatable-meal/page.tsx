@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import Link from "next/link";
+import { Spark, generateSparks } from "../utils/sparks";
 
 type SolidItem = {
   name: string;
@@ -23,7 +25,17 @@ type EggGroup = {
   caloriesPerPiece: number;
 };
 
+const floatingOrbs = [
+  { size: 280, x: 5, y: 10, delay: 0, duration: 20 },
+  { size: 180, x: 75, y: 55, delay: 2, duration: 24 },
+  { size: 130, x: 45, y: 75, delay: 5, duration: 17 },
+  { size: 220, x: 88, y: 5, delay: 1, duration: 22 },
+];
+
 export default function BowlTrackerPage() {
+  const [mounted, setMounted] = useState(false);
+  const [sparks, setSparks] = useState<Spark[]>([]);
+
   // ----- Main Bowl -----
   const [main, setMain] = useState<SolidItem[]>([
     { name: "Brown Rice", grams: 75, calories: 97 },
@@ -72,6 +84,11 @@ export default function BowlTrackerPage() {
     referenceGrams: 120,
   };
 
+  useEffect(() => {
+    setMounted(true);
+    setSparks(generateSparks(14));
+  }, []);
+
   // ----- Calculations -----
 
   const mainTotal = useMemo(() => {
@@ -95,89 +112,124 @@ export default function BowlTrackerPage() {
     return strawberryGrams * calPerGram;
   }, [strawberryGrams]);
 
-  const grandTotal =
-    mainTotal + eggTotal + kefirTotal + strawberryTotal;
+  const grandTotal = mainTotal + eggTotal + kefirTotal + strawberryTotal;
 
   // ----- UI -----
 
   return (
-    <div style={{ padding: 30, fontFamily: "Arial, sans-serif", maxWidth: "800px" }}>
-      <h1 style={{ textAlign: "center" }}>Bowl Calorie Tracker</h1>
+    <div className="bowl-page">
+      <div className="mesh" />
 
-      <h2 style={{ textAlign: "center", fontSize: 28 }}>
-        Total: {grandTotal.toFixed(1)} kcal
-      </h2>
-
-      {/* Main Bowl */}
-      <Section title="Main Bowl" total={mainTotal}>
-        {main.map((item, index) => {
-          const value = mainValues[index];
-          const calPerGram = item.calories / item.grams;
-          const itemCalories = value * calPerGram;
-
-          return (
-            <SliderRow
-              key={item.name}
-              label={item.name}
-              min={0}
-              max={item.grams * 2}
-              step={1}
-              value={value}
-              onChange={(val) => {
-                const updated = [...mainValues];
-                updated[index] = val;
-                setMainValues(updated);
-              }}
-              display={`${value} g (${itemCalories.toFixed(1)} kcal)`}
-            />
-          );
-        })}
-      </Section>
-
-      {/* Deviled Eggs */}
-      <Section title="Deviled Eggs (pieces)" total={eggTotal}>
-        <SliderRow
-          label="Egg Pieces"
-          min={0}
-          max={eggGroup.maxPieces}
-          step={1}
-          value={eggPieces}
-          onChange={(val) => setEggPieces(val)}
-          display={`${eggPieces} pieces (${eggTotal.toFixed(
-            1
-          )} kcal)`}
+      {floatingOrbs.map((orb, i) => (
+        <div
+          key={i}
+          className="orb"
+          style={{
+            width: orb.size,
+            height: orb.size,
+            left: `${orb.x}%`,
+            top: `${orb.y}%`,
+            background: i % 2 === 0 ? "#7B3F6E" : "#C46A00",
+            animationDelay: `${orb.delay}s`,
+            animationDuration: `${orb.duration}s`,
+          }}
         />
-      </Section>
+      ))}
 
-      {/* Kefir & Strawberries */}
-      <Section
-        title="Kefir & Strawberries"
-        total={kefirTotal + strawberryTotal}
-      >
-        <SliderRow
-          label="Whole Milk Kefir"
-          min={0}
-          max={kefir.maxOunces}
-          step={0.1}
-          value={kefirOunces}
-          onChange={(val) => setKefirOunces(val)}
-          display={`${kefirOunces.toFixed(
-            1
-          )} fl oz (${kefirTotal.toFixed(1)} kcal)`}
-        />
+      {sparks.length > 0 &&
+        sparks.map((spark) => (
+          <div
+            key={spark.id}
+            className="spark"
+            style={{
+              width: spark.size,
+              height: spark.size,
+              left: `${spark.x}%`,
+              top: `${spark.y}%`,
+              animationDelay: `${spark.delay}s`,
+              animationDuration: `${spark.duration}s`,
+            }}
+          />
+        ))}
 
-        <SliderRow
-          label="Strawberries"
-          min={0}
-          max={strawberries.grams * 2}
-          step={1}
-          value={strawberryGrams}
-          onChange={(val) => setStrawberryGrams(val)}
-          display={`${strawberryGrams} g (${strawberryTotal.toFixed(
-            1
-          )} kcal)`}
-        />
-      </Section>
+      <div className={`bowl-inner ${mounted ? "bowl-visible" : ""}`}>
+        <Link href="/" className="bowl-back">← Home</Link>
+
+        <div className="bowl-header">
+          <p className="bowl-eyebrow">Daily Nutrition</p>
+          <h1 className="bowl-title">
+            Bowl <em>Calculator</em>
+          </h1>
+          <div className="divider" style={{ opacity: mounted ? 1 : 0 }} />
+          <div className="bowl-grand-total">{grandTotal.toFixed(0)}</div>
+          <p className="bowl-grand-label">kcal total</p>
+        </div>
+
+        {/* Main Bowl */}
+        <Section title="Main Bowl" total={mainTotal}>
+          {main.map((item, index) => {
+            const value = mainValues[index];
+            const calPerGram = item.calories / item.grams;
+            const itemCalories = value * calPerGram;
+
+            return (
+              <SliderRow
+                key={item.name}
+                label={item.name}
+                min={0}
+                max={item.grams * 2}
+                step={1}
+                value={value}
+                onChange={(val) => {
+                  const updated = [...mainValues];
+                  updated[index] = val;
+                  setMainValues(updated);
+                }}
+                display={`${value}g · ${itemCalories.toFixed(0)} kcal`}
+              />
+            );
+          })}
+        </Section>
+
+        {/* Deviled Eggs */}
+        <Section title="Deviled Eggs" total={eggTotal}>
+          <SliderRow
+            label="Egg Pieces"
+            min={0}
+            max={eggGroup.maxPieces}
+            step={1}
+            value={eggPieces}
+            onChange={(val) => setEggPieces(val)}
+            display={`${eggPieces} pieces · ${eggTotal.toFixed(0)} kcal`}
+          />
+        </Section>
+
+        {/* Kefir & Strawberries */}
+        <Section title="Kefir & Strawberries" total={kefirTotal + strawberryTotal}>
+          <SliderRow
+            label="Whole Milk Kefir"
+            min={0}
+            max={kefir.maxOunces}
+            step={0.1}
+            value={kefirOunces}
+            onChange={(val) => setKefirOunces(val)}
+            display={`${kefirOunces.toFixed(1)} fl oz · ${kefirTotal.toFixed(0)} kcal`}
+          />
+          <SliderRow
+            label="Strawberries"
+            min={0}
+            max={strawberries.grams * 2}
+            step={1}
+            value={strawberryGrams}
+            onChange={(val) => setStrawberryGrams(val)}
+            display={`${strawberryGrams}g · ${strawberryTotal.toFixed(0)} kcal`}
+          />
+        </Section>
+      </div>
+
+      <div className="corner corner-tl" />
+      <div className="corner corner-br" />
+      <div className="bottom-rule" />
     </div>
   );
 }
@@ -192,18 +244,12 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div
-      style={{
-        background: "#fff",
-        padding: 20,
-        marginBottom: 25,
-        borderRadius: 12,
-        boxShadow: "0 4px 10px rgba(0,0,0,0.08)",
-      }}
-    >
-      <h3>{title}</h3>
+    <div className="bowl-card">
+      <div className="bowl-card-header">
+        <h3 className="bowl-card-title">{title}</h3>
+        <span className="bowl-card-total">{total.toFixed(0)} kcal</span>
+      </div>
       {children}
-      <strong>Group Total: {total.toFixed(1)} kcal</strong>
     </div>
   );
 }
@@ -226,20 +272,20 @@ function SliderRow({
   display: string;
 }) {
   return (
-    <div style={{ marginBottom: 15 }}>
-      <label>{label}</label>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <input
-          type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
-          style={{ flex: 1, marginRight: 12 }}
-        />
-        <span>{display}</span>
+    <div className="bowl-row">
+      <div className="bowl-row-header">
+        <span className="bowl-row-name">{label}</span>
+        <span className="bowl-row-value">{display}</span>
       </div>
+      <input
+        type="range"
+        className="bowl-slider"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
     </div>
   );
 }

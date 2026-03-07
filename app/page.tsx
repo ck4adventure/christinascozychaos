@@ -1,5 +1,6 @@
 "use client";
 import { Spark } from "./utils/sparks";
+import Link from "next/link";
 
 import { useEffect, useState } from "react";
 import { generateSparks } from "./utils/sparks";
@@ -77,8 +78,8 @@ export default function Home() {
 
           <div className="chips">
             <span className="chip">🍜 Recipe Box</span>
-            <span className="chip">🥣 Bowl Calculator</span>
-            <span className="chip">✅ Chore Tracker</span>
+            <Link href="/repeatable-meal" className="chip">🥣 Bowl Calculator</Link>
+            <Link href="/blossom" className="chip">✅ Chore Tracker</Link>
             <span className="chip">✨ More Randomness Soon!</span>
           </div>
 
