@@ -45,14 +45,7 @@ export default function TrackerPage() {
   if (!mounted) return null;
 
   return (
-    <>
-      <style>{`
-* { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #1A0820; }
-        ::-webkit-scrollbar { width: 0; }
-      `}</style>
-
-      <div style={{
+    <div style={{
         minHeight: '100dvh',
         background: 'linear-gradient(160deg, #2A0E30 0%, #1A0820 60%, #2A1400 100%)',
         color: '#E8D5C4',
@@ -176,6 +169,5 @@ export default function TrackerPage() {
           />
         )}
       </div>
-    </>
   );
 }
