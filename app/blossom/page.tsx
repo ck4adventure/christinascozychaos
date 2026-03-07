@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Task, TaskWithStatus, Frequency } from '@/types';
 import { useTasks } from '@/app/hooks/useTasks';
 import { CATEGORY_CONFIG } from '@/lib/data';
@@ -73,6 +74,8 @@ export default function TrackerPage() {
           padding: '52px 18px 0',
           minHeight: '100dvh',
         }}>
+
+          <Link href="/" className="bowl-back">← Home</Link>
 
           {/* TODAY VIEW */}
           {tab === 'today' && (
