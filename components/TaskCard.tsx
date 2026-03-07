@@ -107,7 +107,7 @@ export default function TaskCard({ task, onToggle }: TaskCardProps) {
         <span style={{
           fontFamily: "var(--font-josefin), sans-serif",
           fontSize: '0.68rem',
-          fontWeight: 200,
+          fontWeight: 600,
           letterSpacing: '0.15em',
           textTransform: 'uppercase',
           color: 'rgba(155,96,144,0.8)',

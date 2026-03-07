@@ -91,7 +91,7 @@ export default function TrackerPage() {
                 <p style={{
                   fontFamily: "var(--font-josefin), sans-serif",
                   fontSize: '0.68rem',
-                  fontWeight: 200,
+                  fontWeight: 600,
                   letterSpacing: '0.3em',
                   textTransform: 'uppercase',
                   color: 'rgba(155,96,144,0.8)',
@@ -118,7 +118,7 @@ export default function TrackerPage() {
                       justifyContent: 'space-between',
                       marginBottom: '6px',
                     }}>
-                      <span style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.15em', color: 'rgba(155,96,144,0.8)' }}>
+                      <span style={{ fontWeight: "bolder", fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.15em', color: 'rgba(155,96,144,0.8)' }}>
                         {completedCount} of {totalCount} done
                       </span>
                       {completedCount === totalCount && totalCount > 0 && (
@@ -178,7 +178,7 @@ export default function TrackerPage() {
                 <p style={{
                   fontFamily: "var(--font-josefin), sans-serif",
                   fontSize: '0.68rem',
-                  fontWeight: 200,
+                  fontWeight: 600,
                   letterSpacing: '0.3em',
                   textTransform: 'uppercase',
                   color: 'rgba(155,96,144,0.8)',
@@ -199,7 +199,7 @@ export default function TrackerPage() {
                 <p style={{
                   fontFamily: "var(--font-josefin), sans-serif",
                   fontSize: '0.68rem',
-                  fontWeight: 200,
+                  fontWeight: 600,
                   letterSpacing: '0.15em',
                   color: 'rgba(155,96,144,0.65)',
                   marginTop: '8px',

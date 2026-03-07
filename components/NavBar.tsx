@@ -58,7 +58,7 @@ export default function NavBar({ active, onChange }: NavBarProps) {
             <span style={{
               fontFamily: "var(--font-josefin), sans-serif",
               fontSize: '0.62rem',
-              fontWeight: isActive ? 400 : 300,
+              fontWeight: isActive ? 400 : 600,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
               color: isActive ? '#E8A020' : 'rgba(155,96,144,0.65)',
