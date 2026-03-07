@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Task, Category, Frequency } from '@/types';
 import { CATEGORY_CONFIG, TASK_LIBRARY } from '@/lib/data';
+import { ordinal } from '@/lib/taskFilter';
 
 interface TaskModalProps {
   editingTask?: Task | null;
@@ -14,11 +15,6 @@ interface TaskModalProps {
 const FREQUENCIES: Frequency[] = ['daily', 'weekly', 'monthly'];
 const CATEGORIES = Object.keys(CATEGORY_CONFIG) as Category[];
 
-const ordinal = (n: number) => {
-  const s = ['th', 'st', 'nd', 'rd'];
-  const v = n % 100;
-  return n + (s[(v - 20) % 10] || s[v] || s[0]);
-};
 
 export default function TaskModal({ editingTask, existingTaskNames, onSave, onClose }: TaskModalProps) {
   const [tab, setTab] = useState<'custom' | 'library'>('custom');

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Task, TaskWithStatus, Frequency } from '@/types';
 import { useTasks } from '@/app/hooks/useTasks';
 import { CATEGORY_CONFIG } from '@/lib/data';
+import { ordinal, isTaskForDay } from '@/lib/taskFilter';
 import TaskCard from '@/components/TaskCard';
 import TaskModal from '@/components/TaskModal';
 import HistoryView from '@/components/HistoryView';
@@ -12,11 +13,6 @@ import NavBar from '@/components/NavBar';
 type Tab = 'today' | 'schedule' | 'history' | 'add';
 
 const DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const ordinal = (n: number) => {
-  const s = ['th', 'st', 'nd', 'rd'];
-  const v = n % 100;
-  return n + (s[(v - 20) % 10] || s[v] || s[0]);
-};
 
 export default function TrackerPage() {
   const { tasks, logs, tasksWithStatus, mounted, addTask, toggleTask, deleteTask, editTask } = useTasks();
@@ -50,12 +46,7 @@ export default function TrackerPage() {
   const todayDow = new Date().getDay();
   const todayDom = new Date().getDate();
 
-  const todaysTasks = tasksWithStatus.filter((t) => {
-    if (t.frequency === 'daily') return true;
-    if (t.frequency === 'weekly') return (t.dayOfWeek ?? 0) === todayDow;
-    if (t.frequency === 'monthly') return (t.dayOfMonth ?? 1) === todayDom;
-    return false;
-  });
+  const todaysTasks = tasksWithStatus.filter((t) => isTaskForDay(t, todayDow, todayDom));
 
   const completedCount = todaysTasks.filter((t) => t.completedToday).length;
   const totalCount = todaysTasks.length;
