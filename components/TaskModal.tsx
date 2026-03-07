@@ -1,0 +1,306 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Task, Category, Frequency } from '@/types';
+import { CATEGORY_CONFIG, TASK_LIBRARY } from '@/lib/data';
+
+interface TaskModalProps {
+  editingTask?: Task | null;
+  existingTaskNames: string[];
+  onSave: (data: Omit<Task, 'id' | 'createdAt'>) => void;
+  onClose: () => void;
+}
+
+const FREQUENCIES: Frequency[] = ['daily', 'weekly', 'monthly'];
+const CATEGORIES = Object.keys(CATEGORY_CONFIG) as Category[];
+
+export default function TaskModal({ editingTask, existingTaskNames, onSave, onClose }: TaskModalProps) {
+  const [tab, setTab] = useState<'custom' | 'library'>('custom');
+  const [name, setName] = useState(editingTask?.name || '');
+  const [category, setCategory] = useState<Category>(editingTask?.category || 'home');
+  const [frequency, setFrequency] = useState<Frequency>(editingTask?.frequency || 'daily');
+  const [libraryFilter, setLibraryFilter] = useState<Category | 'all'>('all');
+
+  useEffect(() => {
+    if (editingTask) {
+      setName(editingTask.name);
+      setCategory(editingTask.category);
+      setFrequency(editingTask.frequency);
+      setTab('custom');
+    }
+  }, [editingTask]);
+
+  const handleSave = () => {
+    if (!name.trim()) return;
+    onSave({ name: name.trim(), category, frequency });
+    onClose();
+  };
+
+  const handleLibraryAdd = (item: typeof TASK_LIBRARY[0]) => {
+    onSave(item);
+    onClose();
+  };
+
+  const filteredLibrary = TASK_LIBRARY.filter((t) => {
+    const notOwned = !existingTaskNames.includes(t.name);
+    const matchesFilter = libraryFilter === 'all' || t.category === libraryFilter;
+    return notOwned && matchesFilter;
+  });
+
+  const inputStyle = {
+    width: '100%',
+    background: 'rgba(42,14,48,0.6)',
+    border: '1px solid rgba(123,63,110,0.5)',
+    borderRadius: '10px',
+    padding: '10px 14px',
+    color: '#E8D5C4',
+    fontFamily: "'Josefin Sans', sans-serif",
+    fontSize: '0.9rem',
+    letterSpacing: '0.04em',
+    outline: 'none',
+  } as React.CSSProperties;
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0,
+        background: 'rgba(10,4,14,0.75)',
+        backdropFilter: 'blur(6px)',
+        zIndex: 100,
+        display: 'flex',
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        padding: '0 0 env(safe-area-inset-bottom)',
+      }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{
+          background: 'linear-gradient(160deg, #3D1A54, #2A0E30)',
+          border: '1px solid rgba(232,160,32,0.2)',
+          borderRadius: '20px 20px 0 0',
+          padding: '24px 20px 32px',
+          width: '100%',
+          maxWidth: '480px',
+          maxHeight: '85vh',
+          overflowY: 'auto',
+        }}
+      >
+        {/* Handle */}
+        <div style={{
+          width: 36, height: 4,
+          borderRadius: 2,
+          background: 'rgba(155,96,144,0.4)',
+          margin: '-10px auto 20px',
+        }} />
+
+        <h2 style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: '1.4rem',
+          fontWeight: 400,
+          color: '#E8D5C4',
+          marginBottom: '18px',
+          fontStyle: 'italic',
+        }}>
+          {editingTask ? 'Edit Task' : 'Add a Task'}
+        </h2>
+
+        {/* Tabs — only show when adding, not editing */}
+        {!editingTask && (
+          <div style={{ display: 'flex', gap: '8px', marginBottom: '20px' }}>
+            {(['custom', 'library'] as const).map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                style={{
+                  flex: 1,
+                  padding: '8px',
+                  borderRadius: '10px',
+                  border: tab === t ? '1px solid rgba(232,160,32,0.5)' : '1px solid rgba(123,63,110,0.3)',
+                  background: tab === t ? 'rgba(232,160,32,0.1)' : 'transparent',
+                  color: tab === t ? '#E8A020' : 'rgba(232,213,196,0.5)',
+                  fontFamily: "'Josefin Sans', sans-serif",
+                  fontSize: '0.75rem',
+                  letterSpacing: '0.15em',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+              >
+                {t === 'custom' ? '✏️ Custom' : '📚 Library'}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Custom form */}
+        {(tab === 'custom' || editingTask) && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <div>
+              <label style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '6px' }}>
+                Task Name
+              </label>
+              <input
+                style={inputStyle}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="e.g. Make my bed"
+                autoFocus
+              />
+            </div>
+
+            <div>
+              <label style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
+                Category
+              </label>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {CATEGORIES.map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setCategory(c)}
+                    style={{
+                      padding: '7px 12px',
+                      borderRadius: '20px',
+                      border: category === c ? '1px solid rgba(232,160,32,0.6)' : '1px solid rgba(123,63,110,0.35)',
+                      background: category === c ? 'rgba(232,160,32,0.12)' : 'transparent',
+                      color: category === c ? '#E8A020' : 'rgba(232,213,196,0.55)',
+                      fontFamily: "'Josefin Sans', sans-serif",
+                      fontSize: '0.75rem',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                    }}
+                  >
+                    {CATEGORY_CONFIG[c].icon} {CATEGORY_CONFIG[c].label.split(' ')[0]}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <label style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
+                Frequency
+              </label>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                {FREQUENCIES.map((f) => (
+                  <button
+                    key={f}
+                    onClick={() => setFrequency(f)}
+                    style={{
+                      flex: 1,
+                      padding: '8px',
+                      borderRadius: '10px',
+                      border: frequency === f ? '1px solid rgba(232,160,32,0.5)' : '1px solid rgba(123,63,110,0.3)',
+                      background: frequency === f ? 'rgba(232,160,32,0.1)' : 'transparent',
+                      color: frequency === f ? '#E8A020' : 'rgba(232,213,196,0.5)',
+                      fontFamily: "'Josefin Sans', sans-serif",
+                      fontSize: '0.75rem',
+                      letterSpacing: '0.1em',
+                      textTransform: 'capitalize',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                    }}
+                  >
+                    {f}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <button
+              onClick={handleSave}
+              disabled={!name.trim()}
+              style={{
+                marginTop: '6px',
+                padding: '13px',
+                borderRadius: '12px',
+                border: 'none',
+                background: name.trim()
+                  ? 'linear-gradient(135deg, #C46A00, #E8A020)'
+                  : 'rgba(123,63,110,0.25)',
+                color: name.trim() ? '#1A0820' : 'rgba(232,213,196,0.3)',
+                fontFamily: "'Josefin Sans', sans-serif",
+                fontSize: '0.85rem',
+                fontWeight: 400,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                cursor: name.trim() ? 'pointer' : 'not-allowed',
+                transition: 'all 0.25s',
+              }}
+            >
+              {editingTask ? 'Save Changes' : 'Add Task'}
+            </button>
+          </div>
+        )}
+
+        {/* Library */}
+        {tab === 'library' && !editingTask && (
+          <div>
+            {/* Category filter */}
+            <div style={{ display: 'flex', gap: '6px', marginBottom: '16px', overflowX: 'auto', paddingBottom: '4px' }}>
+              {(['all', ...CATEGORIES] as const).map((c) => (
+                <button
+                  key={c}
+                  onClick={() => setLibraryFilter(c)}
+                  style={{
+                    padding: '5px 12px',
+                    borderRadius: '20px',
+                    border: libraryFilter === c ? '1px solid rgba(232,160,32,0.55)' : '1px solid rgba(123,63,110,0.3)',
+                    background: libraryFilter === c ? 'rgba(232,160,32,0.1)' : 'transparent',
+                    color: libraryFilter === c ? '#E8A020' : 'rgba(232,213,196,0.5)',
+                    fontFamily: "'Josefin Sans', sans-serif",
+                    fontSize: '0.7rem',
+                    letterSpacing: '0.1em',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  {c === 'all' ? '✨ All' : `${CATEGORY_CONFIG[c].icon} ${CATEGORY_CONFIG[c].label.split(' ')[0]}`}
+                </button>
+              ))}
+            </div>
+
+            {filteredLibrary.length === 0 ? (
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic', color: 'rgba(155,96,144,0.7)', textAlign: 'center', padding: '24px 0' }}>
+                You&apos;ve added everything in this category! 🌸
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {filteredLibrary.map((item) => (
+                  <button
+                    key={item.name}
+                    onClick={() => handleLibraryAdd(item)}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      padding: '12px 14px',
+                      borderRadius: '12px',
+                      border: '1px solid rgba(123,63,110,0.3)',
+                      background: 'rgba(42,14,48,0.4)',
+                      cursor: 'pointer',
+                      textAlign: 'left',
+                      transition: 'all 0.2s',
+                      width: '100%',
+                    }}
+                  >
+                    <span style={{ fontSize: '1.1rem' }}>{CATEGORY_CONFIG[item.category].icon}</span>
+                    <span style={{ flex: 1, fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.88rem', color: '#E8D5C4', letterSpacing: '0.03em' }}>
+                      {item.name}
+                    </span>
+                    <span style={{ fontFamily: "'Josefin Sans', sans-serif", fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.7)' }}>
+                      {item.frequency}
+                    </span>
+                    <span style={{ color: '#E8A020', fontSize: '1rem' }}>+</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
