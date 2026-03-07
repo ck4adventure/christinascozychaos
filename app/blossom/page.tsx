@@ -139,8 +139,8 @@ export default function TrackerPage() {
               {/* Task list */}
               {todaysTasks.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '60px 0' }}>
-                  <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', fontSize: '1.15rem', color: 'rgba(155,96,144,0.7)', lineHeight: 1.6 }}>
-                    Nothing scheduled for today.<br /><span style={{ fontSize: '0.9rem' }}>Enjoy the quiet. 🌙</span>
+                  <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', fontSize: '1.15rem', fontWeight: 600, color: 'rgba(155,96,144,0.7)', lineHeight: 1.6 }}>
+                    Nothing scheduled for today.<br /><span style={{ fontSize: '0.9rem', fontWeight: 600 }}>Enjoy the quiet. 🌙</span>
                   </p>
                 </div>
               ) : (
