@@ -1,6 +1,6 @@
 'use client';
 
-type Tab = 'today' | 'history' | 'add';
+type Tab = 'today' | 'schedule' | 'history' | 'add';
 
 interface NavBarProps {
   active: Tab;
@@ -8,9 +8,10 @@ interface NavBarProps {
 }
 
 const NAV_ITEMS: { id: Tab; icon: string; label: string }[] = [
-  { id: 'today',   icon: '🌙', label: 'Today'   },
-  { id: 'add',     icon: '＋', label: 'Add'     },
-  { id: 'history', icon: '📜', label: 'History' },
+  { id: 'today',    icon: '🌙', label: 'Today'    },
+  { id: 'schedule', icon: '📅', label: 'Schedule' },
+  { id: 'add',      icon: '＋', label: 'Add'      },
+  { id: 'history',  icon: '📜', label: 'History'  },
 ];
 
 export default function NavBar({ active, onChange }: NavBarProps) {

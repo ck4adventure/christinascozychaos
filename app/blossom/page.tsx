@@ -1,14 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Task, TaskWithStatus } from '@/types';
+import { Task, TaskWithStatus, Frequency } from '@/types';
 import { useTasks } from '@/app/hooks/useTasks';
+import { CATEGORY_CONFIG } from '@/lib/data';
 import TaskCard from '@/components/TaskCard';
 import TaskModal from '@/components/TaskModal';
 import HistoryView from '@/components/HistoryView';
 import NavBar from '@/components/NavBar';
 
-type Tab = 'today' | 'history' | 'add';
+type Tab = 'today' | 'schedule' | 'history' | 'add';
 
 export default function TrackerPage() {
   const { tasks, logs, tasksWithStatus, mounted, addTask, toggleTask, deleteTask, editTask } = useTasks();
@@ -141,8 +142,6 @@ export default function TrackerPage() {
                       key={task.id}
                       task={task}
                       onToggle={toggleTask}
-                      onEdit={handleEdit}
-                      onDelete={deleteTask}
                     />
                   ))}
                 </div>
@@ -153,6 +152,156 @@ export default function TrackerPage() {
           {/* HISTORY VIEW */}
           {tab === 'history' && (
             <HistoryView logs={logs} tasks={tasks} />
+          )}
+
+          {/* SCHEDULE VIEW */}
+          {tab === 'schedule' && (
+            <div>
+              <div style={{ marginBottom: '24px' }}>
+                <p style={{
+                  fontFamily: "var(--font-josefin), sans-serif",
+                  fontSize: '0.68rem',
+                  fontWeight: 200,
+                  letterSpacing: '0.3em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(155,96,144,0.8)',
+                  marginBottom: '4px',
+                }}>
+                  All Tasks
+                </p>
+                <h1 style={{
+                  fontFamily: "var(--font-cormorant), serif",
+                  fontSize: '2rem',
+                  fontWeight: 300,
+                  fontStyle: 'italic',
+                  color: '#E8D5C4',
+                  lineHeight: 1.1,
+                }}>
+                  Your Schedule
+                </h1>
+                <p style={{
+                  fontFamily: "var(--font-josefin), sans-serif",
+                  fontSize: '0.68rem',
+                  fontWeight: 200,
+                  letterSpacing: '0.15em',
+                  color: 'rgba(155,96,144,0.65)',
+                  marginTop: '8px',
+                }}>
+                  Change a task&apos;s frequency to shift it between groups
+                </p>
+              </div>
+
+              {tasksWithStatus.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '60px 0' }}>
+                  <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', fontSize: '1.15rem', color: 'rgba(155,96,144,0.7)', lineHeight: 1.6 }}>
+                    No tasks yet.<br />Tap <span style={{ color: '#E8A020' }}>＋ Add</span> to get started.
+                  </p>
+                </div>
+              ) : (
+                <div style={{ paddingBottom: '100px' }}>
+                  {(['daily', 'weekly', 'monthly'] as Frequency[]).map((freq) => {
+                    const group = tasksWithStatus.filter((t) => t.frequency === freq);
+                    if (!group.length) return null;
+                    return (
+                      <div key={freq} style={{ marginBottom: '28px' }}>
+                        {/* Group header */}
+                        <div style={{
+                          display: 'flex',
+                          alignItems: 'baseline',
+                          gap: '10px',
+                          marginBottom: '10px',
+                          paddingBottom: '8px',
+                          borderBottom: '1px solid rgba(123,63,110,0.25)',
+                        }}>
+                          <h2 style={{
+                            fontFamily: "var(--font-cormorant), serif",
+                            fontSize: '1.25rem',
+                            fontWeight: 300,
+                            fontStyle: 'italic',
+                            color: '#E8D5C4',
+                          }}>
+                            {freq.charAt(0).toUpperCase() + freq.slice(1)}
+                          </h2>
+                          <span style={{
+                            fontFamily: "var(--font-josefin), sans-serif",
+                            fontSize: '0.6rem',
+                            letterSpacing: '0.2em',
+                            textTransform: 'uppercase',
+                            color: '#E8A020',
+                            opacity: 0.65,
+                          }}>
+                            {group.length} task{group.length !== 1 ? 's' : ''}
+                          </span>
+                        </div>
+
+                        {/* Task rows */}
+                        {group.map((task) => (
+                          <div key={task.id} style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            background: 'linear-gradient(135deg, rgba(123,63,110,0.18), rgba(42,14,48,0.45))',
+                            border: '1px solid rgba(123,63,110,0.3)',
+                            borderRadius: '12px',
+                            padding: '11px 14px',
+                            marginBottom: '8px',
+                          }}>
+                            <span style={{ fontSize: '1rem', flexShrink: 0, lineHeight: 1 }}>
+                              {CATEGORY_CONFIG[task.category].icon}
+                            </span>
+                            <span style={{
+                              flex: 1,
+                              fontFamily: "var(--font-josefin), sans-serif",
+                              fontSize: '0.9rem',
+                              fontWeight: 300,
+                              letterSpacing: '0.04em',
+                              color: '#E8D5C4',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
+                            }}>
+                              {task.name}
+                            </span>
+                            <button
+                              onClick={() => handleEdit(task)}
+                              style={{
+                                background: 'none',
+                                border: 'none',
+                                color: 'rgba(155,96,144,0.7)',
+                                fontSize: '0.85rem',
+                                cursor: 'pointer',
+                                padding: '4px 6px',
+                                flexShrink: 0,
+                                lineHeight: 1,
+                              }}
+                              aria-label={`Edit ${task.name}`}
+                            >
+                              ✏️
+                            </button>
+                            <button
+                              onClick={() => deleteTask(task.id)}
+                              style={{
+                                background: 'none',
+                                border: 'none',
+                                color: 'rgba(232,112,112,0.5)',
+                                fontSize: '0.85rem',
+                                cursor: 'pointer',
+                                padding: '4px 6px',
+                                flexShrink: 0,
+                                lineHeight: 1,
+                              }}
+                              aria-label={`Delete ${task.name}`}
+                            >
+                              🗑
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           )}
         </div>
 

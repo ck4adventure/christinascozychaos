@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { TaskWithStatus } from '@/types';
 import { CATEGORY_CONFIG } from '@/lib/data';
 import Flower from './Flower';
@@ -8,25 +8,11 @@ import Flower from './Flower';
 interface TaskCardProps {
   task: TaskWithStatus;
   onToggle: (id: string) => void;
-  onEdit: (task: TaskWithStatus) => void;
-  onDelete: (id: string) => void;
 }
 
-export default function TaskCard({ task, onToggle, onEdit, onDelete }: TaskCardProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
+export default function TaskCard({ task, onToggle }: TaskCardProps) {
   const [justCompleted, setJustCompleted] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
   const cat = CATEGORY_CONFIG[task.category];
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, []);
 
   const handleToggle = () => {
     if (!task.completedToday) {
@@ -139,68 +125,6 @@ export default function TaskCard({ task, onToggle, onEdit, onDelete }: TaskCardP
         <Flower type={task.flower} bloomed={task.completedToday} size={34} />
       </div>
 
-      {/* ••• menu */}
-      <div
-        ref={menuRef}
-        onClick={(e) => e.stopPropagation()}
-        style={{ flexShrink: 0, position: 'relative' }}
-      >
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'rgba(155,96,144,0.7)',
-            fontSize: '1.1rem',
-            cursor: 'pointer',
-            padding: '2px 4px',
-            lineHeight: 1,
-            borderRadius: '6px',
-          }}
-          aria-label="Task options"
-        >
-          ···
-        </button>
-        {menuOpen && (
-          <div style={{
-            position: 'absolute',
-            right: 0,
-            top: '110%',
-            background: '#3D1A54',
-            border: '1px solid rgba(232,160,32,0.25)',
-            borderRadius: '10px',
-            overflow: 'hidden',
-            zIndex: 50,
-            minWidth: '110px',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
-          }}>
-            {[
-              { label: '✏️ Edit', action: () => { onEdit(task); setMenuOpen(false); } },
-              { label: '🗑 Delete', action: () => { onDelete(task.id); setMenuOpen(false); }, danger: true },
-            ].map(({ label, action, danger }) => (
-              <button
-                key={label}
-                onClick={action}
-                style={{
-                  display: 'block',
-                  width: '100%',
-                  padding: '10px 14px',
-                  background: 'none',
-                  border: 'none',
-                  textAlign: 'left',
-                  fontFamily: "var(--font-josefin), sans-serif",
-                  fontSize: '0.8rem',
-                  letterSpacing: '0.05em',
-                  color: danger ? '#e87070' : '#E8D5C4',
-                  cursor: 'pointer',
-                }}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 }
