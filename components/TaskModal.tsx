@@ -14,11 +14,19 @@ interface TaskModalProps {
 const FREQUENCIES: Frequency[] = ['daily', 'weekly', 'monthly'];
 const CATEGORIES = Object.keys(CATEGORY_CONFIG) as Category[];
 
+const ordinal = (n: number) => {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+};
+
 export default function TaskModal({ editingTask, existingTaskNames, onSave, onClose }: TaskModalProps) {
   const [tab, setTab] = useState<'custom' | 'library'>('custom');
   const [name, setName] = useState(editingTask?.name || '');
   const [category, setCategory] = useState<Category>(editingTask?.category || 'home');
   const [frequency, setFrequency] = useState<Frequency>(editingTask?.frequency || 'daily');
+  const [dayOfWeek, setDayOfWeek] = useState<number>(editingTask?.dayOfWeek ?? 0);
+  const [dayOfMonth, setDayOfMonth] = useState<number>(editingTask?.dayOfMonth ?? 1);
   const [libraryFilter, setLibraryFilter] = useState<Category | 'all'>('all');
 
   useEffect(() => {
@@ -26,13 +34,21 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
       setName(editingTask.name);
       setCategory(editingTask.category);
       setFrequency(editingTask.frequency);
+      setDayOfWeek(editingTask.dayOfWeek ?? 0);
+      setDayOfMonth(editingTask.dayOfMonth ?? 1);
       setTab('custom');
     }
   }, [editingTask]);
 
   const handleSave = () => {
     if (!name.trim()) return;
-    onSave({ name: name.trim(), category, frequency });
+    onSave({
+      name: name.trim(),
+      category,
+      frequency,
+      dayOfWeek: frequency === 'weekly' ? dayOfWeek : undefined,
+      dayOfMonth: frequency === 'monthly' ? dayOfMonth : undefined,
+    });
     onClose();
   };
 
@@ -206,6 +222,56 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                 ))}
               </div>
             </div>
+
+            {/* Day of week picker — weekly only */}
+            {frequency === 'weekly' && (
+              <div>
+                <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
+                  Day of Week
+                </label>
+                <div style={{ display: 'flex', gap: '5px' }}>
+                  {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setDayOfWeek(i)}
+                      style={{
+                        flex: 1,
+                        padding: '7px 2px',
+                        borderRadius: '10px',
+                        border: dayOfWeek === i ? '1px solid rgba(232,160,32,0.5)' : '1px solid rgba(123,63,110,0.3)',
+                        background: dayOfWeek === i ? 'rgba(232,160,32,0.1)' : 'transparent',
+                        color: dayOfWeek === i ? '#E8A020' : 'rgba(232,213,196,0.5)',
+                        fontFamily: "var(--font-josefin), sans-serif",
+                        fontSize: '0.62rem',
+                        letterSpacing: '0.03em',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                      }}
+                    >
+                      {d}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Day of month picker — monthly only */}
+            {frequency === 'monthly' && (
+              <div>
+                <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
+                  Day of Month
+                </label>
+                <select
+                  value={dayOfMonth}
+                  onChange={(e) => setDayOfMonth(Number(e.target.value))}
+                  style={{ ...inputStyle, cursor: 'pointer' }}
+                >
+                  {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
+                    <option key={d} value={d}>{ordinal(d)}</option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             <button
               onClick={handleSave}

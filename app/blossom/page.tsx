@@ -11,6 +11,13 @@ import NavBar from '@/components/NavBar';
 
 type Tab = 'today' | 'schedule' | 'history' | 'add';
 
+const DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const ordinal = (n: number) => {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+};
+
 export default function TrackerPage() {
   const { tasks, logs, tasksWithStatus, mounted, addTask, toggleTask, deleteTask, editTask } = useTasks();
   const [tab, setTab] = useState<Tab>('today');
@@ -40,8 +47,18 @@ export default function TrackerPage() {
     setEditingTask(null);
   };
 
-  const completedCount = tasksWithStatus.filter((t) => t.completedToday).length;
-  const totalCount = tasksWithStatus.length;
+  const todayDow = new Date().getDay();
+  const todayDom = new Date().getDate();
+
+  const todaysTasks = tasksWithStatus.filter((t) => {
+    if (t.frequency === 'daily') return true;
+    if (t.frequency === 'weekly') return (t.dayOfWeek ?? 0) === todayDow;
+    if (t.frequency === 'monthly') return (t.dayOfMonth ?? 1) === todayDom;
+    return false;
+  });
+
+  const completedCount = todaysTasks.filter((t) => t.completedToday).length;
+  const totalCount = todaysTasks.length;
 
   if (!mounted) return null;
 
@@ -129,15 +146,15 @@ export default function TrackerPage() {
               </div>
 
               {/* Task list */}
-              {tasksWithStatus.length === 0 ? (
+              {todaysTasks.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '60px 0' }}>
                   <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', fontSize: '1.15rem', color: 'rgba(155,96,144,0.7)', lineHeight: 1.6 }}>
-                    No tasks yet.<br />Tap <span style={{ color: '#E8A020' }}>＋ Add</span> below to get started.
+                    Nothing scheduled for today.<br /><span style={{ fontSize: '0.9rem' }}>Enjoy the quiet. 🌙</span>
                   </p>
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', paddingBottom: '100px' }}>
-                  {tasksWithStatus.map((task) => (
+                  {todaysTasks.map((task) => (
                     <TaskCard
                       key={task.id}
                       task={task}
@@ -262,6 +279,32 @@ export default function TrackerPage() {
                             }}>
                               {task.name}
                             </span>
+                            {task.frequency === 'weekly' && (
+                              <span style={{
+                                fontFamily: "var(--font-josefin), sans-serif",
+                                fontSize: '0.62rem',
+                                letterSpacing: '0.15em',
+                                textTransform: 'uppercase',
+                                color: '#E8A020',
+                                opacity: 0.7,
+                                flexShrink: 0,
+                              }}>
+                                {DAY_SHORT[task.dayOfWeek ?? 0]}
+                              </span>
+                            )}
+                            {task.frequency === 'monthly' && (
+                              <span style={{
+                                fontFamily: "var(--font-josefin), sans-serif",
+                                fontSize: '0.62rem',
+                                letterSpacing: '0.15em',
+                                textTransform: 'uppercase',
+                                color: '#E8A020',
+                                opacity: 0.7,
+                                flexShrink: 0,
+                              }}>
+                                {ordinal(task.dayOfMonth ?? 1)}
+                              </span>
+                            )}
                             <button
                               onClick={() => handleEdit(task)}
                               style={{

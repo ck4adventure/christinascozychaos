@@ -7,6 +7,8 @@ export interface Task {
   name: string;
   category: Category;
   frequency: Frequency;
+  dayOfWeek?: number;   // 0=Sun … 6=Sat, used when frequency === 'weekly'
+  dayOfMonth?: number;  // 1–31, used when frequency === 'monthly'
   createdAt: string; // ISO string
 }
 
