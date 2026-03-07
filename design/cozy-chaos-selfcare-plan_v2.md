@@ -22,10 +22,10 @@ A **mobile-first self-care and chore tracking app** that lets you log completed 
 A starter set of common tasks to help new users get going fast, organized by category. User can add any of these to their personal list with one tap.
 
 **Categories in v0:**
-- 🏠 Home & Tidying
-- 🧴 Personal Hygiene & Body Care
-- 🏃 Movement & Exercise
-- 🎨 Skills Practice
+- 🧺 Home & Tidying
+- 🧼 Personal Hygiene & Body Care
+- 🏃🏻‍♀️ Movement & Exercise
+- 🎯 Skills Practice
 
 **Example pre-loaded tasks per category** (not exhaustive):
 - Home: Wash dishes, Take out trash, Tidy bedroom, Do laundry, Wipe counters

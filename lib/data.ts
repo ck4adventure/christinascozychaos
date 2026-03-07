@@ -1,10 +1,10 @@
 import { Category, FlowerType, Task } from '@/types';
 
 export const CATEGORY_CONFIG: Record<Category, { label: string; icon: string; color: string }> = {
-  home:     { label: 'Home & Tidying',           icon: '🏠', color: '#7B3F6E' },
-  hygiene:  { label: 'Hygiene & Body Care',      icon: '🧴', color: '#9B6090' },
-  movement: { label: 'Movement & Exercise',      icon: '🏃', color: '#C46A00' },
-  skills:   { label: 'Skills Practice',          icon: '🎨', color: '#E8A020' },
+  home:     { label: 'Home & Tidying',           icon: '🧺', color: '#7B3F6E' },
+  hygiene:  { label: 'Hygiene & Body Care', icon: '🧼', color: '#9B6090' },
+  movement: { label: 'Movement & Exercise',      icon: '🏃🏻‍♀️', color: '#C46A00' },
+  skills:   { label: 'Skills Practice',          icon: '🎯', color: '#E8A020' },
 };
 
 export const FLOWER_TYPES: FlowerType[] = ['rose', 'daisy', 'tulip', 'sunflower', 'lotus', 'cherry'];
