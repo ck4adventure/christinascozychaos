@@ -1,0 +1,234 @@
+.gameContainer {
+	background-color: white;
+	width: 400px;
+	padding: 20px;
+	border-radius: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.gameContainer h1 {
+	text-align: center;
+	font-size: xx-large;
+}
+
+.gameContainer h2 {
+	margin: 8px;
+	margin-bottom: 16px;
+}
+
+.gameContainer p {
+	margin: 8px;
+}
+
+.scoreBoard {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 10px;
+	font-size: x-large;
+}
+
+.scoreBox {
+	display: flex;
+	margin: 8px;
+}
+
+.controlsBox {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.resetBox {
+	display: flex;
+	justify-items: center;
+	flex-direction: column;
+	margin: 8px;
+}
+
+.resetBox button {
+	width: 100px;
+	margin: auto;
+	padding: 8px;
+}
+
+.speedControlBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.gameBoard {
+	display: grid;
+	grid-template-columns: repeat(8, 1fr);
+	grid-template-rows: repeat(8, 1fr);
+	gap: 4px;
+	margin-top: 10px;
+}
+
+.creditsBox {
+	display: flex;
+	justify-content: space-between;
+	padding-top: 30px;
+}
+
+.creditsBox > div {
+	width: 100px;
+}
+
+.linkBox {
+	text-align: left;
+	margin: auto;
+}
+
+.linkBox a {
+	text-decoration: none;
+}
+
+.versionBox {
+	text-align: left;
+	margin: auto;
+}
+
+.howToButtonBox {
+	text-align: right;
+	padding: 2px;
+}
+
+@keyframes fillFromTop {
+	from {
+		background-size: 100% 0;
+	}
+
+	to {
+		background-size: 100% 100%;
+	}
+}
+
+.tile {
+	text-align: center;
+	width: 100%;
+	border-radius: 5px;
+	padding-top: 100%;
+	background-repeat: no-repeat;
+	background-position: top;
+	background-size: 100% 100%;
+	transition: background-color 0.2s ease;
+}
+
+.tile.fill {
+	animation: fillFromTop 0.2s forwards;
+}
+
+.tile[data-type="1"] {
+	background-color: lightcoral;
+}
+
+.tile[data-type="2"] {
+	background-color: orange;
+}
+
+.tile[data-type="3"] {
+	background-color: lightslategray;
+}
+
+.tile[data-type="4"] {
+	background-color: lightgreen;
+}
+
+.tile[data-type="5"] {
+	background-color: lightskyblue;
+}
+
+.tile[data-type="6"] {
+	background-color: orchid;
+}
+
+.tile[data-type="7"] {
+	background-color: pink;
+}
+
+.tile[data-type="8"] {
+	background-color: lemonchiffon;
+}
+
+.tile[data-type="9"] {
+	background-color: aquamarine;
+}
+
+.modal {
+	position: fixed;
+	z-index: 1000;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+	min-height: 200px;
+}
+
+.modalContent {
+	background-color: #fefefe;
+	margin: 20% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.modalText {
+	padding: 30px;
+}
+
+.modalHeading {
+	font-size: x-large;
+}
+
+.buttonRow {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 20px;
+}
+
+.buttonRowItem {
+	min-width: 40px;
+}
+
+.button {
+	padding: 8px;
+	height: 40px;
+	border-radius: 8px;
+	border-width: 1px;
+}
+
+.closeButton {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.closeButton:hover,
+.closeButton:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.xButtonRow {
+	display: flex;
+	width: 100%;
+	justify-content: flex-end;
+}
+
+.xButton {
+	border-width: 0px;
+	background-color: white;
+	font-size: x-large;
+}
