@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Christina's Cozy Chaos
 
-## Getting Started
+## Cascades
+Implementation of a basic match 3 game where the tiles fall down, creating potentially more matches in a cascade.  
 
-First, run the development server:
+### Up Next
+- debug matching logic on first switch for both mobile and desktop
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Eventual Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- light and dark mode
+- custom height and width
+- custom number of color types
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Version History
+#### c0.7
+Ported over to this personal project site. Changed color and design to better match the rest of the site.
 
-## Learn More
+#### v0.6
+- refactored into Board and Game classes — Board holds pure grid logic, Game owns the DOM
+- Board extracted to its own ES module for testability
+- added 84-unit test suite covering all board logic (run with `npm test`)
+- fixed several bugs: drag-drop tile flicker, double-counted match scores, missing null check in available-moves scan
+- removed dead code and cleaned up commented-out debug lines
 
-To learn more about Next.js, take a look at the following resources:
+#### v0.5
+- alert modal now has button to reset game
+- switched yellow color for gray
+- add favicon
+- vite devserver
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### v0.4 12/17/24
+- alerts when no moves left
+- lighter game board colors
+- cascade speed control slider
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#### v0.3 11/30/24
+- adds basic 10pts per square game scoring
+- resetting board resets the score
+- update colors for higher visibility
+- fix bug of allowing switch if not 3 in a row
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### v0.2 11/28/24
+- Added link to this github repo.
+- Added modal with instructions on how to play.
+- Added mobile touch functionality.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#### v0.1 11/27/24
+- Published 11/27 to AWS Amplify, no custom domain yet.
+- Working game with cascading tiles on matching 3 in a row. 
+- Reset button for when there are no more moves.
+
+
+
+## Calorie Calculator
+## Tasks and Chores App
+
+## App Itself
+### Design
+### Architecture
+### Testing
+
+
