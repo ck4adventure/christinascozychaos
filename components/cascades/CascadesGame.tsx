@@ -1,7 +1,8 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Board, ColorType } from '@/lib/cascades/board';
+import { generateSparks, Spark } from '@/app/utils/sparks';
 import styles from './CascadesGame.module.css';
 
 const COLORS: ColorType[] = ['1', '2', '3', '4', '5', '6', '7'];
@@ -24,6 +25,14 @@ export default function CascadesGame() {
   const [dropSpeed, setDropSpeed] = useState(200);
   const [showHowToModal, setShowHowToModal] = useState(false);
   const [showNoMovesModal, setShowNoMovesModal] = useState(false);
+  const [sparks, setSparks] = useState<Spark[]>([]);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setSparks(generateSparks(20));
+    const t = setTimeout(() => setVisible(true), 50);
+    return () => clearTimeout(t);
+  }, []);
 
   // dropSpeed ref so async moveDown closures always read the latest value
   const dropSpeedRef = useRef(dropSpeed);
@@ -220,7 +229,16 @@ export default function CascadesGame() {
   }
 
   return (
-    <div className={styles.gameContainer}>
+    <div className={styles.page}>
+      <div className={styles.mesh} />
+      <div className={styles.orb} style={{ width: 320, height: 320, background: 'var(--plum-mid)', top: '5%', left: '-8%', animationDuration: '22s' }} />
+      <div className={styles.orb} style={{ width: 220, height: 220, background: 'var(--amber-deep)', bottom: '10%', right: '-5%', animationDuration: '17s', animationDelay: '-8s' }} />
+      <div className={styles.orb} style={{ width: 180, height: 180, background: 'var(--plum-mid)', top: '55%', left: '60%', animationDuration: '25s', animationDelay: '-12s' }} />
+      {sparks.map((s, i) => (
+        <div key={i} className={styles.spark} style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.size, height: s.size, animationDuration: `${s.duration}s`, animationDelay: `${s.delay}s` }} />
+      ))}
+
+      <div className={`${styles.gameContainer} ${visible ? styles.visible : ''}`}>
       <h1>Cascades</h1>
 
       <div className={styles.scoreBoard}>
@@ -326,6 +344,7 @@ export default function CascadesGame() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

@@ -1,76 +1,231 @@
+/* ─── Page shell ────────────────────────────────────────────────────────────── */
+
+.page {
+	min-height: 100vh;
+	background: var(--plum-deep);
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem 1rem;
+	font-family: var(--font-josefin), Arial, sans-serif;
+}
+
+.page::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+	opacity: 0.4;
+	pointer-events: none;
+	z-index: 1;
+}
+
+.mesh {
+	position: fixed;
+	inset: 0;
+	background:
+		radial-gradient(ellipse 60% 50% at 15% 20%, rgba(123,63,110,0.5) 0%, transparent 70%),
+		radial-gradient(ellipse 50% 60% at 85% 75%, rgba(196,106,0,0.25) 0%, transparent 65%),
+		radial-gradient(ellipse 40% 40% at 50% 50%, rgba(42,14,48,0.8) 0%, transparent 100%),
+		radial-gradient(ellipse 70% 40% at 80% 10%, rgba(123,63,110,0.3) 0%, transparent 60%);
+	z-index: 0;
+}
+
+.orb {
+	position: fixed;
+	border-radius: 50%;
+	filter: blur(80px);
+	opacity: 0.15;
+	pointer-events: none;
+	z-index: 0;
+	animation: drift linear infinite;
+}
+
+@keyframes drift {
+	0%, 100% { transform: translate(0, 0) scale(1); }
+	33% { transform: translate(30px, -20px) scale(1.05); }
+	66% { transform: translate(-20px, 25px) scale(0.95); }
+}
+
+.spark {
+	position: fixed;
+	border-radius: 50%;
+	background: var(--amber);
+	opacity: 0;
+	pointer-events: none;
+	z-index: 1;
+	animation: sparkle ease-in-out infinite;
+}
+
+@keyframes sparkle {
+	0%, 100% { opacity: 0; transform: scale(0.5); }
+	50% { opacity: 0.6; transform: scale(1); }
+}
+
+/* ─── Game card ─────────────────────────────────────────────────────────────── */
+
 .gameContainer {
-	background-color: white;
-	width: 400px;
-	padding: 20px;
-	border-radius: 10px;
-	font-family: Arial, Helvetica, sans-serif;
+	position: relative;
+	z-index: 10;
+	background: rgba(42, 14, 48, 0.6);
+	border: 1px solid rgba(232, 160, 32, 0.18);
+	border-radius: 16px;
+	padding: 1.5rem 1.75rem;
+	backdrop-filter: blur(12px);
+	width: min(420px, calc(100vw - 2rem));
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.gameContainer.visible {
+	opacity: 1;
+	transform: translateY(0);
 }
 
 .gameContainer h1 {
+	font-family: var(--font-cormorant), serif;
+	font-size: 2.2rem;
+	font-weight: 300;
+	letter-spacing: 0.05em;
+	color: var(--cream-light);
 	text-align: center;
-	font-size: xx-large;
+	margin-bottom: 0.25rem;
 }
 
 .gameContainer h2 {
+	font-family: var(--font-cormorant), serif;
+	font-weight: 300;
+	font-size: 1.4rem;
+	color: var(--cream-light);
 	margin: 8px;
 	margin-bottom: 16px;
 }
 
 .gameContainer p {
+	font-family: var(--font-josefin), Arial, sans-serif;
+	font-size: 0.8rem;
+	font-weight: 300;
+	color: var(--cream);
+	line-height: 1.6;
 	margin: 8px;
 }
+
+/* ─── Score & controls ──────────────────────────────────────────────────────── */
 
 .scoreBoard {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	margin: 10px;
-	font-size: x-large;
+	margin: 0.5rem 0 0.75rem;
 }
 
 .scoreBox {
+	font-family: var(--font-josefin), sans-serif;
+	font-size: 0.68rem;
+	letter-spacing: 0.25em;
+	text-transform: uppercase;
+	font-weight: 300;
+	color: var(--amber);
 	display: flex;
-	margin: 8px;
+	align-items: baseline;
+	gap: 0.4rem;
+}
+
+.scoreBox span {
+	font-family: var(--font-cormorant), serif;
+	font-size: 2rem;
+	font-weight: 300;
+	line-height: 1;
 }
 
 .controlsBox {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	padding: 0.5rem 0;
+	border-top: 1px solid rgba(232, 160, 32, 0.1);
+	border-bottom: 1px solid rgba(232, 160, 32, 0.1);
+	margin-bottom: 0.75rem;
 }
 
 .resetBox {
 	display: flex;
 	justify-items: center;
 	flex-direction: column;
-	margin: 8px;
-}
-
-.resetBox button {
-	width: 100px;
-	margin: auto;
-	padding: 8px;
 }
 
 .speedControlBox {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	gap: 0.4rem;
+	font-family: var(--font-josefin), sans-serif;
+	font-size: 0.62rem;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	font-weight: 300;
+	color: var(--plum-light);
 }
+
+/* ─── Game board ────────────────────────────────────────────────────────────── */
 
 .gameBoard {
 	display: grid;
 	grid-template-columns: repeat(8, 1fr);
 	grid-template-rows: repeat(8, 1fr);
 	gap: 4px;
-	margin-top: 10px;
+	margin-bottom: 0.75rem;
 }
+
+/* ─── Tiles ─────────────────────────────────────────────────────────────────── */
+
+@keyframes fillFromTop {
+	from { background-size: 100% 0; }
+	to { background-size: 100% 100%; }
+}
+
+.tile {
+	width: 100%;
+	border-radius: 6px;
+	padding-top: 100%;
+	background-repeat: no-repeat;
+	background-position: top;
+	background-size: 100% 100%;
+	transition: filter 0.15s ease;
+	cursor: grab;
+}
+
+.tile:hover {
+	filter: brightness(1.2);
+}
+
+.tile.fill {
+	animation: fillFromTop 0.2s forwards;
+}
+
+.tile[data-type="1"] { background-color: #E8687A; }
+.tile[data-type="2"] { background-color: #E8A020; }
+.tile[data-type="3"] { background-color: #6B9BAA; }
+.tile[data-type="4"] { background-color: #6BC99A; }
+.tile[data-type="5"] { background-color: #5BA8D4; }
+.tile[data-type="6"] { background-color: #B87FC9; }
+.tile[data-type="7"] { background-color: #E89AB0; }
+.tile[data-type="8"] { background-color: #A8D4A0; }
+.tile[data-type="9"] { background-color: #7ACFCF; }
+
+/* ─── Credits ───────────────────────────────────────────────────────────────── */
 
 .creditsBox {
 	display: flex;
 	justify-content: space-between;
-	padding-top: 30px;
+	align-items: center;
+	padding-top: 0.75rem;
+	border-top: 1px solid rgba(232, 160, 32, 0.1);
 }
 
 .creditsBox > div {
@@ -79,146 +234,147 @@
 
 .linkBox {
 	text-align: left;
-	margin: auto;
 }
 
 .linkBox a {
+	font-family: var(--font-josefin), sans-serif;
+	font-size: 0.62rem;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	font-weight: 300;
+	color: var(--amber);
+	opacity: 0.65;
 	text-decoration: none;
+	transition: opacity 0.2s ease;
 }
 
+.linkBox a:hover { opacity: 1; }
+
 .versionBox {
-	text-align: left;
-	margin: auto;
+	font-family: var(--font-josefin), sans-serif;
+	font-size: 0.62rem;
+	letter-spacing: 0.15em;
+	color: var(--plum-light);
+	text-align: center;
 }
 
 .howToButtonBox {
 	text-align: right;
-	padding: 2px;
 }
 
-@keyframes fillFromTop {
-	from {
-		background-size: 100% 0;
-	}
+/* ─── Buttons ───────────────────────────────────────────────────────────────── */
 
-	to {
-		background-size: 100% 100%;
-	}
+.button {
+	font-family: var(--font-josefin), sans-serif;
+	font-size: 0.62rem;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	font-weight: 300;
+	color: var(--amber);
+	background: rgba(232, 160, 32, 0.06);
+	border: 1px solid rgba(232, 160, 32, 0.3);
+	border-radius: 999px;
+	padding: 0.4rem 1rem;
+	cursor: pointer;
+	transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.tile {
-	text-align: center;
-	width: 100%;
-	border-radius: 5px;
-	padding-top: 100%;
-	background-repeat: no-repeat;
-	background-position: top;
-	background-size: 100% 100%;
-	transition: background-color 0.2s ease;
+.button:hover {
+	background: rgba(232, 160, 32, 0.14);
+	border-color: rgba(232, 160, 32, 0.6);
 }
 
-.tile.fill {
-	animation: fillFromTop 0.2s forwards;
+/* ─── Speed slider ──────────────────────────────────────────────────────────── */
+
+.speedControlBox input[type="range"] {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100px;
+	height: 2px;
+	background: rgba(232, 160, 32, 0.2);
+	border-radius: 1px;
+	outline: none;
+	cursor: pointer;
 }
 
-.tile[data-type="1"] {
-	background-color: lightcoral;
+.speedControlBox input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: var(--amber);
+	cursor: pointer;
+	box-shadow: 0 0 8px rgba(232, 160, 32, 0.4);
 }
 
-.tile[data-type="2"] {
-	background-color: orange;
+.speedControlBox input[type="range"]::-moz-range-thumb {
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: var(--amber);
+	border: none;
+	cursor: pointer;
 }
 
-.tile[data-type="3"] {
-	background-color: lightslategray;
-}
-
-.tile[data-type="4"] {
-	background-color: lightgreen;
-}
-
-.tile[data-type="5"] {
-	background-color: lightskyblue;
-}
-
-.tile[data-type="6"] {
-	background-color: orchid;
-}
-
-.tile[data-type="7"] {
-	background-color: pink;
-}
-
-.tile[data-type="8"] {
-	background-color: lemonchiffon;
-}
-
-.tile[data-type="9"] {
-	background-color: aquamarine;
-}
+/* ─── Modals ────────────────────────────────────────────────────────────────── */
 
 .modal {
 	position: fixed;
 	z-index: 1000;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background-color: rgba(0, 0, 0, 0.4);
-	min-height: 200px;
+	inset: 0;
+	background: rgba(26, 8, 30, 0.75);
+	backdrop-filter: blur(4px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .modalContent {
-	background-color: #fefefe;
-	margin: 20% auto;
-	padding: 20px;
-	border: 1px solid #888;
-	width: 400px;
+	background: rgba(42, 14, 48, 0.95);
+	border: 1px solid rgba(232, 160, 32, 0.25);
+	border-radius: 16px;
+	padding: 1.5rem;
+	width: min(380px, calc(100vw - 2rem));
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	gap: 1rem;
 }
 
 .modalText {
-	padding: 30px;
+	padding: 0.5rem 1rem;
+	text-align: center;
 }
 
-.modalHeading {
-	font-size: x-large;
+.modalText h2 {
+	font-family: var(--font-cormorant), serif;
+	font-size: 1.8rem;
+	font-weight: 300;
+	color: var(--cream-light);
+	margin-bottom: 1rem;
+}
+
+.modalText p {
+	font-family: var(--font-josefin), sans-serif;
+	font-size: 0.75rem;
+	font-weight: 300;
+	letter-spacing: 0.05em;
+	line-height: 1.7;
+	color: var(--cream);
+	margin-bottom: 0.75rem;
 }
 
 .buttonRow {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
+	gap: 0.75rem;
 	width: 100%;
-	padding: 20px;
+	padding: 0.5rem 0;
 }
 
 .buttonRowItem {
 	min-width: 40px;
-}
-
-.button {
-	padding: 8px;
-	height: 40px;
-	border-radius: 8px;
-	border-width: 1px;
-}
-
-.closeButton {
-	color: #aaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-}
-
-.closeButton:hover,
-.closeButton:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
 }
 
 .xButtonRow {
@@ -228,7 +384,17 @@
 }
 
 .xButton {
-	border-width: 0px;
-	background-color: white;
-	font-size: x-large;
+	font-family: var(--font-josefin), sans-serif;
+	font-size: 0.62rem;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--plum-light);
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	transition: color 0.2s ease;
+}
+
+.xButton:hover {
+	color: var(--amber);
 }
