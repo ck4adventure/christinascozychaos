@@ -70,8 +70,8 @@
 .gameContainer {
 	position: relative;
 	z-index: 10;
-	background: rgba(42, 14, 48, 0.6);
-	border: 1px solid rgba(232, 160, 32, 0.18);
+	background: var(--color-bg-card);
+	border: 1px solid var(--color-border-card);
 	border-radius: 16px;
 	padding: 1.5rem 1.75rem;
 	backdrop-filter: blur(12px);
@@ -148,8 +148,8 @@
 	justify-content: space-between;
 	align-items: center;
 	padding: 0.5rem 0;
-	border-top: 1px solid rgba(232, 160, 32, 0.1);
-	border-bottom: 1px solid rgba(232, 160, 32, 0.1);
+	border-top: 1px solid var(--color-border-section);
+	border-bottom: 1px solid var(--color-border-section);
 	margin-bottom: 0.75rem;
 }
 
@@ -225,7 +225,7 @@
 	justify-content: space-between;
 	align-items: center;
 	padding-top: 0.75rem;
-	border-top: 1px solid rgba(232, 160, 32, 0.1);
+	border-top: 1px solid var(--color-border-section);
 }
 
 .creditsBox > div {
@@ -271,8 +271,8 @@
 	text-transform: uppercase;
 	font-weight: 300;
 	color: var(--amber);
-	background: rgba(232, 160, 32, 0.06);
-	border: 1px solid rgba(232, 160, 32, 0.3);
+	background: var(--color-bg-chip);
+	border: 1px solid var(--color-border-chip);
 	border-radius: 999px;
 	padding: 0.4rem 1rem;
 	cursor: pointer;
@@ -280,8 +280,8 @@
 }
 
 .button:hover {
-	background: rgba(232, 160, 32, 0.14);
-	border-color: rgba(232, 160, 32, 0.6);
+	background: var(--color-bg-chip-hover);
+	border-color: var(--color-border-chip-hover);
 }
 
 /* ─── Speed slider ──────────────────────────────────────────────────────────── */
@@ -291,7 +291,7 @@
 	appearance: none;
 	width: 100px;
 	height: 2px;
-	background: rgba(232, 160, 32, 0.2);
+	background: var(--color-track);
 	border-radius: 1px;
 	outline: none;
 	cursor: pointer;
@@ -322,7 +322,7 @@
 	position: fixed;
 	z-index: 1000;
 	inset: 0;
-	background: rgba(26, 8, 30, 0.75);
+	background: var(--color-overlay);
 	backdrop-filter: blur(4px);
 	display: flex;
 	align-items: center;
@@ -330,8 +330,8 @@
 }
 
 .modalContent {
-	background: rgba(42, 14, 48, 0.95);
-	border: 1px solid rgba(232, 160, 32, 0.25);
+	background: var(--color-bg-modal-sheet);
+	border: 1px solid var(--color-border-active);
 	border-radius: 16px;
 	padding: 1.5rem;
 	width: min(380px, calc(100vw - 2rem));

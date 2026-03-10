@@ -61,23 +61,35 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
 
   const inputStyle = {
     width: '100%',
-    background: 'rgba(42,14,48,0.6)',
-    border: '1px solid rgba(123,63,110,0.5)',
+    background: 'var(--color-bg-input)',
+    border: '1px solid var(--color-border-input)',
     borderRadius: '10px',
     padding: '10px 14px',
-    color: '#E8D5C4',
+    color: 'var(--color-text-body)',
     fontFamily: "var(--font-josefin), sans-serif",
     fontSize: '0.9rem',
     letterSpacing: '0.04em',
     outline: 'none',
   } as React.CSSProperties;
 
+  const btnActive = {
+    border: '1px solid var(--color-border-active)',
+    background: 'var(--color-bg-chip)',
+    color: 'var(--amber)',
+  };
+
+  const btnInactive = {
+    border: '1px solid var(--color-border-default)',
+    background: 'transparent',
+    color: 'var(--color-text-faint)',
+  };
+
   return (
     <div
       onClick={onClose}
       style={{
         position: 'fixed', inset: 0,
-        background: 'rgba(10,4,14,0.75)',
+        background: 'var(--color-overlay)',
         backdropFilter: 'blur(6px)',
         zIndex: 100,
         display: 'flex',
@@ -89,8 +101,8 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: 'linear-gradient(160deg, #3D1A54, #2A0E30)',
-          border: '1px solid rgba(232,160,32,0.2)',
+          background: 'var(--color-bg-modal-sheet)',
+          border: '1px solid var(--color-border-card)',
           borderRadius: '20px 20px 0 0',
           padding: '24px 20px 32px',
           width: '100%',
@@ -103,7 +115,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
         <div style={{
           width: 36, height: 4,
           borderRadius: 2,
-          background: 'rgba(155,96,144,0.4)',
+          background: 'var(--color-handle)',
           margin: '-10px auto 20px',
         }} />
 
@@ -111,7 +123,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
           fontFamily: "var(--font-cormorant), serif",
           fontSize: '1.4rem',
           fontWeight: 400,
-          color: '#E8D5C4',
+          color: 'var(--color-text-body)',
           marginBottom: '18px',
           fontStyle: 'italic',
         }}>
@@ -129,9 +141,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                   flex: 1,
                   padding: '8px',
                   borderRadius: '10px',
-                  border: tab === t ? '1px solid rgba(232,160,32,0.5)' : '1px solid rgba(123,63,110,0.3)',
-                  background: tab === t ? 'rgba(232,160,32,0.1)' : 'transparent',
-                  color: tab === t ? '#E8A020' : 'rgba(232,213,196,0.5)',
+                  ...(tab === t ? btnActive : btnInactive),
                   fontFamily: "var(--font-josefin), sans-serif",
                   fontSize: '0.75rem',
                   letterSpacing: '0.15em',
@@ -150,7 +160,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
         {(tab === 'custom' || editingTask) && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div>
-              <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '6px' }}>
+              <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: '6px' }}>
                 Task Name
               </label>
               <input
@@ -163,7 +173,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
             </div>
 
             <div>
-              <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
+              <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: '8px' }}>
                 Category
               </label>
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
@@ -174,9 +184,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                     style={{
                       padding: '7px 12px',
                       borderRadius: '20px',
-                      border: category === c ? '1px solid rgba(232,160,32,0.6)' : '1px solid rgba(123,63,110,0.35)',
-                      background: category === c ? 'rgba(232,160,32,0.12)' : 'transparent',
-                      color: category === c ? '#E8A020' : 'rgba(232,213,196,0.55)',
+                      ...(category === c ? btnActive : btnInactive),
                       fontFamily: "var(--font-josefin), sans-serif",
                       fontSize: '0.75rem',
                       cursor: 'pointer',
@@ -190,7 +198,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
             </div>
 
             <div>
-              <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
+              <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: '8px' }}>
                 Frequency
               </label>
               <div style={{ display: 'flex', gap: '8px' }}>
@@ -202,9 +210,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                       flex: 1,
                       padding: '8px',
                       borderRadius: '10px',
-                      border: frequency === f ? '1px solid rgba(232,160,32,0.5)' : '1px solid rgba(123,63,110,0.3)',
-                      background: frequency === f ? 'rgba(232,160,32,0.1)' : 'transparent',
-                      color: frequency === f ? '#E8A020' : 'rgba(232,213,196,0.5)',
+                      ...(frequency === f ? btnActive : btnInactive),
                       fontFamily: "var(--font-josefin), sans-serif",
                       fontSize: '0.75rem',
                       letterSpacing: '0.1em',
@@ -222,7 +228,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
             {/* Day of week picker — weekly only */}
             {frequency === 'weekly' && (
               <div>
-                <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
+                <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: '8px' }}>
                   Day of Week
                 </label>
                 <div style={{ display: 'flex', gap: '5px' }}>
@@ -234,9 +240,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                         flex: 1,
                         padding: '7px 2px',
                         borderRadius: '10px',
-                        border: dayOfWeek === i ? '1px solid rgba(232,160,32,0.5)' : '1px solid rgba(123,63,110,0.3)',
-                        background: dayOfWeek === i ? 'rgba(232,160,32,0.1)' : 'transparent',
-                        color: dayOfWeek === i ? '#E8A020' : 'rgba(232,213,196,0.5)',
+                        ...(dayOfWeek === i ? btnActive : btnInactive),
                         fontFamily: "var(--font-josefin), sans-serif",
                         fontSize: '0.62rem',
                         letterSpacing: '0.03em',
@@ -254,7 +258,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
             {/* Day of month picker — monthly only */}
             {frequency === 'monthly' && (
               <div>
-                <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.9)', display: 'block', marginBottom: '8px' }}>
+                <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: '8px' }}>
                   Day of Month
                 </label>
                 <select
@@ -278,9 +282,9 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                 borderRadius: '12px',
                 border: 'none',
                 background: name.trim()
-                  ? 'linear-gradient(135deg, #C46A00, #E8A020)'
-                  : 'rgba(123,63,110,0.25)',
-                color: name.trim() ? '#1A0820' : 'rgba(232,213,196,0.3)',
+                  ? 'linear-gradient(135deg, var(--amber-deep), var(--amber))'
+                  : 'var(--color-btn-disabled-bg)',
+                color: name.trim() ? 'var(--color-cta-text)' : 'var(--color-btn-disabled-text)',
                 fontFamily: "var(--font-josefin), sans-serif",
                 fontSize: '0.85rem',
                 fontWeight: 400,
@@ -307,9 +311,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                   style={{
                     padding: '5px 12px',
                     borderRadius: '20px',
-                    border: libraryFilter === c ? '1px solid rgba(232,160,32,0.55)' : '1px solid rgba(123,63,110,0.3)',
-                    background: libraryFilter === c ? 'rgba(232,160,32,0.1)' : 'transparent',
-                    color: libraryFilter === c ? '#E8A020' : 'rgba(232,213,196,0.5)',
+                    ...(libraryFilter === c ? btnActive : btnInactive),
                     fontFamily: "var(--font-josefin), sans-serif",
                     fontSize: '0.7rem',
                     letterSpacing: '0.1em',
@@ -325,7 +327,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
             </div>
 
             {filteredLibrary.length === 0 ? (
-              <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', color: 'rgba(155,96,144,0.7)', textAlign: 'center', padding: '24px 0' }}>
+              <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', color: 'var(--color-text-muted)', textAlign: 'center', padding: '24px 0' }}>
                 You&apos;ve added everything in this category! 🌸
               </p>
             ) : (
@@ -340,8 +342,8 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                       gap: '12px',
                       padding: '12px 14px',
                       borderRadius: '12px',
-                      border: '1px solid rgba(123,63,110,0.3)',
-                      background: 'rgba(42,14,48,0.4)',
+                      border: '1px solid var(--color-border-default)',
+                      background: 'var(--color-bg-library-item)',
                       cursor: 'pointer',
                       textAlign: 'left',
                       transition: 'all 0.2s',
@@ -349,13 +351,13 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
                     }}
                   >
                     <span style={{ fontSize: '1.1rem' }}>{CATEGORY_CONFIG[item.category].icon}</span>
-                    <span style={{ flex: 1, fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.88rem', color: '#E8D5C4', letterSpacing: '0.03em' }}>
+                    <span style={{ flex: 1, fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.88rem', color: 'var(--color-text-body)', letterSpacing: '0.03em' }}>
                       {item.name}
                     </span>
-                    <span style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'rgba(155,96,144,0.7)' }}>
+                    <span style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.65rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--color-text-muted-soft)' }}>
                       {item.frequency}
                     </span>
-                    <span style={{ color: '#E8A020', fontSize: '1rem' }}>+</span>
+                    <span style={{ color: 'var(--amber)', fontSize: '1rem' }}>+</span>
                   </button>
                 ))}
               </div>

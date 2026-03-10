@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christina's Cozy Chaos — Light Themes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #f0e8e0;
+    font-family: 'Josefin Sans', sans-serif;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem;
+    font-weight: 400;
+    color: #3a2030;
+    margin-bottom: 0.3rem;
+  }
+  header p {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9b7090;
+  }
+
+  .palettes { display: flex; flex-direction: column; gap: 2.5rem; max-width: 820px; margin: 0 auto; }
+
+  /* ── PALETTE CARD ── */
+  .palette-card { border-radius: 18px; overflow: hidden; box-shadow: 0 2px 20px rgba(60,20,40,0.10); }
+
+  .swatches { display: flex; height: 110px; }
+  .swatch {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-end;
+    padding-bottom: 8px;
+    transition: flex 0.3s ease; cursor: default;
+  }
+  .swatch:hover { flex: 1.6; }
+  .swatch span {
+    font-size: 0.6rem; letter-spacing: 0.07em;
+    background: rgba(255,255,255,0.55);
+    color: rgba(40,10,30,0.75);
+    padding: 2px 6px; border-radius: 4px;
+  }
+
+  .palette-info { padding: 1.2rem 1.6rem 1.5rem; }
+  .palette-info h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem; font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .palette-info p {
+    font-size: 0.85rem; font-weight: 300;
+    line-height: 1.7; margin-bottom: 0.9rem;
+  }
+
+  /* ── MOCKUP ── */
+  .mockup {
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-top: 4px;
+  }
+  .mock-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic;
+    margin-bottom: 10px;
+  }
+  .mock-card {
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 7px;
+    font-size: 0.82rem; letter-spacing: 0.04em;
+  }
+  .mock-check {
+    width: 20px; height: 20px; border-radius: 6px;
+    border-width: 2px; border-style: solid;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 0.7rem;
+  }
+  .mock-chip {
+    display: inline-block;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase; margin-right: 5px; margin-top: 8px;
+    border-width: 1px; border-style: solid;
+  }
+
+  .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tag {
+    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px; border: 1px solid currentColor; opacity: 0.75;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Christina's Cozy Chaos</h1>
+  <p>Light Theme Explorations</p>
+</header>
+
+<div class="palettes">
+
+  <!-- ── PALETTE 1: Parchment & Plum ── -->
+  <div class="palette-card" style="background:#FAF3EC;">
+    <div class="swatches">
+      <div class="swatch" style="background:#FAF3EC"><span>#FAF3EC</span></div>
+      <div class="swatch" style="background:#EFE0D4"><span>#EFE0D4</span></div>
+      <div class="swatch" style="background:#C9A8BC"><span>#C9A8BC</span></div>
+      <div class="swatch" style="background:#7B3F6E"><span>#7B3F6E</span></div>
+      <div class="swatch" style="background:#C46A00"><span>#C46A00</span></div>
+    </div>
+    <div class="palette-info" style="background:#FAF3EC; color:#3a2030;">
+      <h2 style="color:#3a2030;">Parchment & Plum</h2>
+      <p style="color:#6b4a5e;">The warmest and most familiar — a soft parchment base that feels like aged paper. Your existing plum and amber accents carry over almost unchanged, so the brand stays consistent. Easy on the eyes, zero harshness.</p>
+
+      <div class="mockup" style="background:#EFE0D4;">
+        <div class="mock-title" style="color:#3a2030;">Today's Tasks</div>
+        <div class="mock-card" style="background:#FAF3EC; border: 1px solid #C9A8BC44;">
+          <div class="mock-check" style="border-color:#7B3F6E;">✓</div>
+          <span style="color:#3a2030; flex:1;">Wash dishes</span>
+          <span style="font-size:0.65rem; color:#9b7090; letter-spacing:0.1em;">DAILY</span>
+        </div>
+        <div class="mock-card" style="background:#FAF3EC; border: 1px solid #C9A8BC44;">
+          <div class="mock-check" style="border-color:#C9A8BC;"></div>
+          <span style="color:#3a2030; flex:1;">Practice oboe</span>
+          <span style="font-size:0.65rem; color:#9b7090; letter-spacing:0.1em;">DAILY</span>
+        </div>
+        <div>
+          <span class="mock-chip" style="color:#C46A00; border-color:#C46A00aa; background:rgba(196,106,0,0.08);">🏠 Home</span>
+          <span class="mock-chip" style="color:#7B3F6E; border-color:#7B3F6Eaa; background:rgba(123,63,110,0.08);">🎨 Skills</span>
+        </div>
+      </div>
+
+      <div class="tags" style="margin-top:1rem;">
+        <span class="tag" style="color:#7B3F6E;">Warm</span>
+        <span class="tag" style="color:#C46A00;">Familiar</span>
+        <span class="tag" style="color:#6b4a5e;">Easy Transition</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PALETTE 2: Dusty Rose Morning ── -->
+  <div class="palette-card" style="background:#F7EEF0;">
+    <div class="swatches">
+      <div class="swatch" style="background:#F7EEF0"><span>#F7EEF0</span></div>
+      <div class="swatch" style="background:#EEDDE2"><span>#EEDDE2</span></div>
+      <div class="swatch" style="background:#C49AAA"><span>#C49AAA</span></div>
+      <div class="swatch" style="background:#7B3F6E"><span>#7B3F6E</span></div>
+      <div class="swatch" style="background:#D4822A"><span>#D4822A</span></div>
+    </div>
+    <div class="palette-info" style="background:#F7EEF0; color:#3a2030;">
+      <h2 style="color:#3a2030;">Dusty Rose Morning</h2>
+      <p style="color:#7a4a58;">A blush-tinted base — softer and more feminine. Still rooted in your existing palette but the background has a very faint rose warmth that makes the plum accents feel at home. Like early morning light through curtains.</p>
+
+      <div class="mockup" style="background:#EEDDE2;">
+        <div class="mock-title" style="color:#3a2030;">Today's Tasks</div>
+        <div class="mock-card" style="background:#F7EEF0; border: 1px solid #C49AAA44;">
+          <div class="mock-check" style="border-color:#7B3F6E;">✓</div>
+          <span style="color:#3a2030; flex:1; text-decoration:line-through; opacity:0.5;">Skincare routine</span>
+          <span style="font-size:0.65rem; color:#C49AAA; letter-spacing:0.1em;">DAILY</span>
+        </div>
+        <div class="mock-card" style="background:#F7EEF0; border: 1px solid #C49AAA44;">
+          <div class="mock-check" style="border-color:#C49AAA;"></div>
+          <span style="color:#3a2030; flex:1;">Go for a walk</span>
+          <span style="font-size:0.65rem; color:#C49AAA; letter-spacing:0.1em;">DAILY</span>
+        </div>
+        <div>
+          <span class="mock-chip" style="color:#D4822A; border-color:#D4822Aaa; background:rgba(212,130,42,0.08);">🧴 Hygiene</span>
+          <span class="mock-chip" style="color:#7B3F6E; border-color:#7B3F6Eaa; background:rgba(123,63,110,0.08);">🏃 Movement</span>
+        </div>
+      </div>
+
+      <div class="tags" style="margin-top:1rem;">
+        <span class="tag" style="color:#7B3F6E;">Soft</span>
+        <span class="tag" style="color:#D4822A;">Rosy</span>
+        <span class="tag" style="color:#7a4a58;">Feminine</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PALETTE 3: Linen & Lavender ── -->
+  <div class="palette-card" style="background:#F4F0F8;">
+    <div class="swatches">
+      <div class="swatch" style="background:#F4F0F8"><span>#F4F0F8</span></div>
+      <div class="swatch" style="background:#E4DCF0"><span>#E4DCF0</span></div>
+      <div class="swatch" style="background:#B89ACC"><span>#B89ACC</span></div>
+      <div class="swatch" style="background:#5C2D6E"><span>#5C2D6E</span></div>
+      <div class="swatch" style="background:#C46A00"><span>#C46A00</span></div>
+    </div>
+    <div class="palette-info" style="background:#F4F0F8; color:#2a1a38;">
+      <h2 style="color:#2a1a38;">Linen & Lavender</h2>
+      <p style="color:#6a4a88;">The coolest of the three — a barely-there lavender tint on the background. Very calm, almost spa-like. The amber pops brilliantly against it as an accent. Best if you want the light theme to feel distinct from the dark one rather than just an inversion.</p>
+
+      <div class="mockup" style="background:#E4DCF0;">
+        <div class="mock-title" style="color:#2a1a38;">Today's Tasks</div>
+        <div class="mock-card" style="background:#F4F0F8; border: 1px solid #B89ACC44;">
+          <div class="mock-check" style="border-color:#5C2D6E;">✓</div>
+          <span style="color:#2a1a38; flex:1;">Do laundry</span>
+          <span style="font-size:0.65rem; color:#B89ACC; letter-spacing:0.1em;">WEEKLY</span>
+        </div>
+        <div class="mock-card" style="background:#F4F0F8; border: 1px solid #B89ACC44;">
+          <div class="mock-check" style="border-color:#B89ACC;"></div>
+          <span style="color:#2a1a38; flex:1;">Read</span>
+          <span style="font-size:0.65rem; color:#B89ACC; letter-spacing:0.1em;">DAILY</span>
+        </div>
+        <div>
+          <span class="mock-chip" style="color:#C46A00; border-color:#C46A00aa; background:rgba(196,106,0,0.09);">🏠 Home</span>
+          <span class="mock-chip" style="color:#5C2D6E; border-color:#5C2D6Eaa; background:rgba(92,45,110,0.08);">🎨 Skills</span>
+        </div>
+      </div>
+
+      <div class="tags" style="margin-top:1rem;">
+        <span class="tag" style="color:#5C2D6E;">Calm</span>
+        <span class="tag" style="color:#C46A00;">Distinct</span>
+        <span class="tag" style="color:#6a4a88;">Airy</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

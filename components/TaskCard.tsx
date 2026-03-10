@@ -27,11 +27,11 @@ export default function TaskCard({ task, onToggle }: TaskCardProps) {
       onClick={handleToggle}
       style={{
         background: task.completedToday
-          ? 'linear-gradient(135deg, rgba(123,63,110,0.35), rgba(42,14,48,0.6))'
-          : 'linear-gradient(135deg, rgba(123,63,110,0.18), rgba(42,14,48,0.45))',
+          ? 'var(--color-bg-task-card-done)'
+          : 'var(--color-bg-task-card)',
         border: task.completedToday
-          ? '1px solid rgba(232,160,32,0.45)'
-          : '1px solid rgba(123,63,110,0.35)',
+          ? '1px solid var(--color-border-active)'
+          : '1px solid var(--color-border-default)',
         borderRadius: '16px',
         padding: '14px 16px',
         cursor: 'pointer',
@@ -51,9 +51,9 @@ export default function TaskCard({ task, onToggle }: TaskCardProps) {
           height: 26,
           borderRadius: '7px',
           border: task.completedToday
-            ? '2.5px solid #E8A020'
-            : '2.5px solid rgba(155,96,144,0.7)',
-          background: task.completedToday ? 'rgba(232,160,32,0.15)' : 'transparent',
+            ? '2.5px solid var(--amber)'
+            : '2.5px solid var(--color-text-muted)',
+          background: task.completedToday ? 'var(--color-checkbox-fill)' : 'transparent',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -65,7 +65,7 @@ export default function TaskCard({ task, onToggle }: TaskCardProps) {
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path
               d="M2 7L5.5 10.5L12 3.5"
-              stroke="#E8A020"
+              stroke="var(--amber)"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -92,9 +92,9 @@ export default function TaskCard({ task, onToggle }: TaskCardProps) {
             fontFamily: "var(--font-josefin), sans-serif",
             fontSize: '0.95rem',
             fontWeight: 400,
-            color: task.completedToday ? 'rgba(232,213,196,0.65)' : '#E8D5C4',
+            color: task.completedToday ? 'var(--color-text-faded)' : 'var(--color-text-body)',
             textDecoration: task.completedToday ? 'line-through' : 'none',
-            textDecorationColor: 'rgba(232,160,32,0.5)',
+            textDecorationColor: 'var(--color-border-active)',
             transition: 'all 0.3s ease',
             letterSpacing: '0.03em',
             overflow: 'hidden',
@@ -110,7 +110,7 @@ export default function TaskCard({ task, onToggle }: TaskCardProps) {
           fontWeight: 600,
           letterSpacing: '0.15em',
           textTransform: 'uppercase',
-          color: 'rgba(155,96,144,0.8)',
+          color: 'var(--color-text-muted)',
         }}>
           {task.frequency}
         </span>

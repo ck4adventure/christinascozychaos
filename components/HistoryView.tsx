@@ -40,7 +40,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
         fontSize: '1.7rem',
         fontWeight: 400,
         fontStyle: 'italic',
-        color: '#E8D5C4',
+        color: 'var(--color-text-body)',
         marginBottom: '18px',
         padding: '4px 0',
       }}>
@@ -56,9 +56,9 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
             style={{
               padding: '5px 12px',
               borderRadius: '20px',
-              border: filterCategory === c ? '1px solid rgba(232,160,32,0.55)' : '1px solid rgba(123,63,110,0.3)',
-              background: filterCategory === c ? 'rgba(232,160,32,0.1)' : 'transparent',
-              color: filterCategory === c ? '#E8A020' : 'rgba(232,213,196,0.5)',
+              border: filterCategory === c ? '1px solid var(--color-border-active)' : '1px solid var(--color-border-default)',
+              background: filterCategory === c ? 'var(--color-bg-chip)' : 'transparent',
+              color: filterCategory === c ? 'var(--amber)' : 'var(--color-text-faint)',
               fontFamily: "var(--font-josefin), sans-serif",
               fontSize: '0.7rem',
               letterSpacing: '0.1em',
@@ -75,7 +75,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
 
       {Object.keys(grouped).length === 0 ? (
         <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-          <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', fontSize: '1.1rem', color: 'rgba(155,96,144,0.7)' }}>
+          <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', fontSize: '1.1rem', color: 'var(--color-text-muted)' }}>
             Nothing logged yet. Go complete something! 🌸
           </p>
         </div>
@@ -88,7 +88,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
               fontWeight: 300,
               letterSpacing: '0.2em',
               textTransform: 'uppercase',
-              color: 'rgba(155,96,144,0.8)',
+              color: 'var(--color-text-muted)',
               marginBottom: '10px',
             }}>
               {dateLabel}
@@ -106,8 +106,8 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
                       gap: '12px',
                       padding: '11px 14px',
                       borderRadius: '12px',
-                      background: 'rgba(123,63,110,0.12)',
-                      border: '1px solid rgba(123,63,110,0.22)',
+                      background: 'var(--color-bg-task-card)',
+                      border: '1px solid var(--color-border-soft)',
                     }}
                   >
                     <span style={{ fontSize: '1rem' }}>{cat.icon}</span>
@@ -115,7 +115,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
                       flex: 1,
                       fontFamily: "var(--font-josefin), sans-serif",
                       fontSize: '0.88rem',
-                      color: '#E8D5C4',
+                      color: 'var(--color-text-body)',
                       letterSpacing: '0.03em',
                     }}>
                       {log.task.name}
@@ -125,7 +125,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
                       fontSize: '0.68rem',
                       fontWeight: 200,
                       letterSpacing: '0.1em',
-                      color: 'rgba(155,96,144,0.7)',
+                      color: 'var(--color-text-muted-soft)',
                     }}>
                       {time}
                     </span>

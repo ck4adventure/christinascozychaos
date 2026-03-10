@@ -21,8 +21,8 @@ export default function NavBar({ active, onChange }: NavBarProps) {
       bottom: 0,
       left: 0,
       right: 0,
-      background: 'linear-gradient(0deg, rgba(26,8,30,0.97) 0%, rgba(42,14,48,0.95) 100%)',
-      borderTop: '1px solid rgba(123,63,110,0.3)',
+      background: 'var(--color-bg-nav)',
+      borderTop: '1px solid var(--color-border-default)',
       backdropFilter: 'blur(12px)',
       display: 'flex',
       justifyContent: 'space-around',
@@ -61,7 +61,7 @@ export default function NavBar({ active, onChange }: NavBarProps) {
               fontWeight: isActive ? 400 : 600,
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
-              color: isActive ? '#E8A020' : 'rgba(155,96,144,0.65)',
+              color: isActive ? 'var(--amber)' : 'var(--color-text-muted-soft)',
               transition: 'color 0.3s ease',
             }}>
               {label}
