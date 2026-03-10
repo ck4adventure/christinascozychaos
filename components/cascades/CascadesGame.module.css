@@ -1,7 +1,7 @@
 /* ─── Page shell ────────────────────────────────────────────────────────────── */
 
 .page {
-	min-height: 100vh;
+	min-height: 100dvh;
 	background: var(--plum-deep);
 	position: relative;
 	overflow: hidden;
@@ -9,7 +9,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 2rem 1rem;
+	padding: 1rem;
 	font-family: var(--font-josefin), Arial, sans-serif;
 }
 

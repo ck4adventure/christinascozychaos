@@ -147,7 +147,7 @@ body {
 /* ─── Landing page ─────────────────────────────────────────────────────────── */
 
 .page {
-  min-height: 100vh;
+  height: 100dvh;
   background: var(--plum-deep);
   position: relative;
   overflow: hidden;
