@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { Board, ColorType } from '@/lib/cascades/board';
 import { generateSparks, Spark } from '@/app/utils/sparks';
 import styles from './CascadesGame.module.css';
@@ -237,6 +238,8 @@ export default function CascadesGame() {
       {sparks.map((s, i) => (
         <div key={i} className={styles.spark} style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.size, height: s.size, animationDuration: `${s.duration}s`, animationDelay: `${s.delay}s` }} />
       ))}
+
+      <Link href="/" className={styles.backLink}>← Home</Link>
 
       <div className={`${styles.gameContainer} ${visible ? styles.visible : ''}`}>
       <h1>Cascades</h1>

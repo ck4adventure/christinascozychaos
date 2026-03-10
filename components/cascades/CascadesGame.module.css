@@ -67,6 +67,25 @@
 
 /* ─── Game card ─────────────────────────────────────────────────────────────── */
 
+.backLink {
+	display: inline-flex;
+	align-items: center;
+	font-family: var(--font-josefin), sans-serif;
+	font-size: 0.65rem;
+	letter-spacing: 0.3em;
+	text-transform: uppercase;
+	font-weight: 400;
+	color: var(--amber);
+	opacity: 0.65;
+	text-decoration: none;
+	margin-bottom: 1rem;
+	transition: opacity 0.2s ease;
+	position: relative;
+	z-index: 10;
+}
+
+.backLink:hover { opacity: 1; }
+
 .gameContainer {
 	position: relative;
 	z-index: 10;
