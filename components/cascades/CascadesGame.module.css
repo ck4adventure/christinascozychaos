@@ -89,7 +89,7 @@
 .gameContainer h1 {
 	font-family: var(--font-cormorant), serif;
 	font-size: 2.2rem;
-	font-weight: 300;
+	font-weight: 400;
 	letter-spacing: 0.05em;
 	color: var(--cream-light);
 	text-align: center;
@@ -98,7 +98,7 @@
 
 .gameContainer h2 {
 	font-family: var(--font-cormorant), serif;
-	font-weight: 300;
+	font-weight: 400;
 	font-size: 1.4rem;
 	color: var(--cream-light);
 	margin: 8px;
@@ -108,7 +108,7 @@
 .gameContainer p {
 	font-family: var(--font-josefin), Arial, sans-serif;
 	font-size: 0.8rem;
-	font-weight: 300;
+	font-weight: 400;
 	color: var(--cream);
 	line-height: 1.6;
 	margin: 8px;
@@ -129,7 +129,7 @@
 	font-size: 0.68rem;
 	letter-spacing: 0.25em;
 	text-transform: uppercase;
-	font-weight: 300;
+	font-weight: 400;
 	color: var(--amber);
 	display: flex;
 	align-items: baseline;
@@ -139,7 +139,7 @@
 .scoreBox span {
 	font-family: var(--font-cormorant), serif;
 	font-size: 2rem;
-	font-weight: 300;
+	font-weight: 400;
 	line-height: 1;
 }
 
@@ -168,7 +168,7 @@
 	font-size: 0.62rem;
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	font-weight: 300;
+	font-weight: 400;
 	color: var(--plum-light);
 }
 
@@ -241,7 +241,7 @@
 	font-size: 0.62rem;
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	font-weight: 300;
+	font-weight: 400;
 	color: var(--amber);
 	opacity: 0.65;
 	text-decoration: none;
@@ -269,7 +269,7 @@
 	font-size: 0.62rem;
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
-	font-weight: 300;
+	font-weight: 400;
 	color: var(--amber);
 	background: var(--color-bg-chip);
 	border: 1px solid var(--color-border-chip);
@@ -349,7 +349,7 @@
 .modalText h2 {
 	font-family: var(--font-cormorant), serif;
 	font-size: 1.8rem;
-	font-weight: 300;
+	font-weight: 400;
 	color: var(--cream-light);
 	margin-bottom: 1rem;
 }
@@ -357,7 +357,7 @@
 .modalText p {
 	font-family: var(--font-josefin), sans-serif;
 	font-size: 0.75rem;
-	font-weight: 300;
+	font-weight: 400;
 	letter-spacing: 0.05em;
 	line-height: 1.7;
 	color: var(--cream);

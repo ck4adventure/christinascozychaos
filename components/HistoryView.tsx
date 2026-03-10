@@ -85,7 +85,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
             <p style={{
               fontFamily: "var(--font-josefin), sans-serif",
               fontSize: '0.68rem',
-              fontWeight: 300,
+              fontWeight: 400,
               letterSpacing: '0.2em',
               textTransform: 'uppercase',
               color: 'var(--color-text-muted)',
