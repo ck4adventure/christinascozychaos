@@ -80,6 +80,7 @@ export default function Home() {
             {/* <span className="chip">🍜 Recipe Box</span> */}
             <Link href="/repeatable-meal" className="chip">🥣 Bowl Calculator</Link>
             <Link href="/blossom" className="chip">✅ Chore Tracker</Link>
+            <Link href="/cascades" className="chip">Cascades 🟪🟪🟦</Link>
             {/* <span className="chip">✨ More Randomness Soon!</span> */}
           </div>
 
