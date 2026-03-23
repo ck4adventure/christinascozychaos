@@ -9,6 +9,7 @@ export interface Task {
   frequency: Frequency;
   dayOfWeek?: number;   // 0=Sun … 6=Sat, used when frequency === 'weekly'
   dayOfMonth?: number;  // 1–31, used when frequency === 'monthly'
+  emoji?: string;       // custom icon, falls back to category icon
   createdAt: string; // ISO string
 }
 

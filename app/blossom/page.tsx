@@ -166,13 +166,6 @@ export default function TrackerPage() {
                           >
                             ✏️
                           </button>
-                          <button
-                            className="blossom-delete-btn"
-                            onClick={() => deleteTask(task.id)}
-                            aria-label={`Delete ${task.name}`}
-                          >
-                            🗑
-                          </button>
                         </div>
                       ))}
                     </div>
@@ -191,6 +184,7 @@ export default function TrackerPage() {
           editingTask={editingTask}
           existingTaskNames={tasks.map((t) => t.name)}
           onSave={handleSave}
+          onDelete={editingTask ? () => { deleteTask(editingTask.id); setModalOpen(false); setEditingTask(null); } : undefined}
           onClose={() => { setModalOpen(false); setEditingTask(null); }}
         />
       )}

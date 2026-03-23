@@ -9,6 +9,7 @@ interface TaskModalProps {
   editingTask?: Task | null;
   existingTaskNames: string[];
   onSave: (data: Omit<Task, 'id' | 'createdAt'>) => void;
+  onDelete?: () => void;
   onClose: () => void;
 }
 
@@ -16,9 +17,10 @@ const FREQUENCIES: Frequency[] = ['daily', 'weekly', 'monthly'];
 const CATEGORIES = Object.keys(CATEGORY_CONFIG) as Category[];
 
 
-export default function TaskModal({ editingTask, existingTaskNames, onSave, onClose }: TaskModalProps) {
+export default function TaskModal({ editingTask, existingTaskNames, onSave, onDelete, onClose }: TaskModalProps) {
   const [tab, setTab] = useState<'custom' | 'library'>('custom');
   const [name, setName] = useState(editingTask?.name || '');
+  const [emoji, setEmoji] = useState(editingTask?.emoji || '');
   const [category, setCategory] = useState<Category>(editingTask?.category || 'home');
   const [frequency, setFrequency] = useState<Frequency>(editingTask?.frequency || 'daily');
   const [dayOfWeek, setDayOfWeek] = useState<number>(editingTask?.dayOfWeek ?? 0);
@@ -28,6 +30,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
   useEffect(() => {
     if (editingTask) {
       setName(editingTask.name);
+      setEmoji(editingTask.emoji || '');
       setCategory(editingTask.category);
       setFrequency(editingTask.frequency);
       setDayOfWeek(editingTask.dayOfWeek ?? 0);
@@ -40,6 +43,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
     if (!name.trim()) return;
     onSave({
       name: name.trim(),
+      emoji: emoji.trim() || undefined,
       category,
       frequency,
       dayOfWeek: frequency === 'weekly' ? dayOfWeek : undefined,
@@ -159,17 +163,36 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onCl
         {/* Custom form */}
         {(tab === 'custom' || editingTask) && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            <div>
-              <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: '6px' }}>
-                Task Name
-              </label>
-              <input
-                style={inputStyle}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="e.g. Make my bed"
-                autoFocus
-              />
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-end' }}>
+              <div style={{ flex: 1 }}>
+                <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: '6px' }}>
+                  Task Name
+                </label>
+                <input
+                  style={inputStyle}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="e.g. Make my bed"
+                  autoFocus
+                />
+              </div>
+              <div>
+                <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: '6px' }}>
+                  Icon
+                </label>
+                <input
+                  style={{ ...inputStyle, width: '56px', textAlign: 'center', fontSize: '1.3rem', padding: '8px', cursor: 'text' }}
+                  value={emoji}
+                  onChange={(e) => {
+                    // keep only the last character entered (emoji)
+                    const val = e.target.value;
+                    const chars = [...val]; // spread handles multi-codepoint emoji
+                    setEmoji(chars.length > 0 ? chars[chars.length - 1] : '');
+                  }}
+                  placeholder="✨"
+                  maxLength={8}
+                />
+              </div>
             </div>
 
             <div>

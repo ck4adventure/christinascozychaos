@@ -87,7 +87,7 @@ export default function TaskCard({ task, onToggle }: TaskCardProps) {
           gap: '6px',
           marginBottom: '3px',
         }}>
-          <span style={{ fontSize: '0.78rem' }}>{cat.icon}</span>
+          <span style={{ fontSize: '0.78rem' }}>{task.emoji || cat.icon}</span>
           <span style={{
             fontFamily: "var(--font-josefin), sans-serif",
             fontSize: '0.95rem',
