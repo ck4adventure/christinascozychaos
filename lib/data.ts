@@ -5,7 +5,7 @@ export const CATEGORY_CONFIG: Record<Category, { label: string; icon: string; co
   hygiene:  { label: 'Hygiene & Body Care', icon: '🧼', color: '#9B6090' },
   movement: { label: 'Movement & Exercise', icon: '🏃🏻‍♀️', color: '#C46A00' },
   skills:   { label: 'Skills Practice',     icon: '🎯', color: '#E8A020' },
-  seeking:  { label: 'Seeking',             icon: '🔮', color: '#7B7BAA' },
+  seeking:  { label: 'Seeking',             icon: '🔥', color: '#7B7BAA' },
 };
 
 export const getTaskIcon = (task: { emoji?: string; category: Category }): string =>
