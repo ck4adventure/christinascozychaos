@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Task, TaskLog, TaskWithStatus } from '@/types';
 import { storage, isToday, generateId } from '@/lib/storage';
-import { getRandomFlower } from '@/lib/data';
+import { getFlowerForCategory } from '@/lib/data';
 
 export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -38,7 +38,7 @@ export function useTasks() {
       createdAt: new Date().toISOString(),
     };
     // Assign a random flower to this task — sticks forever
-    const newFlowers = { ...flowers, [newTask.id]: getRandomFlower() };
+    const newFlowers = { ...flowers, [newTask.id]: getFlowerForCategory(newTask.category) };
     const newTasks = [...tasks, newTask];
     setTasks(newTasks);
     setFlowers(newFlowers);

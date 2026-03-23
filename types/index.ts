@@ -1,4 +1,4 @@
-export type Category = 'home' | 'hygiene' | 'movement' | 'skills';
+export type Category = 'home' | 'hygiene' | 'movement' | 'skills' | 'seeking';
 
 export type Frequency = 'daily' | 'weekly' | 'monthly';
 
@@ -19,7 +19,7 @@ export interface TaskLog {
   completedAt: string; // ISO string
 }
 
-export type FlowerType = 'rose' | 'daisy' | 'tulip' | 'sunflower' | 'lotus' | 'cherry';
+export type FlowerType = 'rose' | 'daisy' | 'tulip' | 'sunflower' | 'lotus' | 'cherry' | 'white_lotus';
 
 export interface TaskWithStatus extends Task {
   completedToday: boolean;

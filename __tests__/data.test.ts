@@ -1,10 +1,33 @@
 import { describe, it, expect } from 'vitest';
-import { FLOWER_TYPES, getRandomFlower, TASK_LIBRARY, CATEGORY_CONFIG } from '@/lib/data';
+import { FLOWER_TYPES, getRandomFlower, getFlowerForCategory, TASK_LIBRARY, CATEGORY_CONFIG } from '@/lib/data';
 
 describe('getRandomFlower', () => {
   it('always returns a valid FlowerType', () => {
     for (let i = 0; i < 50; i++) {
       expect(FLOWER_TYPES).toContain(getRandomFlower());
+    }
+  });
+});
+
+describe('getFlowerForCategory', () => {
+  it('always returns white_lotus for seeking', () => {
+    for (let i = 0; i < 30; i++) {
+      expect(getFlowerForCategory('seeking')).toBe('white_lotus');
+    }
+  });
+
+  it('never returns white_lotus for non-seeking categories', () => {
+    const standard = ['home', 'hygiene', 'movement', 'skills'] as const;
+    for (const cat of standard) {
+      for (let i = 0; i < 20; i++) {
+        expect(getFlowerForCategory(cat)).not.toBe('white_lotus');
+      }
+    }
+  });
+
+  it('returns a flower from the standard pool for non-seeking categories', () => {
+    for (let i = 0; i < 50; i++) {
+      expect(FLOWER_TYPES).toContain(getFlowerForCategory('home'));
     }
   });
 });

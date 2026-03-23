@@ -87,6 +87,27 @@ const FLOWERS: Record<FlowerType, { bud: string; bloom: string; color: string; a
             <circle cx="12" cy="13" r="2.5" fill="#f9e0f6"/>
             <line x1="12" y1="21" x2="12" y2="28" stroke="#4a7c59" stroke-width="1.5"/>`,
   },
+  white_lotus: {
+    color: '#a89cd8',
+    accent: '#d8d0f5',
+    bud: `<ellipse cx="12" cy="24" rx="9" ry="2.8" fill="#4a8c48" opacity="0.95"/>
+          <ellipse cx="11" cy="23.4" rx="6" ry="1.6" fill="#65a858" opacity="0.38"/>
+          <ellipse cx="12" cy="13" rx="5" ry="8" fill="#b8b0d8" opacity="0.55"/>
+          <ellipse cx="12" cy="13" rx="3.5" ry="8" fill="#d0caf0" opacity="0.85"/>
+          <ellipse cx="12" cy="13" rx="2" ry="7" fill="#e4e0f8"/>`,
+    bloom: `<ellipse cx="12" cy="24" rx="9" ry="2.8" fill="#4a8c48" opacity="0.95"/>
+            <ellipse cx="11" cy="23.4" rx="6" ry="1.6" fill="#65a858" opacity="0.38"/>
+            <ellipse cx="12" cy="15" rx="2.8" ry="6" fill="#c4bce8" opacity="0.78" transform="rotate(-65 12 21)"/>
+            <ellipse cx="12" cy="15" rx="2.8" ry="6" fill="#c4bce8" opacity="0.85" transform="rotate(-30 12 21)"/>
+            <ellipse cx="12" cy="15" rx="2.8" ry="6" fill="#c4bce8" opacity="0.95"/>
+            <ellipse cx="12" cy="15" rx="2.8" ry="6" fill="#c4bce8" opacity="0.85" transform="rotate(30 12 21)"/>
+            <ellipse cx="12" cy="15" rx="2.8" ry="6" fill="#c4bce8" opacity="0.78" transform="rotate(65 12 21)"/>
+            <ellipse cx="12" cy="16.5" rx="1.8" ry="4.5" fill="#ddd6f5" opacity="0.9" transform="rotate(-20 12 21)"/>
+            <ellipse cx="12" cy="16.5" rx="1.8" ry="5" fill="#ddd6f5" opacity="0.95"/>
+            <ellipse cx="12" cy="16.5" rx="1.8" ry="4.5" fill="#ddd6f5" opacity="0.9" transform="rotate(20 12 21)"/>
+            <circle cx="12" cy="19.5" r="2.2" fill="#f9e878" opacity="0.88"/>
+            <circle cx="12" cy="19.5" r="1.2" fill="#ddb828"/>`,
+  },
   cherry: {
     color: '#f4a7b9',
     accent: '#fce4ec',
