@@ -901,3 +901,163 @@ body {
 }
 
 .blossom-schedule-empty-text span { color: var(--amber); }
+
+/* ─── Blossom NavBar — mobile (bottom tab bar) ──────────────────────────── */
+
+.blossom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--color-bg-nav);
+  border-top: 1px solid var(--color-border-default);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch;
+  padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
+  z-index: 90;
+}
+
+.blossom-nav-brand { display: none; }
+
+.blossom-nav-item {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 16px;
+  flex: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.blossom-nav-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+  transition: filter 0.3s ease;
+}
+
+.blossom-nav-item--add .blossom-nav-icon { font-size: 1.5rem; }
+
+.blossom-nav-label {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-muted-soft);
+  transition: color 0.3s ease;
+}
+
+.blossom-nav-item--active .blossom-nav-icon {
+  filter: drop-shadow(0 0 6px rgba(232,160,32,0.7));
+}
+
+.blossom-nav-item--active .blossom-nav-label {
+  color: var(--amber);
+  font-weight: 400;
+}
+
+/* ─── Blossom NavBar — desktop (left sidebar) ───────────────────────────── */
+
+@media (min-width: 1024px) {
+  .blossom-page {
+    padding-left: 220px;
+  }
+
+  .blossom-inner {
+    max-width: 700px;
+    padding-top: 48px;
+  }
+
+  .blossom-task-list,
+  .blossom-schedule-list {
+    padding-bottom: 48px;
+  }
+
+  .blossom-nav {
+    top: 0; bottom: 0;
+    right: auto;
+    width: 220px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 36px 0;
+    border-top: none;
+    border-right: 1px solid var(--color-border-default);
+    gap: 2px;
+  }
+
+  .blossom-nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 24px 24px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--color-border-soft);
+    flex-shrink: 0;
+  }
+
+  .blossom-nav-brand-icon { font-size: 1.3rem; }
+
+  .blossom-nav-brand-text {
+    font-family: var(--font-cormorant), serif;
+    font-size: 1.35rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--color-text-body);
+    letter-spacing: 0.03em;
+  }
+
+  .blossom-nav-item {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 13px 24px;
+    flex: 0 0 auto;
+    position: relative;
+    border-radius: 0;
+    transition: background 0.2s ease;
+  }
+
+  .blossom-nav-item:hover {
+    background: color-mix(in srgb, var(--amber) 5%, transparent);
+  }
+
+  .blossom-nav-item--active {
+    background: color-mix(in srgb, var(--amber) 8%, transparent);
+  }
+
+  .blossom-nav-item--active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--amber-deep), var(--amber));
+    border-radius: 0 2px 2px 0;
+  }
+
+  .blossom-nav-icon {
+    font-size: 1.1rem;
+    width: 22px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .blossom-nav-item--add .blossom-nav-icon { font-size: 1.1rem; }
+
+  .blossom-nav-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+  }
+
+  .blossom-nav-item--add {
+    margin-top: 8px;
+    border-top: 1px solid var(--color-border-soft);
+    padding-top: 21px;
+  }
+}

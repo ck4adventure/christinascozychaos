@@ -93,7 +93,7 @@ export default function TaskCard({ task, onToggle }: TaskCardProps) {
             fontSize: '0.95rem',
             fontWeight: 400,
             color: task.completedToday ? 'var(--color-text-faded)' : 'var(--color-text-body)',
-            textDecoration: task.completedToday ? 'line-through' : 'none',
+            textDecorationLine: task.completedToday ? 'line-through' : 'none',
             textDecorationColor: 'var(--color-border-active)',
             transition: 'all 0.3s ease',
             letterSpacing: '0.03em',
