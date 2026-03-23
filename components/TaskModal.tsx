@@ -184,10 +184,11 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onDe
                   style={{ ...inputStyle, width: '56px', textAlign: 'center', fontSize: '1.3rem', padding: '8px', cursor: 'text' }}
                   value={emoji}
                   onChange={(e) => {
-                    // keep only the last character entered (emoji)
+                    // Use Segmenter to split by grapheme clusters so multi-codepoint
+                    // emoji (e.g. 🗑️ = base + variation selector) stay together
                     const val = e.target.value;
-                    const chars = [...val]; // spread handles multi-codepoint emoji
-                    setEmoji(chars.length > 0 ? chars[chars.length - 1] : '');
+                    const segments = [...new Intl.Segmenter().segment(val)];
+                    setEmoji(segments.length > 0 ? segments[segments.length - 1].segment : '');
                   }}
                   placeholder="✨"
                   maxLength={8}

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Task, TaskWithStatus, Frequency } from '@/types';
 import { useTasks } from '@/app/hooks/useTasks';
-import { CATEGORY_CONFIG } from '@/lib/data';
+import { CATEGORY_CONFIG, getTaskIcon } from '@/lib/data';
 import { ordinal, isTaskForDay } from '@/lib/taskFilter';
 import TaskCard from '@/components/TaskCard';
 import TaskModal from '@/components/TaskModal';
@@ -146,7 +146,7 @@ export default function TrackerPage() {
                       {group.map((task) => (
                         <div key={task.id} className="blossom-task-row">
                           <span className="blossom-icon">
-                            {CATEGORY_CONFIG[task.category].icon}
+                            {getTaskIcon(task)}
                           </span>
                           <span className="blossom-task-name">{task.name}</span>
                           {task.frequency === 'weekly' && (

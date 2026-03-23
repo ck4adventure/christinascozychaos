@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { TaskWithStatus } from '@/types';
-import { CATEGORY_CONFIG } from '@/lib/data';
+import { getTaskIcon } from '@/lib/data';
 import Flower from './Flower';
 
 interface TaskCardProps {
@@ -12,7 +12,7 @@ interface TaskCardProps {
 
 export default function TaskCard({ task, onToggle }: TaskCardProps) {
   const [justCompleted, setJustCompleted] = useState(false);
-  const cat = CATEGORY_CONFIG[task.category];
+  const icon = getTaskIcon(task);
 
   const handleToggle = () => {
     if (!task.completedToday) {
@@ -87,7 +87,7 @@ export default function TaskCard({ task, onToggle }: TaskCardProps) {
           gap: '6px',
           marginBottom: '3px',
         }}>
-          <span style={{ fontSize: '0.78rem' }}>{task.emoji || cat.icon}</span>
+          <span style={{ fontSize: '0.78rem' }}>{icon}</span>
           <span style={{
             fontFamily: "var(--font-josefin), sans-serif",
             fontSize: '0.95rem',

@@ -7,6 +7,9 @@ export const CATEGORY_CONFIG: Record<Category, { label: string; icon: string; co
   skills:   { label: 'Skills Practice',          icon: '🎯', color: '#E8A020' },
 };
 
+export const getTaskIcon = (task: { emoji?: string; category: Category }): string =>
+  task.emoji || CATEGORY_CONFIG[task.category].icon;
+
 export const FLOWER_TYPES: FlowerType[] = ['rose', 'daisy', 'tulip', 'sunflower', 'lotus', 'cherry'];
 
 export const getRandomFlower = (): FlowerType =>

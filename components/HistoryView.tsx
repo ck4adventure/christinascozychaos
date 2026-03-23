@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Task, TaskLog, Category } from '@/types';
-import { CATEGORY_CONFIG } from '@/lib/data';
+import { CATEGORY_CONFIG, getTaskIcon } from '@/lib/data';
 import { formatDateTime, isToday } from '@/lib/storage';
 
 interface HistoryViewProps {
@@ -96,7 +96,6 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {entries.map((log) => {
                 const { time } = formatDateTime(log.completedAt);
-                const cat = CATEGORY_CONFIG[log.task.category];
                 return (
                   <div
                     key={log.id}
@@ -110,7 +109,7 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
                       border: '1px solid var(--color-border-soft)',
                     }}
                   >
-                    <span style={{ fontSize: '1rem' }}>{cat.icon}</span>
+                    <span style={{ fontSize: '1rem' }}>{getTaskIcon(log.task)}</span>
                     <span style={{
                       flex: 1,
                       fontFamily: "var(--font-josefin), sans-serif",
