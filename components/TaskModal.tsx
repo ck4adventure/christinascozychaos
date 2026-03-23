@@ -296,29 +296,73 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onDe
               </div>
             )}
 
-            <button
-              onClick={handleSave}
-              disabled={!name.trim()}
-              style={{
-                marginTop: '6px',
-                padding: '13px',
-                borderRadius: '12px',
-                border: 'none',
-                background: name.trim()
-                  ? 'linear-gradient(135deg, var(--amber-deep), var(--amber))'
-                  : 'var(--color-btn-disabled-bg)',
-                color: name.trim() ? 'var(--color-cta-text)' : 'var(--color-btn-disabled-text)',
-                fontFamily: "var(--font-josefin), sans-serif",
-                fontSize: '0.85rem',
-                fontWeight: 400,
-                letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                cursor: name.trim() ? 'pointer' : 'not-allowed',
-                transition: 'all 0.25s',
-              }}
-            >
-              {editingTask ? 'Save Changes' : 'Add Task'}
-            </button>
+            <div style={{ display: 'flex', gap: '8px', marginTop: '6px' }}>
+              <button
+                onClick={onClose}
+                style={{
+                  flex: 1,
+                  padding: '13px',
+                  borderRadius: '12px',
+                  border: '1px solid var(--color-border-default)',
+                  background: 'transparent',
+                  color: 'var(--color-text-faint)',
+                  fontFamily: "var(--font-josefin), sans-serif",
+                  fontSize: '0.85rem',
+                  fontWeight: 400,
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer',
+                  transition: 'all 0.25s',
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSave}
+                disabled={!name.trim()}
+                style={{
+                  flex: 2,
+                  padding: '13px',
+                  borderRadius: '12px',
+                  border: 'none',
+                  background: name.trim()
+                    ? 'linear-gradient(135deg, var(--amber-deep), var(--amber))'
+                    : 'var(--color-btn-disabled-bg)',
+                  color: name.trim() ? 'var(--color-cta-text)' : 'var(--color-btn-disabled-text)',
+                  fontFamily: "var(--font-josefin), sans-serif",
+                  fontSize: '0.85rem',
+                  fontWeight: 400,
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  cursor: name.trim() ? 'pointer' : 'not-allowed',
+                  transition: 'all 0.25s',
+                }}
+              >
+                {editingTask ? 'Save Changes' : 'Add Task'}
+              </button>
+            </div>
+
+            {onDelete && (
+              <button
+                onClick={onDelete}
+                style={{
+                  padding: '11px',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(180, 60, 60, 0.35)',
+                  background: 'transparent',
+                  color: 'rgba(220, 100, 100, 0.75)',
+                  fontFamily: "var(--font-josefin), sans-serif",
+                  fontSize: '0.8rem',
+                  fontWeight: 400,
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  cursor: 'pointer',
+                  transition: 'all 0.25s',
+                }}
+              >
+                Delete Task
+              </button>
+            )}
           </div>
         )}
 
