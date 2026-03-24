@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 type Tab = 'today' | 'schedule' | 'history' | 'add';
 
 interface NavBarProps {
@@ -16,6 +18,13 @@ const NAV_LINKS: { id: Tab; icon: string; label: string }[] = [
 const ADD_ITEM = { id: 'add' as Tab, icon: '＋', label: 'Add Task' };
 
 export default function NavBar({ active, onChange }: NavBarProps) {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/login');
+  };
+
   return (
     <nav className="blossom-nav">
       <div className="blossom-nav-brand">
@@ -36,6 +45,10 @@ export default function NavBar({ active, onChange }: NavBarProps) {
           <span className="blossom-nav-label">{label}</span>
         </button>
       ))}
+      <button className="blossom-nav-item blossom-nav-item--logout" onClick={handleLogout}>
+        <span className="blossom-nav-icon">↩</span>
+        <span className="blossom-nav-label">Sign out</span>
+      </button>
     </nav>
   );
 }

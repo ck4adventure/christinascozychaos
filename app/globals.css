@@ -920,6 +920,8 @@ body {
 
 .blossom-nav-brand { display: none; }
 
+.blossom-nav-item--logout { display: none; }
+
 .blossom-nav-item {
   background: none;
   border: none;
@@ -1059,6 +1061,17 @@ body {
     margin-top: 8px;
     border-top: 1px solid var(--color-border-soft);
     padding-top: 21px;
+  }
+
+  .blossom-nav-item--logout {
+    margin-top: auto;
+    border-top: 1px solid var(--color-border-soft);
+    padding-top: 21px;
+    opacity: 0.45;
+  }
+
+  .blossom-nav-item--logout:hover {
+    opacity: 0.75;
   }
 }
 
