@@ -12,7 +12,8 @@
     "test:coverage": "vitest run --coverage",
     "db:migrate": "dotenv -e .env.local -- prisma migrate dev",
     "db:studio": "dotenv -e .env.local -- prisma studio",
-    "db:generate": "dotenv -e .env.local -- prisma generate"
+    "db:generate": "dotenv -e .env.local -- prisma generate",
+		"prisma:generate": "prisma generate --schema=./packages/db/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
