@@ -1061,3 +1061,112 @@ body {
     padding-top: 21px;
   }
 }
+
+/* ─── Login Page ─────────────────────────────────────────────────────────── */
+
+.login-header {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.login-eyebrow {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-weight: 300;
+  color: var(--amber);
+  margin-bottom: 0.75rem;
+}
+
+.login-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: clamp(2.2rem, 7vw, 3.5rem);
+  font-weight: 300;
+  color: var(--cream-light);
+  line-height: 1.15;
+}
+
+.login-title em {
+  font-style: italic;
+  color: var(--amber);
+}
+
+.login-card {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.login-label {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 300;
+  color: var(--cream);
+  opacity: 0.75;
+}
+
+.login-input {
+  background: rgba(42, 14, 48, 0.6);
+  border: 1px solid rgba(232, 160, 32, 0.25);
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.9rem;
+  color: var(--cream-light);
+  outline: none;
+  transition: border-color 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-input:focus {
+  border-color: rgba(232, 160, 32, 0.6);
+}
+
+.login-error {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: #e86060;
+  margin: 0;
+}
+
+.login-btn {
+  margin-top: 0.25rem;
+  background: transparent;
+  border: 1px solid rgba(232, 160, 32, 0.4);
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: var(--amber);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+  background: rgba(232, 160, 32, 0.08);
+  border-color: rgba(232, 160, 32, 0.7);
+}
+
+.login-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

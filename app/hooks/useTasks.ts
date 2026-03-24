@@ -2,23 +2,25 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Task, TaskLog, TaskWithStatus } from '@/types';
-import { storage, isToday, generateId } from '@/lib/storage';
-import { getFlowerForCategory } from '@/lib/data';
+import { isToday } from '@/lib/storage';
 
 export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [logs, setLogs] = useState<TaskLog[]>([]);
-  const [flowers, setFlowers] = useState<Record<string, string>>({});
-  const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTasks(storage.getTasks());
-    setLogs(storage.getLogs());
-    setFlowers(storage.getFlowers());
-    setMounted(true);
+    Promise.all([
+      fetch('/api/tasks').then((r) => r.json()),
+      fetch('/api/logs').then((r) => r.json()),
+    ])
+      .then(([{ tasks }, { logs }]) => {
+        setTasks(tasks ?? []);
+        setLogs(logs ?? []);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  // Tasks enriched with today's completion status + assigned flower
   const tasksWithStatus: TaskWithStatus[] = tasks.map((task) => {
     const todayLog = logs.find(
       (l) => l.taskId === task.id && isToday(l.completedAt)
@@ -27,67 +29,76 @@ export function useTasks() {
       ...task,
       completedToday: !!todayLog,
       logId: todayLog?.id,
-      flower: (flowers[task.id] as TaskWithStatus['flower']) || 'daisy',
     };
   });
 
-  const addTask = useCallback((taskData: Omit<Task, 'id' | 'createdAt'>) => {
-    const newTask: Task = {
-      ...taskData,
-      id: generateId(),
-      createdAt: new Date().toISOString(),
-    };
-    // Assign a random flower to this task — sticks forever
-    const newFlowers = { ...flowers, [newTask.id]: getFlowerForCategory(newTask.category) };
-    const newTasks = [...tasks, newTask];
-    setTasks(newTasks);
-    setFlowers(newFlowers);
-    storage.saveTasks(newTasks);
-    storage.saveFlowers(newFlowers);
-    return newTask;
-  }, [tasks, flowers]);
+  const addTask = useCallback(
+    async (taskData: Omit<Task, 'id' | 'createdAt' | 'flower'>) => {
+      const res = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(taskData),
+      });
+      const { task } = await res.json();
+      setTasks((prev) => [...prev, task]);
+      return task as Task;
+    },
+    []
+  );
 
-  const toggleTask = useCallback((taskId: string) => {
-    const existingLog = logs.find(
-      (l) => l.taskId === taskId && isToday(l.completedAt)
-    );
-    let newLogs: TaskLog[];
-    if (existingLog) {
-      // Un-complete: remove the log entry
-      newLogs = logs.filter((l) => l.id !== existingLog.id);
-    } else {
-      // Complete: add a new log entry
-      const newLog: TaskLog = {
-        id: generateId(),
-        taskId,
-        completedAt: new Date().toISOString(),
-      };
-      newLogs = [...logs, newLog];
-    }
-    setLogs(newLogs);
-    storage.saveLogs(newLogs);
-  }, [logs]);
+  const toggleTask = useCallback(
+    async (taskId: string) => {
+      const existingLog = logs.find(
+        (l) => l.taskId === taskId && isToday(l.completedAt)
+      );
 
-  const deleteTask = useCallback((taskId: string) => {
-    const newTasks = tasks.filter((t) => t.id !== taskId);
-    const newLogs = logs.filter((l) => l.taskId !== taskId);
-    setTasks(newTasks);
-    setLogs(newLogs);
-    storage.saveTasks(newTasks);
-    storage.saveLogs(newLogs);
-  }, [tasks, logs]);
+      if (existingLog) {
+        // Optimistic remove
+        setLogs((prev) => prev.filter((l) => l.id !== existingLog.id));
+        await fetch(`/api/logs/${existingLog.id}`, { method: 'DELETE' });
+      } else {
+        const res = await fetch('/api/logs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ taskId }),
+        });
+        const { log } = await res.json();
+        setLogs((prev) => [...prev, log]);
+      }
+    },
+    [logs]
+  );
 
-  const editTask = useCallback((taskId: string, updates: Partial<Omit<Task, 'id' | 'createdAt'>>) => {
-    const newTasks = tasks.map((t) => t.id === taskId ? { ...t, ...updates } : t);
-    setTasks(newTasks);
-    storage.saveTasks(newTasks);
-  }, [tasks]);
+  const deleteTask = useCallback(
+    async (taskId: string) => {
+      // Optimistic remove
+      setTasks((prev) => prev.filter((t) => t.id !== taskId));
+      setLogs((prev) => prev.filter((l) => l.taskId !== taskId));
+      await fetch(`/api/tasks/${taskId}`, { method: 'DELETE' });
+    },
+    []
+  );
+
+  const editTask = useCallback(
+    async (taskId: string, updates: Partial<Omit<Task, 'id' | 'createdAt' | 'flower'>>) => {
+      // Optimistic update
+      setTasks((prev) =>
+        prev.map((t) => (t.id === taskId ? { ...t, ...updates } : t))
+      );
+      await fetch(`/api/tasks/${taskId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates),
+      });
+    },
+    []
+  );
 
   return {
     tasks,
     logs,
     tasksWithStatus,
-    mounted,
+    loading,
     addTask,
     toggleTask,
     deleteTask,

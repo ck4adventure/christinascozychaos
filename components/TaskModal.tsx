@@ -8,7 +8,7 @@ import { ordinal } from '@/lib/taskFilter';
 interface TaskModalProps {
   editingTask?: Task | null;
   existingTaskNames: string[];
-  onSave: (data: Omit<Task, 'id' | 'createdAt'>) => void;
+  onSave: (data: Omit<Task, 'id' | 'createdAt' | 'flower'>) => void;
   onDelete?: () => void;
   onClose: () => void;
 }

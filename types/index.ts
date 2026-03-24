@@ -10,6 +10,7 @@ export interface Task {
   dayOfWeek?: number;   // 0=Sun … 6=Sat, used when frequency === 'weekly'
   dayOfMonth?: number;  // 1–31, used when frequency === 'monthly'
   emoji?: string;       // custom icon, falls back to category icon
+  flower: FlowerType;   // assigned at creation, never changes
   createdAt: string; // ISO string
 }
 
@@ -24,5 +25,4 @@ export type FlowerType = 'rose' | 'daisy' | 'tulip' | 'sunflower' | 'lotus' | 'c
 export interface TaskWithStatus extends Task {
   completedToday: boolean;
   logId?: string;
-  flower: FlowerType;
 }

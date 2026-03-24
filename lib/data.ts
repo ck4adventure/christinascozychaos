@@ -28,7 +28,7 @@ export const getFlowerForCategory = (category: Category): FlowerType => {
 };
 
 // Pre-loaded suggestion library — users can add any of these with one tap
-export const TASK_LIBRARY: Omit<Task, 'id' | 'createdAt'>[] = [
+export const TASK_LIBRARY: Omit<Task, 'id' | 'createdAt' | 'flower'>[] = [
   // Home
   { name: 'Wash dishes',       category: 'home',     frequency: 'daily'   },
   { name: 'Tidy bedroom',      category: 'home',     frequency: 'daily'   },

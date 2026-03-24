@@ -9,10 +9,15 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "db:migrate": "dotenv -e .env.local -- prisma migrate dev",
+    "db:studio": "dotenv -e .env.local -- prisma studio",
+    "db:generate": "dotenv -e .env.local -- prisma generate"
   },
   "dependencies": {
+    "@prisma/client": "^5.22.0",
     "@vercel/analytics": "^1.6.1",
+    "iron-session": "^8.0.4",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3"
@@ -23,8 +28,10 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitest/coverage-v8": "^4.0.18",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "prisma": "^5.22.0",
     "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5",

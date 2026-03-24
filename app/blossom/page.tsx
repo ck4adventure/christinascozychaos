@@ -16,7 +16,7 @@ type Tab = 'today' | 'schedule' | 'history' | 'add';
 const DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export default function TrackerPage() {
-  const { tasks, logs, tasksWithStatus, mounted, addTask, toggleTask, deleteTask, editTask } = useTasks();
+  const { tasks, logs, tasksWithStatus, loading, addTask, toggleTask, deleteTask, editTask } = useTasks();
   const [tab, setTab] = useState<Tab>('today');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -35,7 +35,7 @@ export default function TrackerPage() {
     setModalOpen(true);
   };
 
-  const handleSave = (data: Omit<Task, 'id' | 'createdAt'>) => {
+  const handleSave = (data: Omit<Task, 'id' | 'createdAt' | 'flower'>) => {
     if (editingTask) {
       editTask(editingTask.id, data);
     } else {
@@ -51,7 +51,7 @@ export default function TrackerPage() {
   const completedCount = todaysTasks.filter((t) => t.completedToday).length;
   const totalCount = todaysTasks.length;
 
-  if (!mounted) return null;
+  if (loading) return null;
 
   return (
     <div className="blossom-page">

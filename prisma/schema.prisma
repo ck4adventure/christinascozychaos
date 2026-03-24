@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Task {
+  id         String    @id @default(cuid())
+  name       String
+  category   String
+  frequency  String
+  dayOfWeek  Int?
+  dayOfMonth Int?
+  emoji      String?
+  flower     String
+  createdAt  DateTime  @default(now())
+  logs       TaskLog[]
+}
+
+model TaskLog {
+  id          String   @id @default(cuid())
+  taskId      String
+  completedAt DateTime @default(now())
+  task        Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
