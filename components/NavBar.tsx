@@ -10,7 +10,7 @@ interface NavBarProps {
 }
 
 const NAV_LINKS: { id: Tab; icon: string; label: string }[] = [
-  { id: 'today',    icon: '🌙', label: 'Today'    },
+  { id: 'today',    icon: '☀️', label: 'Today'    },
   { id: 'schedule', icon: '📅', label: 'Schedule' },
   { id: 'history',  icon: '📜', label: 'History'  },
 ];
