@@ -10,14 +10,18 @@ export function useTasks() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([
-      fetch('/api/tasks').then((r) => r.json()),
-      fetch('/api/logs').then((r) => r.json()),
-    ])
+    const get = (url: string) =>
+      fetch(url).then((r) => {
+        if (!r.ok) throw new Error(`${url} returned ${r.status}`);
+        return r.json();
+      });
+
+    Promise.all([get('/api/tasks'), get('/api/logs')])
       .then(([{ tasks }, { logs }]) => {
         setTasks(tasks ?? []);
         setLogs(logs ?? []);
       })
+      .catch((e) => console.error('Failed to load tasks/logs:', e))
       .finally(() => setLoading(false));
   }, []);
 
@@ -39,6 +43,7 @@ export function useTasks() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(taskData),
       });
+      if (!res.ok) throw new Error(`POST /api/tasks returned ${res.status}`);
       const { task } = await res.json();
       setTasks((prev) => [...prev, task]);
       return task as Task;

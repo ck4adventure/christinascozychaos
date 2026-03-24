@@ -4,29 +4,39 @@ import { getFlowerForCategory } from '@/lib/data';
 import { Category, Frequency } from '@/types';
 
 export async function GET() {
-  const tasks = await prisma.task.findMany({ orderBy: { createdAt: 'asc' } });
-  return NextResponse.json({ tasks: tasks.map(dbTaskToApi) });
+  try {
+    const tasks = await prisma.task.findMany({ orderBy: { createdAt: 'asc' } });
+    return NextResponse.json({ tasks: tasks.map(dbTaskToApi) });
+  } catch (e) {
+    console.error('GET /api/tasks error:', e);
+    return NextResponse.json({ error: 'Failed to load tasks' }, { status: 500 });
+  }
 }
 
 export async function POST(request: Request) {
-  const body = await request.json();
-  const { name, category, frequency, dayOfWeek, dayOfMonth, emoji } = body;
+  try {
+    const body = await request.json();
+    const { name, category, frequency, dayOfWeek, dayOfMonth, emoji } = body;
 
-  const flower = getFlowerForCategory(category as Category);
+    const flower = getFlowerForCategory(category as Category);
 
-  const task = await prisma.task.create({
-    data: {
-      name,
-      category,
-      frequency,
-      dayOfWeek: dayOfWeek ?? null,
-      dayOfMonth: dayOfMonth ?? null,
-      emoji: emoji ?? null,
-      flower,
-    },
-  });
+    const task = await prisma.task.create({
+      data: {
+        name,
+        category,
+        frequency,
+        dayOfWeek: dayOfWeek ?? null,
+        dayOfMonth: dayOfMonth ?? null,
+        emoji: emoji ?? null,
+        flower,
+      },
+    });
 
-  return NextResponse.json({ task: dbTaskToApi(task) }, { status: 201 });
+    return NextResponse.json({ task: dbTaskToApi(task) }, { status: 201 });
+  } catch (e) {
+    console.error('POST /api/tasks error:', e);
+    return NextResponse.json({ error: 'Failed to create task' }, { status: 500 });
+  }
 }
 
 function dbTaskToApi(task: {
