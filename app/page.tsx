@@ -78,6 +78,7 @@ export default function Home() {
 
           <div className="chips">
             {/* <span className="chip">🍜 Recipe Box</span> */}
+            <Link href="/bowl-prep" className="chip">🛒 Bowl Prep</Link>
             <Link href="/repeatable-meal" className="chip">🥣 Bowl Calculator</Link>
             <Link href="/blossom" className="chip">🌸 Blossom</Link>
             <Link href="/cascades" className="chip">Cascades 🟪🟪🟦</Link>
