@@ -20,7 +20,7 @@ export interface TaskLog {
   completedAt: string; // ISO string
 }
 
-export type FlowerType = 'rose' | 'daisy' | 'tulip' | 'sunflower' | 'lotus' | 'cherry' | 'white_lotus';
+export type FlowerType = 'rose' | 'daisy' | 'tulip' | 'sunflower' | 'lotus' | 'cherry' | 'white_lotus' | 'passionflower';
 
 export interface TaskWithStatus extends Task {
   completedToday: boolean;

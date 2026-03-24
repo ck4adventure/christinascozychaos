@@ -15,7 +15,7 @@ export const getTaskIcon = (task: { emoji?: string; category: Category }): strin
 export const FLOWER_TYPES: FlowerType[] = ['rose', 'daisy', 'tulip', 'sunflower', 'lotus', 'cherry'];
 
 // Flowers reserved for the Seeking category
-const SEEKING_FLOWER_TYPES: FlowerType[] = ['white_lotus'];
+const SEEKING_FLOWER_TYPES: FlowerType[] = ['white_lotus', 'passionflower'];
 
 export const getRandomFlower = (): FlowerType =>
   FLOWER_TYPES[Math.floor(Math.random() * FLOWER_TYPES.length)];

@@ -124,6 +124,103 @@ const FLOWERS: Record<FlowerType, { bud: string; bloom: string; color: string; a
             <circle cx="12"   cy="13" r="0.8" fill="#c0647a"/>
             <line x1="12" y1="21" x2="12" y2="28" stroke="#6B3A2A" stroke-width="1.5"/>`,
   },
+  passionflower: {
+    color: '#9878c8',
+    accent: '#b090d8',
+    bud: `<path d="M12,12 C11.2,9.8 10.9,6.8 12,3 C13.1,6.8 12.8,9.8 12,12 Z" fill="#e8ddd0" stroke="#c4b09c" stroke-width="0.4"/>
+          <path d="M12,12 C11.2,9.8 10.9,6.8 12,3 C13.1,6.8 12.8,9.8 12,12 Z" fill="#ece2d4" stroke="#c4b09c" stroke-width="0.4" transform="rotate(36 12 12)"/>
+          <path d="M12,12 C11.2,9.8 10.9,6.8 12,3 C13.1,6.8 12.8,9.8 12,12 Z" fill="#e8ddd0" stroke="#c4b09c" stroke-width="0.4" transform="rotate(72 12 12)"/>
+          <path d="M12,12 C11.2,9.8 10.9,6.8 12,3 C13.1,6.8 12.8,9.8 12,12 Z" fill="#ece2d4" stroke="#c4b09c" stroke-width="0.4" transform="rotate(108 12 12)"/>
+          <path d="M12,12 C11.2,9.8 10.9,6.8 12,3 C13.1,6.8 12.8,9.8 12,12 Z" fill="#e8ddd0" stroke="#c4b09c" stroke-width="0.4" transform="rotate(144 12 12)"/>
+          <path d="M12,12 C11.2,9.8 10.9,6.8 12,3 C13.1,6.8 12.8,9.8 12,12 Z" fill="#ece2d4" stroke="#c4b09c" stroke-width="0.4" transform="rotate(180 12 12)"/>
+          <path d="M12,12 C11.2,9.8 10.9,6.8 12,3 C13.1,6.8 12.8,9.8 12,12 Z" fill="#e8ddd0" stroke="#c4b09c" stroke-width="0.4" transform="rotate(216 12 12)"/>
+          <path d="M12,12 C11.2,9.8 10.9,6.8 12,3 C13.1,6.8 12.8,9.8 12,12 Z" fill="#ece2d4" stroke="#c4b09c" stroke-width="0.4" transform="rotate(252 12 12)"/>
+          <path d="M12,12 C11.2,9.8 10.9,6.8 12,3 C13.1,6.8 12.8,9.8 12,12 Z" fill="#e8ddd0" stroke="#c4b09c" stroke-width="0.4" transform="rotate(288 12 12)"/>
+          <path d="M12,12 C11.2,9.8 10.9,6.8 12,3 C13.1,6.8 12.8,9.8 12,12 Z" fill="#ece2d4" stroke="#c4b09c" stroke-width="0.4" transform="rotate(324 12 12)"/>
+          <circle cx="12" cy="12" r="5" fill="#f0e6d8" stroke="#c8b49a" stroke-width="0.6"/>
+          <circle cx="12" cy="12" r="3.5" fill="#f8f0e4" stroke="#d0bfaa" stroke-width="0.5"/>
+          <circle cx="12" cy="12" r="2" fill="#fdf8f2"/>`,
+    bloom: `<path d="M12,12 C10.8,9.9 10.3,6.1 12,3 C13.7,6.1 13.2,9.9 12,12 Z" fill="#e8ddd0" stroke="#c4b09c" stroke-width="0.4"/>
+            <path d="M12,12 C10.8,9.9 10.3,6.1 12,3 C13.7,6.1 13.2,9.9 12,12 Z" fill="#ece2d4" stroke="#c4b09c" stroke-width="0.4" transform="rotate(36 12 12)"/>
+            <path d="M12,12 C10.8,9.9 10.3,6.1 12,3 C13.7,6.1 13.2,9.9 12,12 Z" fill="#e8ddd0" stroke="#c4b09c" stroke-width="0.4" transform="rotate(72 12 12)"/>
+            <path d="M12,12 C10.8,9.9 10.3,6.1 12,3 C13.7,6.1 13.2,9.9 12,12 Z" fill="#ece2d4" stroke="#c4b09c" stroke-width="0.4" transform="rotate(108 12 12)"/>
+            <path d="M12,12 C10.8,9.9 10.3,6.1 12,3 C13.7,6.1 13.2,9.9 12,12 Z" fill="#e8ddd0" stroke="#c4b09c" stroke-width="0.4" transform="rotate(144 12 12)"/>
+            <path d="M12,12 C10.8,9.9 10.3,6.1 12,3 C13.7,6.1 13.2,9.9 12,12 Z" fill="#ece2d4" stroke="#c4b09c" stroke-width="0.4" transform="rotate(180 12 12)"/>
+            <path d="M12,12 C10.8,9.9 10.3,6.1 12,3 C13.7,6.1 13.2,9.9 12,12 Z" fill="#e8ddd0" stroke="#c4b09c" stroke-width="0.4" transform="rotate(216 12 12)"/>
+            <path d="M12,12 C10.8,9.9 10.3,6.1 12,3 C13.7,6.1 13.2,9.9 12,12 Z" fill="#ece2d4" stroke="#c4b09c" stroke-width="0.4" transform="rotate(252 12 12)"/>
+            <path d="M12,12 C10.8,9.9 10.3,6.1 12,3 C13.7,6.1 13.2,9.9 12,12 Z" fill="#e8ddd0" stroke="#c4b09c" stroke-width="0.4" transform="rotate(288 12 12)"/>
+            <path d="M12,12 C10.8,9.9 10.3,6.1 12,3 C13.7,6.1 13.2,9.9 12,12 Z" fill="#ece2d4" stroke="#c4b09c" stroke-width="0.4" transform="rotate(324 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(0 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(12 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(24 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(36 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(48 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(60 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(72 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(84 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(96 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(108 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(120 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(132 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(144 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(156 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(168 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(180 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(192 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(204 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(216 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(228 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(240 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(252 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(264 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(276 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(288 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(300 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(312 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(324 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#9878c8" stroke-width="0.5" transform="rotate(336 12 12)"/>
+            <line x1="12" y1="7" x2="12" y2="3.5" stroke="#b090d8" stroke-width="0.5" transform="rotate(348 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(6 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(18 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(30 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(42 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(54 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(66 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(78 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(90 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(102 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(114 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(126 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(138 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(150 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(162 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(174 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(186 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(198 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(210 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(222 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(234 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(246 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(258 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(270 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(282 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(294 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(306 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(318 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(330 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(342 12 12)"/>
+            <line x1="12" y1="7.5" x2="12" y2="5.8" stroke="#c8a8e8" stroke-width="0.4" transform="rotate(354 12 12)"/>
+            <circle cx="12" cy="12" r="3.5" fill="#f0e8d8" stroke="#c8b49a" stroke-width="0.5"/>
+            <ellipse cx="12" cy="9.8" rx="0.65" ry="1.1" fill="#d4a820" stroke="#b89010" stroke-width="0.3"/>
+            <ellipse cx="12" cy="9.8" rx="0.65" ry="1.1" fill="#d4a820" stroke="#b89010" stroke-width="0.3" transform="rotate(72 12 12)"/>
+            <ellipse cx="12" cy="9.8" rx="0.65" ry="1.1" fill="#d4a820" stroke="#b89010" stroke-width="0.3" transform="rotate(144 12 12)"/>
+            <ellipse cx="12" cy="9.8" rx="0.65" ry="1.1" fill="#d4a820" stroke="#b89010" stroke-width="0.3" transform="rotate(216 12 12)"/>
+            <ellipse cx="12" cy="9.8" rx="0.65" ry="1.1" fill="#d4a820" stroke="#b89010" stroke-width="0.3" transform="rotate(288 12 12)"/>
+            <circle cx="12" cy="10.3" r="0.9" fill="#8a6090" stroke="#6a4070" stroke-width="0.4" transform="rotate(0 12 12)"/>
+            <circle cx="12" cy="10.3" r="0.9" fill="#8a6090" stroke="#6a4070" stroke-width="0.4" transform="rotate(120 12 12)"/>
+            <circle cx="12" cy="10.3" r="0.9" fill="#8a6090" stroke="#6a4070" stroke-width="0.4" transform="rotate(240 12 12)"/>
+            <circle cx="12" cy="12" r="1.3" fill="#fdf8f0" stroke="#d0c0a0" stroke-width="0.4"/>`,
+  },
 };
 
 export default function Flower({ type, bloomed, size = 32 }: FlowerProps) {
