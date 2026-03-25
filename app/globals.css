@@ -91,10 +91,10 @@
   --color-bg-chip:              color-mix(in srgb, var(--amber) 8%, transparent); /* 8% vs dark 6% */
 
   /* Text — light theme uses darker plum tones not in the overridden palette vars */
-  --color-text-muted:           rgba(106, 74, 94, 0.8);
-  --color-text-muted-soft:      rgba(106, 74, 94, 0.65);
-  --color-text-faint:           rgba(58, 32, 48, 0.4);
-  --color-text-faded:           rgba(58, 32, 48, 0.55);
+  --color-text-muted:           rgba(106, 74, 94, 0.9);
+  --color-text-muted-soft:      rgba(106, 74, 94, 0.82);
+  --color-text-faint:           rgba(58, 32, 48, 0.6);
+  --color-text-faded:           rgba(58, 32, 48, 0.7);
 
   /* Backgrounds */
   --color-bg-blossom:           #ffffff;
@@ -134,6 +134,10 @@
 
 [data-theme="light"] .page::before {
   opacity: 0.15;
+}
+
+[data-theme="light"] .blossom-nav-item--logout {
+  opacity: 0.65;
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────────────── */
@@ -1658,6 +1662,151 @@ body {
   .blossom-nav-item--logout:hover {
     opacity: 0.75;
   }
+}
+
+/* ─── History View ───────────────────────────────────────────────────────── */
+
+.history-root {
+  padding: 0 0 100px;
+}
+
+.history-heading {
+  font-family: var(--font-cormorant), serif;
+  font-size: 1.7rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-text-body);
+  margin-bottom: 18px;
+  padding: 4px 0;
+}
+
+.history-filters {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 22px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.history-chip {
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border-default);
+  background: transparent;
+  color: var(--color-text-faint);
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.history-chip--active {
+  border-color: var(--color-border-active);
+  background: var(--color-bg-chip);
+  color: var(--amber);
+}
+
+.history-empty {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.history-empty-text {
+  font-family: var(--font-cormorant), serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+}
+
+.history-day {
+  margin-bottom: 24px;
+}
+
+.history-day-label {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+
+.history-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-task-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  background: var(--color-bg-task-card);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: opacity 0.15s;
+}
+
+.history-task-row--done {
+  border: 1px solid rgba(232, 160, 32, 0.3);
+}
+
+.history-task-row--pending {
+  border: 1px solid rgba(155, 96, 144, 0.3);
+}
+
+.history-task-status {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--amber);
+}
+
+.history-task-status--pending {
+  border: 1.5px dashed rgba(155, 96, 144, 0.5);
+}
+
+.history-task-icon {
+  font-size: 1rem;
+}
+
+.history-task-name {
+  flex: 1;
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.88rem;
+  color: var(--color-text-body);
+  letter-spacing: 0.03em;
+}
+
+.history-task-name--pending {
+  opacity: 0.55;
+}
+
+.history-task-time {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+
+.history-task-time--done {
+  color: var(--color-text-muted-soft);
+}
+
+.history-task-time--pending {
+  color: var(--color-text-muted);
 }
 
 /* ─── Login Page ─────────────────────────────────────────────────────────── */
