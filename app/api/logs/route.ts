@@ -24,10 +24,13 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { taskId } = await request.json();
+    const { taskId, completedAt } = await request.json();
 
     const log = await prisma.taskLog.create({
-      data: { taskId },
+      data: {
+        taskId,
+        ...(completedAt ? { completedAt: new Date(completedAt) } : {}),
+      },
     });
 
     return NextResponse.json(

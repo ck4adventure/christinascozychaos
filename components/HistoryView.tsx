@@ -3,35 +3,51 @@
 import { useState } from 'react';
 import { Task, TaskLog, Category } from '@/types';
 import { CATEGORY_CONFIG, getTaskIcon } from '@/lib/data';
-import { formatDateTime, isToday } from '@/lib/storage';
+import { formatDateTime, isOnDate } from '@/lib/storage';
+import { isTaskForDay } from '@/lib/taskFilter';
 
 interface HistoryViewProps {
   logs: TaskLog[];
   tasks: Task[];
+  onToggle: (taskId: string, date: Date) => void;
 }
 
-export default function HistoryView({ logs, tasks }: HistoryViewProps) {
+export default function HistoryView({ logs, tasks, onToggle }: HistoryViewProps) {
   const [filterCategory, setFilterCategory] = useState<Category | 'all'>('all');
 
-  const taskMap = Object.fromEntries(tasks.map((t) => [t.id, t]));
-
-  const enrichedLogs = logs
-    .map((log) => ({ ...log, task: taskMap[log.taskId] }))
-    .filter((log) => log.task)
-    .filter((log) => filterCategory === 'all' || log.task.category === filterCategory)
-    .sort((a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime());
-
-  // Group by date label
-  const grouped: Record<string, typeof enrichedLogs> = {};
-  enrichedLogs.forEach((log) => {
-    const label = isToday(log.completedAt)
-      ? 'Today'
-      : new Date(log.completedAt).toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-    if (!grouped[label]) grouped[label] = [];
-    grouped[label].push(log);
-  });
-
   const CATEGORIES = Object.keys(CATEGORY_CONFIG) as Category[];
+
+  // Build last 7 days (yesterday → 7 days ago), excluding today
+  const pastDays: Array<{
+    date: Date;
+    label: string;
+    entries: Array<{ task: Task; log: TaskLog | undefined }>;
+  }> = [];
+
+  for (let i = 1; i <= 7; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    d.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(d);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    const dueTasks = tasks
+      .filter((t) => new Date(t.createdAt) <= endOfDay)
+      .filter((t) => isTaskForDay(t, d.getDay(), d.getDate()))
+      .filter((t) => filterCategory === 'all' || t.category === filterCategory);
+
+    if (dueTasks.length === 0) continue;
+
+    pastDays.push({
+      date: d,
+      label: d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }),
+      entries: dueTasks.map((task) => ({
+        task,
+        log: logs.find((l) => l.taskId === task.id && isOnDate(l.completedAt, d)),
+      })),
+    });
+  }
 
   return (
     <div style={{ padding: '0 0 100px' }}>
@@ -73,15 +89,15 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
         ))}
       </div>
 
-      {Object.keys(grouped).length === 0 ? (
+      {pastDays.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '60px 20px' }}>
           <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', fontSize: '1.1rem', color: 'var(--color-text-muted)' }}>
-            Nothing logged yet. Go complete something! 🌸
+            Nothing scheduled in the last 7 days. 🌸
           </p>
         </div>
       ) : (
-        Object.entries(grouped).map(([dateLabel, entries]) => (
-          <div key={dateLabel} style={{ marginBottom: '24px' }}>
+        pastDays.map(({ date, label, entries }) => (
+          <div key={label} style={{ marginBottom: '24px' }}>
             <p style={{
               fontFamily: "var(--font-josefin), sans-serif",
               fontSize: '0.68rem',
@@ -91,14 +107,16 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
               color: 'var(--color-text-muted)',
               marginBottom: '10px',
             }}>
-              {dateLabel}
+              {label}
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {entries.map((log) => {
-                const { time } = formatDateTime(log.completedAt);
+              {entries.map(({ task, log }) => {
+                const done = !!log;
+                const time = log ? formatDateTime(log.completedAt).time : null;
                 return (
-                  <div
-                    key={log.id}
+                  <button
+                    key={task.id}
+                    onClick={() => onToggle(task.id, date)}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -106,29 +124,55 @@ export default function HistoryView({ logs, tasks }: HistoryViewProps) {
                       padding: '11px 14px',
                       borderRadius: '12px',
                       background: 'var(--color-bg-task-card)',
-                      border: '1px solid var(--color-border-soft)',
+                      border: done
+                        ? '1px solid rgba(232, 160, 32, 0.3)'
+                        : '1px solid rgba(155, 96, 144, 0.3)',
+                      cursor: 'pointer',
+                      width: '100%',
+                      textAlign: 'left',
+                      transition: 'opacity 0.15s',
                     }}
                   >
-                    <span style={{ fontSize: '1rem' }}>{getTaskIcon(log.task)}</span>
+                    {/* Status indicator */}
+                    <span style={{
+                      width: '18px',
+                      height: '18px',
+                      borderRadius: '50%',
+                      flexShrink: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      border: done ? 'none' : '1.5px dashed rgba(155, 96, 144, 0.5)',
+                      background: done ? 'transparent' : 'transparent',
+                      fontSize: '0.75rem',
+                      color: 'var(--amber)',
+                    }}>
+                      {done ? '✓' : ''}
+                    </span>
+
+                    <span style={{ fontSize: '1rem' }}>{getTaskIcon(task)}</span>
+
                     <span style={{
                       flex: 1,
                       fontFamily: "var(--font-josefin), sans-serif",
                       fontSize: '0.88rem',
                       color: 'var(--color-text-body)',
                       letterSpacing: '0.03em',
+                      opacity: done ? 1 : 0.55,
                     }}>
-                      {log.task.name}
+                      {task.name}
                     </span>
+
                     <span style={{
                       fontFamily: "var(--font-josefin), sans-serif",
-                      fontSize: '0.68rem',
+                      fontSize: '0.65rem',
                       fontWeight: 200,
                       letterSpacing: '0.1em',
-                      color: 'var(--color-text-muted-soft)',
+                      color: done ? 'var(--color-text-muted-soft)' : 'rgba(155, 96, 144, 0.6)',
                     }}>
-                      {time}
+                      {done ? time : 'tap to log'}
                     </span>
-                  </div>
+                  </button>
                 );
               })}
             </div>

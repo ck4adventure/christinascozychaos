@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Task, TaskLog, TaskWithStatus } from '@/types';
-import { isToday } from '@/lib/storage';
+import { isToday, isOnDate } from '@/lib/storage';
 
 export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -74,6 +74,31 @@ export function useTasks() {
     [logs]
   );
 
+  const toggleTaskForDate = useCallback(
+    async (taskId: string, date: Date) => {
+      const normalizedDate = new Date(date);
+      normalizedDate.setHours(12, 0, 0, 0);
+
+      const existingLog = logs.find(
+        (l) => l.taskId === taskId && isOnDate(l.completedAt, normalizedDate)
+      );
+
+      if (existingLog) {
+        setLogs((prev) => prev.filter((l) => l.id !== existingLog.id));
+        await fetch(`/api/logs/${existingLog.id}`, { method: 'DELETE' });
+      } else {
+        const res = await fetch('/api/logs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ taskId, completedAt: normalizedDate.toISOString() }),
+        });
+        const { log } = await res.json();
+        setLogs((prev) => [...prev, log]);
+      }
+    },
+    [logs]
+  );
+
   const deleteTask = useCallback(
     async (taskId: string) => {
       // Optimistic remove
@@ -106,6 +131,7 @@ export function useTasks() {
     loading,
     addTask,
     toggleTask,
+    toggleTaskForDate,
     deleteTask,
     editTask,
   };

@@ -41,6 +41,13 @@ export const isToday = (isoString: string): boolean => {
     d.getDate() === now.getDate();
 };
 
+export const isOnDate = (isoString: string, date: Date): boolean => {
+  const d = new Date(isoString);
+  return d.getFullYear() === date.getFullYear() &&
+    d.getMonth() === date.getMonth() &&
+    d.getDate() === date.getDate();
+};
+
 export const formatDateTime = (isoString: string): { date: string; time: string } => {
   const d = new Date(isoString);
   return {

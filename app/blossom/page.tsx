@@ -16,7 +16,7 @@ type Tab = 'today' | 'schedule' | 'history' | 'add';
 const DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export default function TrackerPage() {
-  const { tasks, logs, tasksWithStatus, loading, addTask, toggleTask, deleteTask, editTask } = useTasks();
+  const { tasks, logs, tasksWithStatus, loading, addTask, toggleTask, toggleTaskForDate, deleteTask, editTask } = useTasks();
   const [tab, setTab] = useState<Tab>('today');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
@@ -107,7 +107,7 @@ export default function TrackerPage() {
         )}
 
         {/* HISTORY VIEW */}
-        {tab === 'history' && <HistoryView logs={logs} tasks={tasks} />}
+        {tab === 'history' && <HistoryView logs={logs} tasks={tasks} onToggle={toggleTaskForDate} />}
 
         {/* SCHEDULE VIEW */}
         {tab === 'schedule' && (
