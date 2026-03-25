@@ -1,9 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { Task, Category, Frequency } from '@/types';
 import { CATEGORY_CONFIG, TASK_LIBRARY } from '@/lib/data';
 import { ordinal } from '@/lib/taskFilter';
+
+const EmojiPicker = dynamic(() => import('@emoji-mart/react'), { ssr: false });
 
 interface TaskModalProps {
   editingTask?: Task | null;
@@ -26,6 +29,8 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onDe
   const [dayOfWeek, setDayOfWeek] = useState<number>(editingTask?.dayOfWeek ?? 0);
   const [dayOfMonth, setDayOfMonth] = useState<number>(editingTask?.dayOfMonth ?? 1);
   const [libraryFilter, setLibraryFilter] = useState<Category | 'all'>('all');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const emojiPickerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (editingTask) {
@@ -38,6 +43,17 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onDe
       setTab('custom');
     }
   }, [editingTask]);
+
+  useEffect(() => {
+    if (!showEmojiPicker) return;
+    const handler = (e: MouseEvent) => {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(e.target as Node)) {
+        setShowEmojiPicker(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [showEmojiPicker]);
 
   const handleSave = () => {
     if (!name.trim()) return;
@@ -176,23 +192,31 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onDe
                   autoFocus
                 />
               </div>
-              <div>
+              <div style={{ position: 'relative' }} ref={emojiPickerRef}>
                 <label style={{ fontFamily: "var(--font-josefin), sans-serif", fontSize: '0.7rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)', display: 'block', marginBottom: '6px' }}>
                   Icon
                 </label>
-                <input
-                  style={{ ...inputStyle, width: '56px', textAlign: 'center', fontSize: '1.3rem', padding: '8px', cursor: 'text' }}
-                  value={emoji}
-                  onChange={(e) => {
-                    // Use Segmenter to split by grapheme clusters so multi-codepoint
-                    // emoji (e.g. 🗑️ = base + variation selector) stay together
-                    const val = e.target.value;
-                    const segments = [...new Intl.Segmenter().segment(val)];
-                    setEmoji(segments.length > 0 ? segments[segments.length - 1].segment : '');
-                  }}
-                  placeholder="✨"
-                  maxLength={8}
-                />
+                <button
+                  type="button"
+                  onClick={() => setShowEmojiPicker((v) => !v)}
+                  style={{ ...inputStyle, width: '56px', textAlign: 'center', fontSize: '1.3rem', padding: '8px', cursor: 'pointer' }}
+                >
+                  {emoji || '✨'}
+                </button>
+                {showEmojiPicker && (
+                  <div style={{ position: 'absolute', top: '100%', right: 0, zIndex: 200, marginTop: '4px' }}>
+                    <EmojiPicker
+                      onEmojiSelect={(e: { native: string }) => {
+                        setEmoji(e.native);
+                        setShowEmojiPicker(false);
+                      }}
+                      theme="auto"
+                      previewPosition="none"
+                      skinTonePosition="none"
+                      dynamicWidth={false}
+                    />
+                  </div>
+                )}
               </div>
             </div>
 

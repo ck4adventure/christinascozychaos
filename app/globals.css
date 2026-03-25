@@ -37,8 +37,8 @@
   --color-text-heading:         var(--cream-light);
   --color-text-body:            var(--cream);
   --color-text-muted:           color-mix(in srgb, var(--plum-light) 80%, transparent);
-  --color-text-muted-soft:      color-mix(in srgb, var(--plum-light) 65%, transparent);
-  --color-text-faint:           color-mix(in srgb, var(--cream) 50%, transparent);
+  --color-text-muted-soft:      color-mix(in srgb, var(--plum-light) 85%, transparent);
+  --color-text-faint:           color-mix(in srgb, var(--cream) 70%, transparent);
   --color-text-faded:           color-mix(in srgb, var(--cream) 65%, transparent);
 
   /* Backgrounds */
@@ -58,7 +58,7 @@
   --color-cta-text:             var(--dark);
 
   /* Borders */
-  --color-border-default:       color-mix(in srgb, var(--plum-mid) 30%, transparent);
+  --color-border-default:       color-mix(in srgb, var(--plum-mid) 60%, transparent);
   --color-border-active:        color-mix(in srgb, var(--amber) 45%, transparent);
   --color-border-soft:          color-mix(in srgb, var(--plum-mid) 25%, transparent);
   --color-border-input:         color-mix(in srgb, var(--plum-mid) 50%, transparent);
@@ -100,7 +100,7 @@
   --color-bg-blossom:           #ffffff;
   --color-bg-task-card:         linear-gradient(135deg, rgba(123,63,110,0.07), rgba(239,224,212,0.55));
   --color-bg-task-card-done:    linear-gradient(135deg, rgba(123,63,110,0.14), rgba(239,224,212,0.75));
-  --color-bg-modal-sheet:       linear-gradient(160deg, #EFE0D4, #FAF3EC);
+  --color-bg-modal-sheet:       linear-gradient(160deg, #FAF5EF, #ffffff);
   --color-bg-input:             rgba(239, 224, 212, 0.8);
   --color-bg-library-item:      rgba(239, 224, 212, 0.5);
   --color-bg-nav:               linear-gradient(0deg, rgba(250,243,236,0.97) 0%, rgba(239,224,212,0.95) 100%);
@@ -468,7 +468,7 @@ body {
   text-transform: uppercase;
   font-weight: 400;
   color: var(--amber);
-  opacity: 0.65;
+  opacity: 0.9;
   text-decoration: none;
   margin-bottom: 2.5rem;
   transition: opacity 0.2s ease;
@@ -1261,7 +1261,7 @@ body {
   text-transform: uppercase;
   font-weight: 400;
   color: var(--amber);
-  opacity: 0.7;
+  opacity: 0.95;
   min-width: 2.5rem;
   text-align: left;
 }
