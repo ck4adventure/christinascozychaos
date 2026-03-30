@@ -601,7 +601,7 @@ body {
 
 .bowl-card-total {
   font-family: var(--font-josefin), sans-serif;
-  font-size: 0.65rem;
+  font-size: 1.15rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 400;
