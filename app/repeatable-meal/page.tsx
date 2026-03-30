@@ -4,25 +4,13 @@ import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { Spark, generateSparks } from "../utils/sparks";
 
-type SolidItem = {
+type Item = {
   name: string;
-  grams: number;
+  defaultQty: number;
   calories: number;
-};
-
-type LiquidItem = {
-  name: string;
-  ounces: number;
-  maxOunces: number;
-  gramsPerOunce: number;
-  calories: number; // calories for referenceGrams
-  referenceGrams: number;
-};
-
-type EggGroup = {
-  defaultPieces: number;
-  maxPieces: number;
-  caloriesPerPiece: number;
+  unit: string;
+  step: number;
+  max: number;
 };
 
 const floatingOrbs = [
@@ -32,89 +20,79 @@ const floatingOrbs = [
   { size: 220, x: 88, y: 5, delay: 1, duration: 22 },
 ];
 
+const BOWL_ITEMS: Item[] = [
+  { name: "Brown Rice",      defaultQty: 63,  calories: 73,  unit: "g",   step: 1,  max: 150 },
+  { name: "Quinoa",          defaultQty: 80,  calories: 83,  unit: "g",   step: 1,  max: 200 },
+  { name: "Black Beans",     defaultQty: 100, calories: 50,  unit: "g",   step: 1,  max: 250 },
+  { name: "Sweet Potato",    defaultQty: 150, calories: 63,  unit: "g",   step: 5,  max: 350 },
+  { name: "Spinach",         defaultQty: 90,  calories: 10,  unit: "g",   step: 1,  max: 200 },
+  { name: "Bell Pepper",     defaultQty: 75,  calories: 19,  unit: "g",   step: 1,  max: 200 },
+  { name: "Olive Oil",       defaultQty: 10,  calories: 89,  unit: "g",   step: 1,  max: 30  },
+  { name: "Flaxseed",        defaultQty: 7,   calories: 37,  unit: "g",   step: 1,  max: 20  },
+  { name: "Pepitas",         defaultQty: 20,  calories: 115, unit: "g",   step: 1,  max: 50  },
+  { name: "Tahini",          defaultQty: 30,  calories: 178, unit: "g",   step: 1,  max: 60  },
+  { name: "Nutritional Yeast", defaultQty: 10, calories: 35, unit: "g",   step: 1,  max: 30  },
+  { name: "Lemon Juice",     defaultQty: 15,  calories: 2,   unit: "g",   step: 1,  max: 45  },
+];
+
+const EGG_ITEMS: Item[] = [
+  { name: "Egg Pieces", defaultQty: 4, calories: 245, unit: "pcs", step: 1, max: 12 },
+];
+
+// Strawberries and blueberries default to 0 (optional); banana is included by default
+const FRUIT_DEFAULTS = [0, 0, 60];
+const FRUIT_ITEMS: Item[] = [
+  { name: "Strawberries",     defaultQty: 150, calories: 48, unit: "g", step: 10, max: 300 },
+  { name: "Wild Blueberries", defaultQty: 75,  calories: 40, unit: "g", step: 5,  max: 200 },
+  { name: "Banana",           defaultQty: 60,  calories: 53, unit: "g", step: 5,  max: 150 },
+];
+
+const FERMENT_ITEMS: Item[] = [
+  { name: "Kefir",      defaultQty: 8,   calories: 160, unit: "oz", step: 1,  max: 16  },
+  { name: "Sauerkraut", defaultQty: 30,  calories: 5,   unit: "g", step: 5,  max: 100 },
+];
+
+function groupCalories(items: Item[], values: number[]): number {
+  return items.reduce((sum, item, i) => {
+    return sum + values[i] * (item.calories / item.defaultQty);
+  }, 0);
+}
+
 export default function BowlTrackerPage() {
   const [mounted, setMounted] = useState(false);
   const [sparks, setSparks] = useState<Spark[]>([]);
 
-  // ----- Main Bowl -----
-  const [main, setMain] = useState<SolidItem[]>([
-    { name: "Brown Rice", grams: 75, calories: 97 },
-    { name: "Black Beans", grams: 80, calories: 105 },
-    { name: "Quinoa", grams: 70, calories: 84 },
-    { name: "Spinach", grams: 70, calories: 20 },
-    { name: "Red Bell Pepper", grams: 80, calories: 23 },
-    { name: "Pepitas", grams: 15, calories: 86 },
-    { name: "Nutritional Yeast", grams: 10, calories: 40 },
-    { name: "Flaxseed", grams: 10, calories: 55 },
-    { name: "Olive Oil", grams: 5, calories: 45 },
-    { name: "Lemon Juice", grams: 20, calories: 5 },
-  ]);
-
-  // Track current gram values separately
-  const [mainValues, setMainValues] = useState(
-    main.map((item) => item.grams)
-  );
-
-  // ----- Deviled Eggs -----
-  const eggGroup: EggGroup = {
-    defaultPieces: 4,
-    maxPieces: 8,
-    caloriesPerPiece: (140 + 70 + 5) / 4,
-  };
-
-  const [eggPieces, setEggPieces] = useState(eggGroup.defaultPieces);
-
-  // ----- Kefir & Strawberries -----
-  const [kefirOunces, setKefirOunces] = useState(4);
-
-  const strawberries: SolidItem = {
-    name: "Strawberries",
-    grams: 170,
-    calories: 55,
-  };
-
-  const [strawberryGrams, setStrawberryGrams] = useState(170);
-
-  const kefir: LiquidItem = {
-    name: "Whole Milk Kefir",
-    ounces: 4,
-    maxOunces: 8,
-    gramsPerOunce: 29.57,
-    calories: 75,
-    referenceGrams: 120,
-  };
+  const [bowlValues, setBowlValues] = useState(BOWL_ITEMS.map((i) => i.defaultQty));
+  const [eggValues, setEggValues] = useState(EGG_ITEMS.map((i) => i.defaultQty));
+  const [fruitValues, setFruitValues] = useState(FRUIT_DEFAULTS);
+  const [fermentValues, setFermentValues] = useState(FERMENT_ITEMS.map((i) => i.defaultQty));
 
   useEffect(() => {
     setMounted(true);
     setSparks(generateSparks(14));
   }, []);
 
-  // ----- Calculations -----
+  const bowlTotal = useMemo(() => groupCalories(BOWL_ITEMS, bowlValues), [bowlValues]);
+  const eggTotal = useMemo(() => groupCalories(EGG_ITEMS, eggValues), [eggValues]);
+  const fruitTotal = useMemo(() => groupCalories(FRUIT_ITEMS, fruitValues), [fruitValues]);
+  const fermentTotal = useMemo(() => groupCalories(FERMENT_ITEMS, fermentValues), [fermentValues]);
 
-  const mainTotal = useMemo(() => {
-    return main.reduce((sum, item, index) => {
-      const grams = mainValues[index];
-      const calPerGram = item.calories / item.grams;
-      return sum + grams * calPerGram;
-    }, 0);
-  }, [main, mainValues]);
+  const sideTotal = eggTotal + fruitTotal + fermentTotal;
+  const grandTotal = bowlTotal + sideTotal;
 
-  const eggTotal = eggPieces * eggGroup.caloriesPerPiece;
+  const makeUpdater =
+    (setter: React.Dispatch<React.SetStateAction<number[]>>) =>
+    (index: number, val: number) =>
+      setter((prev) => {
+        const next = [...prev];
+        next[index] = val;
+        return next;
+      });
 
-  const kefirTotal = useMemo(() => {
-    const grams = kefirOunces * kefir.gramsPerOunce;
-    const calPerGram = kefir.calories / kefir.referenceGrams;
-    return grams * calPerGram;
-  }, [kefirOunces]);
-
-  const strawberryTotal = useMemo(() => {
-    const calPerGram = strawberries.calories / strawberries.grams;
-    return strawberryGrams * calPerGram;
-  }, [strawberryGrams]);
-
-  const grandTotal = mainTotal + eggTotal + kefirTotal + strawberryTotal;
-
-  // ----- UI -----
+  const updateBowl = makeUpdater(setBowlValues);
+  const updateEgg = makeUpdater(setEggValues);
+  const updateFruit = makeUpdater(setFruitValues);
+  const updateFerment = makeUpdater(setFermentValues);
 
   return (
     <div className="bowl-page">
@@ -165,66 +143,89 @@ export default function BowlTrackerPage() {
           <p className="bowl-grand-label">kcal total</p>
         </div>
 
-        {/* Main Bowl */}
-        <Section title="Main Bowl" total={mainTotal}>
-          {main.map((item, index) => {
-            const value = mainValues[index];
-            const calPerGram = item.calories / item.grams;
-            const itemCalories = value * calPerGram;
+        <div className="bowl-sections">
+          {/* Bowl — full width, 2-col grid */}
+          <Section title="Bowl" total={bowlTotal}>
+            <div className="bowl-items-grid">
+              {BOWL_ITEMS.map((item, index) => {
+                const value = bowlValues[index];
+                return (
+                  <NumberInputRow
+                    key={item.name}
+                    label={item.name}
+                    min={0}
+                    max={item.max}
+                    step={item.step}
+                    value={value}
+                    onChange={(val) => updateBowl(index, val)}
+                    unit={item.unit}
+                    calories={value * (item.calories / item.defaultQty)}
+                  />
+                );
+              })}
+            </div>
+          </Section>
 
-            return (
-              <SliderRow
-                key={item.name}
-                label={item.name}
-                min={0}
-                max={item.grams * 2}
-                step={1}
-                value={value}
-                onChange={(val) => {
-                  const updated = [...mainValues];
-                  updated[index] = val;
-                  setMainValues(updated);
-                }}
-                display={`${value}g · ${itemCalories.toFixed(0)} kcal`}
-              />
-            );
-          })}
-        </Section>
+          {/* On the Side — Deviled Eggs | Ferments, then Fruits */}
+          <div className="bowl-row-pair">
+            <Section title="Deviled Eggs" total={eggTotal}>
+              {EGG_ITEMS.map((item, index) => {
+                const value = eggValues[index];
+                return (
+                  <NumberInputRow
+                    key={item.name}
+                    label={item.name}
+                    min={0}
+                    max={item.max}
+                    step={item.step}
+                    value={value}
+                    onChange={(val) => updateEgg(index, val)}
+                    unit={item.unit}
+                    calories={value * (item.calories / item.defaultQty)}
+                  />
+                );
+              })}
+            </Section>
 
-        {/* Deviled Eggs */}
-        <Section title="Deviled Eggs" total={eggTotal}>
-          <SliderRow
-            label="Egg Pieces"
-            min={0}
-            max={eggGroup.maxPieces}
-            step={1}
-            value={eggPieces}
-            onChange={(val) => setEggPieces(val)}
-            display={`${eggPieces} pieces · ${eggTotal.toFixed(0)} kcal`}
-          />
-        </Section>
+            <Section title="Ferments" total={fermentTotal}>
+              {FERMENT_ITEMS.map((item, index) => {
+                const value = fermentValues[index];
+                return (
+                  <NumberInputRow
+                    key={item.name}
+                    label={item.name}
+                    min={0}
+                    max={item.max}
+                    step={item.step}
+                    value={value}
+                    onChange={(val) => updateFerment(index, val)}
+                    unit={item.unit}
+                    calories={value * (item.calories / item.defaultQty)}
+                  />
+                );
+              })}
+            </Section>
+          </div>
 
-        {/* Kefir & Strawberries */}
-        <Section title="Kefir & Strawberries" total={kefirTotal + strawberryTotal}>
-          <SliderRow
-            label="Whole Milk Kefir"
-            min={0}
-            max={kefir.maxOunces}
-            step={0.1}
-            value={kefirOunces}
-            onChange={(val) => setKefirOunces(val)}
-            display={`${kefirOunces.toFixed(1)} fl oz · ${kefirTotal.toFixed(0)} kcal`}
-          />
-          <SliderRow
-            label="Strawberries"
-            min={0}
-            max={strawberries.grams * 2}
-            step={1}
-            value={strawberryGrams}
-            onChange={(val) => setStrawberryGrams(val)}
-            display={`${strawberryGrams}g · ${strawberryTotal.toFixed(0)} kcal`}
-          />
-        </Section>
+          <Section title="Fruits" total={fruitTotal}>
+            {FRUIT_ITEMS.map((item, index) => {
+              const value = fruitValues[index];
+              return (
+                <NumberInputRow
+                  key={item.name}
+                  label={item.name}
+                  min={0}
+                  max={item.max}
+                  step={item.step}
+                  value={value}
+                  onChange={(val) => updateFruit(index, val)}
+                  unit={item.unit}
+                  calories={value * (item.calories / item.defaultQty)}
+                />
+              );
+            })}
+          </Section>
+        </div>
       </div>
 
       <div className="corner corner-tl" />
@@ -254,14 +255,15 @@ function Section({
   );
 }
 
-function SliderRow({
+function NumberInputRow({
   label,
   min,
   max,
   step,
   value,
   onChange,
-  display,
+  unit,
+  calories,
 }: {
   label: string;
   min: number;
@@ -269,23 +271,68 @@ function SliderRow({
   step: number;
   value: number;
   onChange: (val: number) => void;
-  display: string;
+  unit: string;
+  calories: number;
 }) {
+  const decimals = step < 1 ? 1 : 0;
+  const [inputStr, setInputStr] = useState(value.toFixed(decimals));
+
+  useEffect(() => {
+    setInputStr(value.toFixed(decimals));
+  }, [value, decimals]);
+
+  const commit = (str: string) => {
+    const parsed = parseFloat(str);
+    if (!isNaN(parsed)) {
+      onChange(Math.min(max, Math.max(min, parsed)));
+    } else {
+      setInputStr(value.toFixed(decimals));
+    }
+  };
+
+  const decrement = () => {
+    const next = parseFloat(Math.max(min, value - step).toFixed(10));
+    onChange(next);
+  };
+
+  const increment = () => {
+    const next = parseFloat(Math.min(max, value + step).toFixed(10));
+    onChange(next);
+  };
+
   return (
     <div className="bowl-row">
       <div className="bowl-row-header">
-        <span className="bowl-row-name">{label}</span>
-        <span className="bowl-row-value">{display}</span>
+        <span className="bowl-row-name">{label} <span className="bowl-row-unit">({unit})</span></span>
+        <span className="bowl-row-value">{calories.toFixed(0)} kcal</span>
       </div>
-      <input
-        type="range"
-        className="bowl-slider"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
-      />
+      <div className="bowl-stepper">
+        <button
+          className="bowl-stepper-btn"
+          onClick={decrement}
+          aria-label={`Decrease ${label}`}
+        >
+          −
+        </button>
+        <input
+          type="number"
+          className="bowl-stepper-input"
+          value={inputStr}
+          onChange={(e) => setInputStr(e.target.value)}
+          onBlur={(e) => commit(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && commit(inputStr)}
+          min={min}
+          max={max}
+          step={step}
+        />
+        <button
+          className="bowl-stepper-btn"
+          onClick={increment}
+          aria-label={`Increase ${label}`}
+        >
+          +
+        </button>
+      </div>
     </div>
   );
 }
