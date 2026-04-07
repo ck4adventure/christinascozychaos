@@ -16,6 +16,8 @@ const shoppingList = {
 	],
 	"Fruit": [
 		{ item: "Strawberries", amount: "900g / 6 cups", note: "slice fresh before serving" },
+		{ item: "Wild blueberries (frozen)", amount: "450g", note: "optional — 75g per bowl" },
+		{ item: "Bananas", amount: "3 medium", note: "optional — 60g per bowl, slice fresh" },
 	],
 	"Protein & Dairy": [
 		{ item: "Large eggs", amount: "12", note: "boiled weekly" },

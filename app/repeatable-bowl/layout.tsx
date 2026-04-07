@@ -13,9 +13,9 @@ const floatingOrbs = [
 ];
 
 const tabs = [
+	{ id: "build",    label: "The Bowl", emoji: "🥣", href: "/repeatable-bowl/build" },
 	{ id: "shopping", label: "Shopping", emoji: "🛒", href: "/repeatable-bowl/shopping" },
 	{ id: "prep",     label: "Prep Day", emoji: "👩‍🍳", href: "/repeatable-bowl/prep" },
-	{ id: "build",    label: "The Bowl", emoji: "🥣", href: "/repeatable-bowl/build" },
 	{ id: "calories", label: "Calories", emoji: "🍲", href: "/repeatable-bowl/calories" },
 	{ id: "storage",  label: "Storage",  emoji: "🧊", href: "/repeatable-bowl/storage" },
 ];

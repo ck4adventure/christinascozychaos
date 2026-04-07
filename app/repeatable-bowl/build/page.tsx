@@ -19,6 +19,11 @@ const sides = [
 	{ item: "Strawberries", amount: "1 cup, sliced fresh", emoji: "🍓" },
 ];
 
+const optionalFruits = [
+	{ item: "Wild blueberries", amount: "75g", emoji: "🫐" },
+	{ item: "Banana", amount: "60g, sliced", emoji: "🍌" },
+];
+
 export default function BuildPage() {
 	return (
 		<div>
@@ -43,6 +48,16 @@ export default function BuildPage() {
 						<span className="prep-list-emoji">{side.emoji}</span>
 						<span className="prep-list-name">{side.item}</span>
 						<span className="prep-list-amount">{side.amount}</span>
+					</div>
+				))}
+			</div>
+			<h3 className="prep-list-subheader">Optional Fruit Add-Ons</h3>
+			<div className="prep-list-card">
+				{optionalFruits.map((fruit) => (
+					<div key={fruit.item} className="prep-list-row">
+						<span className="prep-list-emoji">{fruit.emoji}</span>
+						<span className="prep-list-name">{fruit.item}</span>
+						<span className="prep-list-amount">{fruit.amount}</span>
 					</div>
 				))}
 			</div>
