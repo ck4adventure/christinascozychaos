@@ -63,7 +63,9 @@ export default function BuildPage() {
 			</div>
 			<div className="prep-note">
 				<p className="prep-note-text">
-					<strong className="prep-note-strong">Option A:</strong> Pre-assemble all 6 bowls, reheat base and add fresh sides when eating.{" "}
+					<strong className="prep-note-strong">Option A:</strong> Pre-assemble all 6 bowls, reheat base and add fresh sides when eating.
+					</p>
+				<p className="prep-note-text">
 					<strong className="prep-note-strong">Option B:</strong> Store components separately and build each bowl fresh. Either works — choose based on your week.
 				</p>
 			</div>

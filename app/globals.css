@@ -1152,7 +1152,7 @@ body {
   font-family: var(--font-cormorant), serif;
   font-style: italic;
   font-size: 0.95rem;
-  color: var(--color-text-muted);
+  /* color: var(--color-text-muted); */
   line-height: 1.65;
   margin: 0;
 }

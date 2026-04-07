@@ -73,10 +73,10 @@ export default function BowlLayout({
 			<div className={`prep-inner ${mounted ? "bowl-visible" : ""}`}>
 				<Link href="/" className="bowl-back">← Home</Link>
 				<div className="prep-hero">
-					<p className="prep-hero-eyebrow">3-Day Meal Prep</p>
-					<h1 className="prep-hero-title">The Repeatable Bowl</h1>
+					<p className="prep-hero-eyebrow">2 Meals a Day</p>
+					<h1 className="prep-hero-title">The Infinitely Repeatable Bowl</h1>
 					<p className="prep-hero-tagline">
-						Six nourishing bowls, two hours of prep, three days of not thinking about food.
+						Six nourishing meals, two hours of prep, three days of not thinking about food.
 					</p>
 					<div className="prep-stats">
 						{[
@@ -103,7 +103,7 @@ export default function BowlLayout({
 			<nav className="prep-nav">
 				<div className="prep-nav-brand">
 					<span className="prep-nav-brand-icon">🥣</span>
-					<span className="prep-nav-brand-text">Bowl Prep</span>
+					<span className="prep-nav-brand-text">Infinite Bowl</span>
 				</div>
 				{tabs.map((tab) => {
 					const active = pathname === tab.href || pathname.startsWith(tab.href + "/");

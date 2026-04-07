@@ -14,11 +14,6 @@ const shoppingList = {
 		{ item: "Red bell peppers", amount: "3 medium", note: "diced fresh" },
 		{ item: "Lemons", amount: "3 whole", note: "½ per bowl" },
 	],
-	"Fruit": [
-		{ item: "Strawberries", amount: "900g / 6 cups", note: "slice fresh before serving" },
-		{ item: "Wild blueberries (frozen)", amount: "450g", note: "optional — 75g per bowl" },
-		{ item: "Bananas", amount: "3 medium", note: "optional — 60g per bowl, slice fresh" },
-	],
 	"Protein & Dairy": [
 		{ item: "Large eggs", amount: "12", note: "boiled weekly" },
 		{ item: "Mayonnaise", amount: "6 Tbsp", note: "for deviled eggs" },
@@ -35,6 +30,11 @@ const shoppingList = {
 		{ item: "Sauerkraut", amount: "180g / ¾ cup", note: "30g per bowl" },
 		{ item: "Iodized salt", amount: "9g / 1½ tsp", note: "¼ tsp per bowl" },
 		{ item: "Black pepper, smoked paprika, cumin", amount: "to taste", note: "" },
+	],
+	"Fruit": [
+		{ item: "Strawberries", amount: "900g / 6 cups", note: "slice fresh before serving" },
+		{ item: "Wild blueberries (frozen)", amount: "450g", note: "optional — 75g per bowl" },
+		{ item: "Bananas", amount: "3 medium", note: "optional — 60g per bowl, slice fresh" },
 	],
 };
 

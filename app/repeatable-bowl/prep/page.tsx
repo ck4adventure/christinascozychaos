@@ -76,6 +76,16 @@ const prepSteps = [
 			"Kefir: 120g (4 oz) per bowl — keep in original container, pour when serving",
 		],
 	},
+	{
+		number: "07",
+		title: "Optional Fruit Add-Ons",
+		time: "5 min",
+		emoji: "🫐",
+		steps: [
+			"Wild blueberries: portion 75g per bowl if using — keep refrigerated, add fresh at serving",
+			"Banana: don't prep ahead — slice 60g fresh when building each bowl",
+		],
+	},
 ];
 
 export default function PrepPage() {
