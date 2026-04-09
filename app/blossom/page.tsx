@@ -8,6 +8,7 @@ import { CATEGORY_CONFIG, getTaskIcon } from '@/lib/data';
 import { ordinal, isTaskForDay } from '@/lib/taskFilter';
 import TaskCard from '@/components/TaskCard';
 import TaskModal from '@/components/TaskModal';
+import QuickLogSheet from '@/components/QuickLogSheet';
 import HistoryView from '@/components/HistoryView';
 import NavBar from '@/components/NavBar';
 
@@ -16,10 +17,11 @@ type Tab = 'today' | 'schedule' | 'history' | 'add';
 const DAY_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export default function TrackerPage() {
-  const { tasks, logs, tasksWithStatus, loading, addTask, toggleTask, toggleTaskForDate, deleteTask, editTask } = useTasks();
+  const { tasks, logs, tasksWithStatus, loading, addTask, addOneOffTask, toggleTask, toggleTaskForDate, deleteTask, editTask } = useTasks();
   const [tab, setTab] = useState<Tab>('today');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [quickLogOpen, setQuickLogOpen] = useState(false);
 
   const handleTabChange = (t: Tab) => {
     if (t === 'add') {
@@ -47,7 +49,7 @@ export default function TrackerPage() {
   const todayDow = new Date().getDay();
   const todayDom = new Date().getDate();
 
-  const todaysTasks = tasksWithStatus.filter((t) => isTaskForDay(t, todayDow, todayDom));
+  const todaysTasks = tasksWithStatus.filter((t) => isTaskForDay(t, todayDow, todayDom) || t.completedToday);
   const completedCount = todaysTasks.filter((t) => t.completedToday).length;
   const totalCount = todaysTasks.length;
 
@@ -95,12 +97,50 @@ export default function TrackerPage() {
                   Nothing scheduled for today.<br />
                   <span>Enjoy the quiet. 🌙</span>
                 </p>
+                <button
+                  onClick={() => setQuickLogOpen(true)}
+                  style={{
+                    marginTop: '16px',
+                    padding: '10px 20px',
+                    borderRadius: '20px',
+                    border: '1px solid rgba(232, 160, 32, 0.35)',
+                    background: 'transparent',
+                    color: 'var(--amber)',
+                    fontFamily: "var(--font-josefin), sans-serif",
+                    fontSize: '0.75rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer',
+                  }}
+                >
+                  ✦ Log something
+                </button>
               </div>
             ) : (
               <div className="blossom-task-list">
                 {todaysTasks.map((task) => (
                   <TaskCard key={task.id} task={task} onToggle={toggleTask} />
                 ))}
+                <button
+                  onClick={() => setQuickLogOpen(true)}
+                  style={{
+                    width: '100%',
+                    padding: '11px',
+                    borderRadius: '12px',
+                    border: '1px solid rgba(232, 160, 32, 0.25)',
+                    background: 'transparent',
+                    color: 'var(--amber)',
+                    fontFamily: "var(--font-josefin), sans-serif",
+                    fontSize: '0.72rem',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer',
+                    marginTop: '4px',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  ✦ Log something extra
+                </button>
               </div>
             )}
           </div>
@@ -186,6 +226,19 @@ export default function TrackerPage() {
           onSave={handleSave}
           onDelete={editingTask ? () => { deleteTask(editingTask.id); setModalOpen(false); setEditingTask(null); } : undefined}
           onClose={() => { setModalOpen(false); setEditingTask(null); }}
+        />
+      )}
+
+      {quickLogOpen && (
+        <QuickLogSheet
+          tasksWithStatus={tasksWithStatus}
+          todayDow={todayDow}
+          todayDom={todayDom}
+          isTaskForDay={isTaskForDay}
+          onAddOneOff={addOneOffTask}
+          onAddScheduled={addTask}
+          onToggle={toggleTask}
+          onClose={() => setQuickLogOpen(false)}
         />
       )}
     </div>

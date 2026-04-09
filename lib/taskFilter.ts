@@ -18,6 +18,7 @@ export const isTaskForDay = (
   dow: number,
   dom: number,
 ): boolean => {
+  if (task.frequency === 'once') return false;
   if (task.frequency === 'daily') return true;
   if (task.frequency === 'weekly') return (task.dayOfWeek ?? 0) === dow;
   if (task.frequency === 'monthly') return (task.dayOfMonth ?? 1) === dom;

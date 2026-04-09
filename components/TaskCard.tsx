@@ -110,9 +110,9 @@ export default function TaskCard({ task, onToggle }: TaskCardProps) {
           fontWeight: 600,
           letterSpacing: '0.15em',
           textTransform: 'uppercase',
-          color: 'var(--color-text-muted)',
+          color: task.frequency === 'once' ? 'var(--amber)' : 'var(--color-text-muted)',
         }}>
-          {task.frequency}
+          {task.frequency === 'once' ? '✦ today' : task.frequency}
         </span>
       </div>
 

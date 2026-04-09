@@ -51,6 +51,30 @@ export function useTasks() {
     []
   );
 
+  const addOneOffTask = useCallback(
+    async (taskData: Omit<Task, 'id' | 'createdAt' | 'flower' | 'frequency'>) => {
+      const res = await fetch('/api/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...taskData, frequency: 'once' }),
+      });
+      if (!res.ok) throw new Error(`POST /api/tasks returned ${res.status}`);
+      const { task } = await res.json();
+      setTasks((prev) => [...prev, task]);
+
+      const logRes = await fetch('/api/logs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ taskId: task.id }),
+      });
+      const { log } = await logRes.json();
+      setLogs((prev) => [...prev, log]);
+
+      return task as Task;
+    },
+    []
+  );
+
   const toggleTask = useCallback(
     async (taskId: string) => {
       const existingLog = logs.find(
@@ -130,6 +154,7 @@ export function useTasks() {
     tasksWithStatus,
     loading,
     addTask,
+    addOneOffTask,
     toggleTask,
     toggleTaskForDate,
     deleteTask,

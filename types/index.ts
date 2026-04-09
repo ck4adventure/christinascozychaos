@@ -1,6 +1,6 @@
 export type Category = 'home' | 'hygiene' | 'movement' | 'skills' | 'seeking';
 
-export type Frequency = 'daily' | 'weekly' | 'monthly';
+export type Frequency = 'daily' | 'weekly' | 'monthly' | 'once';
 
 export interface Task {
   id: string;
