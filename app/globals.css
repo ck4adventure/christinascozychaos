@@ -101,7 +101,7 @@
   --color-bg-task-card:         linear-gradient(135deg, rgba(123,63,110,0.07), rgba(239,224,212,0.55));
   --color-bg-task-card-done:    linear-gradient(135deg, rgba(123,63,110,0.14), rgba(239,224,212,0.75));
   --color-bg-modal-sheet:       linear-gradient(160deg, #FAF5EF, #ffffff);
-  --color-bg-input:             rgba(239, 224, 212, 0.8);
+  --color-bg-input:             #ffffff;
   --color-bg-library-item:      rgba(239, 224, 212, 0.5);
   --color-bg-nav:               linear-gradient(0deg, rgba(250,243,236,0.97) 0%, rgba(239,224,212,0.95) 100%);
   --color-overlay:              rgba(58, 32, 48, 0.6);
@@ -1956,13 +1956,13 @@ body {
 }
 
 .login-input {
-  background: rgba(42, 14, 48, 0.6);
-  border: 1px solid rgba(232, 160, 32, 0.25);
+  background: var(--color-bg-input);
+  border: 1px solid var(--color-border-input);
   border-radius: 8px;
   padding: 0.65rem 0.85rem;
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.9rem;
-  color: var(--cream-light);
+  color: var(--color-text-body);
   outline: none;
   transition: border-color 0.2s ease;
   width: 100%;
