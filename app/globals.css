@@ -2825,7 +2825,13 @@ body {
 
 .writing-tab-btn--active .writing-tab-label { color: var(--amber); }
 
-/* Light theme overrides for writing cards */
+/* Writing cards use a lighter base than the site-wide card variable */
+.writing-project-card,
+.writing-section-row,
+.writing-new-form {
+  background: color-mix(in srgb, var(--plum-deep) 28%, transparent);
+}
+
 [data-theme="light"] .writing-project-card,
 [data-theme="light"] .writing-section-row,
 [data-theme="light"] .writing-new-form {
