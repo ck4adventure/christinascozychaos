@@ -176,17 +176,18 @@ export default function ProjectPage({ params }: { params: Promise<{ projectId: s
         />
       ))}
 
+      <div className="writing-page-topnav">
+        <Link href="/writing" className="chip" style={{ textDecoration: 'none' }}>
+          ← Projects
+        </Link>
+      </div>
+
       <div className={`content ${mounted ? 'visible' : ''}`}>
-        <div className="writing-header">
-          <div>
-            <p className="eyebrow">{project ? labels.plural : 'Writing'}</p>
-            <h1 className="title" style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)' }}>
-              {project ? <em>{project.title}</em> : <em>Loading…</em>}
-            </h1>
-          </div>
-          <Link href="/writing" className="chip" style={{ textDecoration: 'none', alignSelf: 'flex-start', marginTop: '0.5rem' }}>
-            ← Projects
-          </Link>
+        <div className="writing-title-block">
+          <p className="eyebrow">{project ? labels.plural : 'Writing'}</p>
+          <h1 className="title" style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)' }}>
+            {project ? <em>{project.title}</em> : <em>Loading…</em>}
+          </h1>
         </div>
 
         <div className="divider" />

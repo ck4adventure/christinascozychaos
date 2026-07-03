@@ -114,22 +114,22 @@ export default function WritingPage() {
         />
       ))}
 
+      {/* Fixed top-right nav — desktop sits beside the theme toggle, mobile goes inline */}
+      <div className="writing-page-topnav">
+        <Link href="/blossom" className="chip" style={{ textDecoration: 'none' }}>
+          ← Blossom
+        </Link>
+        <button className="chip" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+          Sign out
+        </button>
+      </div>
+
       <div className={`content ${mounted ? 'visible' : ''}`}>
-        <div className="writing-header">
-          <div>
-            <p className="eyebrow">Christina&apos;s</p>
-            <h1 className="title" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}>
-              <em>Writing</em>
-            </h1>
-          </div>
-          <div className="writing-header-actions">
-            <Link href="/blossom" className="chip" style={{ textDecoration: 'none' }}>
-              ← Blossom
-            </Link>
-            <button className="chip" onClick={handleLogout} style={{ cursor: 'pointer', background: 'none', border: '1px solid rgba(232,160,32,0.3)', color: 'var(--amber)', fontFamily: 'var(--font-josefin)', fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase', padding: '0.4rem 0.9rem', borderRadius: '100px' }}>
-              Sign out
-            </button>
-          </div>
+        <div className="writing-title-block">
+          <p className="eyebrow">Christina&apos;s</p>
+          <h1 className="title" style={{ fontSize: 'clamp(2rem, 6vw, 4rem)' }}>
+            <em>Writing</em>
+          </h1>
         </div>
 
         <div className="divider" />
