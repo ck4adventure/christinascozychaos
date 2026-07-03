@@ -11,12 +11,18 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [destination, setDestination] = useState('/blossom');
 
   useEffect(() => {
-    // Auto-redirect if already logged in
+    const params = new URLSearchParams(window.location.search);
+    const from = params.get('from') ?? '';
+    // Only accept internal paths; reject empty, external, or protocol-relative values
+    const dest = from.startsWith('/') && !from.startsWith('//') ? from : '/blossom';
+    setDestination(dest);
+
     fetch('/api/auth/session')
       .then((r) => r.json())
-      .then(({ loggedIn }) => { if (loggedIn) router.replace('/blossom'); });
+      .then(({ loggedIn }) => { if (loggedIn) router.replace(dest); });
 
     const t = setTimeout(() => setVisible(true), 50);
     return () => clearTimeout(t);
@@ -34,7 +40,7 @@ export default function LoginPage() {
     });
 
     if (res.ok) {
-      router.push('/blossom');
+      router.push(destination);
     } else {
       setError('Invalid username or password.');
       setLoading(false);
