@@ -2006,3 +2006,775 @@ body {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* ============================================================
+   WRITING TOOL
+   ============================================================ */
+
+/* Shared header row (project list + section list pages) */
+.writing-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.writing-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+}
+
+/* ---- Project list ---- */
+.writing-project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.writing-project-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.writing-project-card-link {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-decoration: none;
+}
+
+.writing-project-type {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-weight: 300;
+}
+
+.writing-project-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream-light);
+}
+
+.writing-project-meta {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--plum-light);
+  font-weight: 300;
+}
+
+/* ---- Section list ---- */
+.writing-section-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.writing-section-row {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.writing-drag-handle {
+  color: var(--plum-light);
+  cursor: grab;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.2rem;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.writing-drag-handle:active {
+  cursor: grabbing;
+}
+
+.writing-section-link {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.writing-section-label {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-weight: 300;
+  flex-shrink: 0;
+}
+
+.writing-section-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream-light);
+}
+
+.writing-delete-inline {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ---- Shared form elements ---- */
+.writing-new-form {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.writing-input {
+  width: 100%;
+  background: rgba(42, 14, 48, 0.4);
+  border: 1px solid rgba(232, 160, 32, 0.25);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  color: var(--cream-light);
+  font-family: var(--font-cormorant), serif;
+  font-size: 1rem;
+  font-style: italic;
+  outline: none;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.writing-input:focus {
+  border-color: rgba(232, 160, 32, 0.6);
+}
+
+.writing-type-picker {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.writing-type-btn {
+  background: none;
+  border: 1px solid rgba(232, 160, 32, 0.25);
+  border-radius: 100px;
+  padding: 0.35rem 0.9rem;
+  color: var(--plum-light);
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.writing-type-btn--active {
+  border-color: rgba(232, 160, 32, 0.7);
+  color: var(--amber);
+}
+
+.writing-new-btn {
+  background: none;
+  border: 1px solid rgba(232, 160, 32, 0.3);
+  border-radius: 100px;
+  padding: 0.45rem 1.1rem;
+  color: var(--amber);
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  display: inline-block;
+}
+
+.writing-new-btn:hover {
+  border-color: rgba(232, 160, 32, 0.65);
+  background: rgba(232, 160, 32, 0.06);
+}
+
+.writing-submit-btn {
+  background: rgba(232, 160, 32, 0.12);
+  border: 1px solid rgba(232, 160, 32, 0.5);
+  border-radius: 8px;
+  padding: 0.45rem 1.1rem;
+  color: var(--amber);
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.writing-submit-btn:hover:not(:disabled) {
+  background: rgba(232, 160, 32, 0.22);
+}
+
+.writing-submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.writing-cancel-btn {
+  background: none;
+  border: 1px solid rgba(232, 160, 32, 0.15);
+  border-radius: 8px;
+  padding: 0.45rem 1.1rem;
+  color: var(--plum-light);
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.writing-cancel-btn:hover {
+  border-color: rgba(232, 160, 32, 0.3);
+  color: var(--cream);
+}
+
+.writing-card-delete {
+  background: none;
+  border: none;
+  color: var(--plum-light);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.writing-card-delete:hover {
+  color: #c97777;
+}
+
+.writing-delete-confirm {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.writing-delete-btn {
+  background: none;
+  border: 1px solid rgba(232, 160, 32, 0.2);
+  border-radius: 6px;
+  padding: 0.25rem 0.6rem;
+  color: var(--plum-light);
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.writing-delete-btn--confirm {
+  border-color: rgba(200, 100, 100, 0.5);
+  color: #c97777;
+}
+
+.writing-delete-btn--confirm:hover {
+  background: rgba(200, 100, 100, 0.1);
+}
+
+/* ============================================================
+   EDITOR SHELL (three-column layout)
+   ============================================================ */
+
+.writing-editor-shell {
+  display: flex;
+  height: 100dvh;
+  background: var(--plum-deep);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.writing-editor-shell.mounted {
+  opacity: 1;
+}
+
+/* Left sidebar */
+.writing-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: rgba(26, 8, 30, 0.85);
+  border-right: 1px solid rgba(232, 160, 32, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1.25rem 0;
+}
+
+.writing-sidebar-brand {
+  padding: 0 1.1rem 1rem;
+  border-bottom: 1px solid rgba(232, 160, 32, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.writing-sidebar-back {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--plum-light);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.writing-sidebar-back:hover {
+  color: var(--amber);
+}
+
+.writing-sidebar-project-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: 1rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream-light);
+  text-decoration: none;
+  line-height: 1.3;
+  display: block;
+}
+
+.writing-sidebar-sections {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.writing-sidebar-label {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--amber);
+  font-weight: 300;
+  padding: 0 1.1rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.writing-sidebar-section {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  text-decoration: none;
+  transition: background 0.15s ease;
+  border-left: 2px solid transparent;
+}
+
+.writing-sidebar-section:hover {
+  background: rgba(232, 160, 32, 0.05);
+}
+
+.writing-sidebar-section--active {
+  background: rgba(232, 160, 32, 0.08);
+  border-left-color: rgba(232, 160, 32, 0.5);
+}
+
+.writing-sidebar-section-num {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--amber);
+  flex-shrink: 0;
+}
+
+.writing-sidebar-section-name {
+  font-family: var(--font-cormorant), serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.writing-sidebar-section--active .writing-sidebar-section-name {
+  color: var(--cream-light);
+}
+
+.writing-sidebar-new {
+  margin: 0.75rem 1.1rem 0;
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--plum-light);
+  text-decoration: none;
+  padding: 0.4rem 0;
+  border-top: 1px solid rgba(232, 160, 32, 0.1);
+  display: block;
+  transition: color 0.2s ease;
+}
+
+.writing-sidebar-new:hover {
+  color: var(--amber);
+}
+
+/* Main editor */
+.writing-editor-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.writing-editor-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid rgba(232, 160, 32, 0.1);
+  background: rgba(26, 8, 30, 0.5);
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.writing-editor-title-area {
+  flex: 1;
+  min-width: 0;
+}
+
+.writing-editor-section-title {
+  font-family: var(--font-cormorant), serif;
+  font-size: 1.3rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream-light);
+  margin: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.writing-editor-section-title:hover {
+  color: var(--amber);
+}
+
+.writing-title-input {
+  background: rgba(42, 14, 48, 0.5);
+  border: 1px solid rgba(232, 160, 32, 0.4);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  color: var(--cream-light);
+  font-family: var(--font-cormorant), serif;
+  font-size: 1.3rem;
+  font-style: italic;
+  font-weight: 300;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.writing-editor-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.writing-save-indicator {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: opacity 0.3s ease;
+  min-width: 60px;
+  text-align: right;
+}
+
+.writing-save-indicator--idle { opacity: 0; color: var(--plum-light); }
+.writing-save-indicator--saving { opacity: 1; color: var(--plum-light); }
+.writing-save-indicator--saved { opacity: 1; color: var(--amber); }
+.writing-save-indicator--error { opacity: 1; color: #c97777; }
+
+.writing-notes-toggle {
+  background: none;
+  border: 1px solid rgba(232, 160, 32, 0.25);
+  border-radius: 100px;
+  padding: 0.3rem 0.8rem;
+  color: var(--plum-light);
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.writing-notes-toggle--open,
+.writing-notes-toggle:hover {
+  border-color: rgba(232, 160, 32, 0.55);
+  color: var(--amber);
+}
+
+.writing-notes-count {
+  background: rgba(232, 160, 32, 0.2);
+  border-radius: 100px;
+  padding: 0.05rem 0.35rem;
+  font-size: 0.55rem;
+  color: var(--amber);
+}
+
+.writing-editor-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 3rem;
+  max-width: 780px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Tiptap editor styles */
+.writing-editor-body {
+  outline: none;
+  font-family: var(--font-cormorant), serif;
+  font-size: 1.15rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: var(--cream);
+  min-height: 60vh;
+}
+
+.writing-editor-body p {
+  margin: 0 0 1em;
+}
+
+.writing-editor-body h1,
+.writing-editor-body h2,
+.writing-editor-body h3 {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 300;
+  color: var(--cream-light);
+  margin: 1.5em 0 0.5em;
+}
+
+.writing-editor-body h1 { font-size: 1.8rem; }
+.writing-editor-body h2 { font-size: 1.4rem; }
+.writing-editor-body h3 { font-size: 1.15rem; font-style: italic; }
+
+.writing-editor-body blockquote {
+  border-left: 2px solid rgba(232, 160, 32, 0.4);
+  margin: 1em 0;
+  padding-left: 1.2em;
+  color: var(--plum-light);
+  font-style: italic;
+}
+
+.writing-editor-body strong { color: var(--cream-light); font-weight: 600; }
+.writing-editor-body em { font-style: italic; color: var(--cream-light); }
+
+.writing-editor-body ul,
+.writing-editor-body ol {
+  padding-left: 1.5em;
+  margin: 0.5em 0 1em;
+}
+
+.writing-editor-body li { margin-bottom: 0.3em; }
+
+.writing-editor-body hr {
+  border: none;
+  border-top: 1px solid rgba(232, 160, 32, 0.2);
+  margin: 2em 0;
+}
+
+/* Cursor */
+.writing-editor-body .ProseMirror-focused { caret-color: var(--amber); }
+
+/* Bottom prev/next nav */
+.writing-editor-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  border-top: 1px solid rgba(232, 160, 32, 0.1);
+  flex-shrink: 0;
+}
+
+.writing-prev-next {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--plum-light);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.writing-prev-next:hover {
+  color: var(--amber);
+}
+
+/* Notes panel */
+.writing-notes-panel {
+  width: 260px;
+  flex-shrink: 0;
+  background: rgba(26, 8, 30, 0.85);
+  border-left: 1px solid rgba(232, 160, 32, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.writing-notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.1rem 0.75rem;
+  border-bottom: 1px solid rgba(232, 160, 32, 0.1);
+}
+
+.writing-notes-close {
+  background: none;
+  border: none;
+  color: var(--plum-light);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.1rem 0.3rem;
+  transition: color 0.2s ease;
+}
+
+.writing-notes-close:hover { color: var(--cream); }
+
+.writing-notes-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.writing-notes-empty {
+  font-family: var(--font-josefin), sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--plum-light);
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.writing-note {
+  background: rgba(42, 14, 48, 0.5);
+  border: 1px solid rgba(232, 160, 32, 0.12);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.writing-note-body {
+  flex: 1;
+  font-family: var(--font-cormorant), serif;
+  font-size: 0.92rem;
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.writing-note-delete {
+  background: none;
+  border: none;
+  color: var(--plum-light);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+.writing-note-delete:hover { color: #c97777; }
+
+.writing-note-form {
+  padding: 0.75rem;
+  border-top: 1px solid rgba(232, 160, 32, 0.1);
+}
+
+.writing-note-textarea {
+  width: 100%;
+  background: rgba(42, 14, 48, 0.5);
+  border: 1px solid rgba(232, 160, 32, 0.25);
+  border-radius: 8px;
+  padding: 0.5rem 0.65rem;
+  color: var(--cream);
+  font-family: var(--font-cormorant), serif;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  outline: none;
+  resize: vertical;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.writing-note-textarea:focus {
+  border-color: rgba(232, 160, 32, 0.5);
+}
+
+/* ---- Mobile adjustments ---- */
+@media (max-width: 640px) {
+  .writing-sidebar {
+    display: none;
+  }
+
+  .writing-editor-content {
+    padding: 1.25rem 1.1rem;
+  }
+
+  .writing-notes-panel {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100dvh;
+    z-index: 50;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.4);
+  }
+}
