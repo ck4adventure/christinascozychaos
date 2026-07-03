@@ -2027,6 +2027,11 @@ body {
   gap: 0.5rem;
 }
 
+.writing-page-topnav .chip {
+  width: auto;
+  white-space: nowrap;
+}
+
 /* ---- Centered title block ---- */
 .writing-title-block {
   text-align: center;
