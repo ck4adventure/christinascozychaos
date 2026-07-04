@@ -151,7 +151,7 @@ export default function TrackerPage() {
                   return (
                     <div key={freq} className="blossom-group">
                       <div className="blossom-group-header">
-                        <h2 className="blossom-group-title">
+                        <h2 className="card-title blossom-group-title">
                           {freq.charAt(0).toUpperCase() + freq.slice(1)}
                         </h2>
                         <span className="blossom-group-count">

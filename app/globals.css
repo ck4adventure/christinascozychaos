@@ -454,12 +454,25 @@ body {
 
 /* ─── Shared cards ──────────────────────────────────────────────────────────── */
 
-.card {
+.card,
+.bowl-card,
+.prep-hero,
+.prep-item,
+.prep-step,
+.prep-list-card,
+.prep-note,
+.prep-storage-item,
+.writing-project-card,
+.writing-section-row,
+.writing-new-form {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border-card);
+  backdrop-filter: blur(10px);
+}
+
+.card {
   border-radius: 16px;
   padding: 1.5rem 1.75rem;
-  backdrop-filter: blur(10px);
 }
 
 /* ─── Shared form inputs ────────────────────────────────────────────────────── */
@@ -771,18 +784,6 @@ body {
   }
 }
 
-.bowl-card,
-.prep-hero,
-.prep-item,
-.prep-step,
-.prep-list-card,
-.prep-note,
-.prep-storage-item {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border-card);
-  backdrop-filter: blur(10px);
-}
-
 .bowl-card {
   border-radius: 16px;
   padding: 1.5rem 1.75rem;
@@ -798,11 +799,7 @@ body {
   border-bottom: 1px solid var(--color-border-section);
 }
 
-.bowl-card-title,
-.prep-section-title,
-.blossom-group-title,
-.writing-project-title,
-.writing-section-title {
+.card-title {
   font-family: var(--font-cormorant), serif;
   font-style: italic;
   color: var(--color-text-heading);
@@ -1825,14 +1822,6 @@ body {
   grid-template-columns: 1fr;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
-}
-
-.writing-project-card,
-.writing-section-row,
-.writing-new-form {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border-card);
-  backdrop-filter: blur(10px);
 }
 
 .writing-project-card {

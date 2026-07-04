@@ -150,7 +150,7 @@ export default function WritingPage() {
                 <div key={project.id} className="writing-project-card">
                   <Link href={`/writing/${project.id}`} className="writing-project-card-link">
                     <span className="writing-project-type">{TYPE_LABELS[project.type]}</span>
-                    <span className="writing-project-title">{project.title}</span>
+                    <span className="card-title writing-project-title">{project.title}</span>
                     <span className="writing-project-meta">
                       {project.sectionCount ?? 0} {project.sectionCount === 1 ? 'section' : 'sections'}
                     </span>

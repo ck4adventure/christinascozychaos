@@ -27,7 +27,7 @@ const optionalFruits = [
 export default function BuildPage() {
 	return (
 		<div>
-			<h2 className="prep-section-title">Build Your Bowl</h2>
+			<h2 className="card-title prep-section-title">Build Your Bowl</h2>
 			<p className="prep-intro">
 				Layer these into each container. Reheat the base, then add fresh sides before serving.
 			</p>
