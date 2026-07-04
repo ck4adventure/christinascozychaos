@@ -100,10 +100,10 @@ export default function BowlLayout({
 			</div>
 
 			{/* Nav */}
-			<nav className="nav-tabs">
-				<div className="prep-nav-brand">
-					<span className="prep-nav-brand-icon">🥣</span>
-					<span className="prep-nav-brand-text">Infinite Bowl</span>
+			<nav className="nav-tabs nav-tabs--sidebar">
+				<div className="nav-brand">
+					<span className="nav-brand-icon">🥣</span>
+					<span className="nav-brand-text">Infinite Bowl</span>
 				</div>
 				{tabs.map((tab) => {
 					const active = pathname === tab.href || pathname.startsWith(tab.href + "/");
@@ -111,7 +111,7 @@ export default function BowlLayout({
 						<Link
 							key={tab.id}
 							href={tab.href}
-							className={`nav-tab ${active ? "nav-tab--active" : ""}`}
+							className={`nav-tab nav-item--sidebar ${active ? "nav-tab--active" : ""}`}
 						>
 							<span className="nav-tab-icon">{tab.emoji}</span>
 							<span>{tab.label}</span>
