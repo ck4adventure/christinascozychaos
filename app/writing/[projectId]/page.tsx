@@ -27,7 +27,7 @@ export default function ProjectDashboardPage() {
   return (
     <main className="writing-editor-main">
       <div className="writing-editor-content" style={{ maxWidth: '560px' }}>
-        <Link href="/writing" className="writing-sidebar-back mobile-nav-link" style={{ display: 'inline-block', marginBottom: '1.5rem' }}>
+        <Link href="/writing" className="link-subtle mobile-nav-link" style={{ display: 'inline-block', marginBottom: '1.5rem' }}>
           ← Projects
         </Link>
 
@@ -48,7 +48,7 @@ export default function ProjectDashboardPage() {
             </div>
 
             {mostRecent ? (
-              <Link href={`/writing/${projectId}/${mostRecent.id}`} className="writing-sidebar-back" style={{ display: 'inline-block' }}>
+              <Link href={`/writing/${projectId}/${mostRecent.id}`} className="link-subtle" style={{ display: 'inline-block' }}>
                 Continue with &quot;{mostRecent.title}&quot; →
               </Link>
             ) : (

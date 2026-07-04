@@ -119,10 +119,10 @@ export default function WritingPage() {
 
       {/* Mobile-only nav — desktop gets Home/Sign out from the shared top bar */}
       <div className="writing-page-topnav mobile-nav-link">
-        <Link href="/" className="chip" style={{ textDecoration: 'none' }}>
+        <Link href="/" className="btn btn--outline" style={{ textDecoration: 'none' }}>
           ← Home
         </Link>
-        <button className="chip" onClick={handleLogout} style={{ cursor: 'pointer' }}>
+        <button className="btn btn--outline" onClick={handleLogout}>
           Sign out
         </button>
       </div>

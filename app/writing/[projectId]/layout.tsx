@@ -92,7 +92,7 @@ function ProjectShell({ children }: { children: React.ReactNode }) {
       {/* ── Desktop sidebar ── */}
       <aside className="writing-sidebar">
         <div className="writing-sidebar-brand">
-          <Link href="/writing" className="writing-sidebar-back">← Projects</Link>
+          <Link href="/writing" className="link-subtle">← Projects</Link>
           {project && (
             <Link href={`/writing/${projectId}`} className="writing-sidebar-project-title">
               {project.title}
@@ -115,7 +115,7 @@ function ProjectShell({ children }: { children: React.ReactNode }) {
               ))}
             </SortableContext>
           </DndContext>
-          <button onClick={handleAddSection} className="writing-sidebar-new">
+          <button onClick={handleAddSection} className="link-subtle link-subtle--button link-subtle--bordered">
             {labels.newLabel}
           </button>
         </div>

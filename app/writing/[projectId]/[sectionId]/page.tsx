@@ -238,7 +238,7 @@ export default function SectionEditorPage({
         <div className="writing-editor-topbar">
           {/* Mobile: back link + project name */}
           <div className="writing-topbar-mobile-brand">
-            <Link href={`/writing/${projectId}`} className="writing-sidebar-back">← {project?.title ?? 'Back'}</Link>
+            <Link href={`/writing/${projectId}`} className="link-subtle">← {project?.title ?? 'Back'}</Link>
           </div>
 
           <div className="writing-editor-title-area">
@@ -282,7 +282,7 @@ export default function SectionEditorPage({
           <div className="writing-mobile-panel writing-mobile-only">
             <div className="writing-mobile-panel-header">
               <span className="writing-sidebar-label">{labels.plural}</span>
-              <button onClick={handleAddSection} className="writing-sidebar-new" style={{ margin: 0 }}>
+              <button onClick={handleAddSection} className="link-subtle link-subtle--button link-subtle--bordered" style={{ margin: 0 }}>
                 {labels.newLabel}
               </button>
             </div>
