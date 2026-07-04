@@ -2188,6 +2188,13 @@ body {
 
 .writing-sidebar-section--active .writing-sidebar-section-name { color: var(--cream-light); }
 
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
 .writing-sidebar-new {
   background: none;
   border: none;

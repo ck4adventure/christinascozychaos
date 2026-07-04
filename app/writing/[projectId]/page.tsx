@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ProjectType } from '@/lib/writing';
 import { useProjectShell } from '@/components/writing/ProjectShellContext';
 
@@ -11,7 +12,13 @@ const TYPE_LABELS: Record<ProjectType, string> = {
 };
 
 export default function ProjectDashboardPage() {
-  const { projectId, project, sections, loading, labels } = useProjectShell();
+  const router = useRouter();
+  const { projectId, project, sections, loading, labels, addSection } = useProjectShell();
+
+  async function handleAddSection() {
+    const section = await addSection();
+    if (section) router.push(`/writing/${projectId}/${section.id}`);
+  }
 
   const mostRecent = sections.length
     ? [...sections].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())[0]
@@ -31,7 +38,7 @@ export default function ProjectDashboardPage() {
               <em>{project.title}</em>
             </h1>
 
-            <div className="card" style={{ marginBottom: '1.5rem' }}>
+            <div className="card" style={{ marginBottom: '3rem' }}>
               <div style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.6rem', color: 'var(--amber)' }}>
                 {sections.length}
               </div>
@@ -45,9 +52,15 @@ export default function ProjectDashboardPage() {
                 Continue with &quot;{mostRecent.title}&quot; →
               </Link>
             ) : (
-              <p style={{ color: 'var(--plum-light)', fontFamily: 'var(--font-josefin)', fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
-                No {labels.plural.toLowerCase()} yet — use &quot;{labels.newLabel}&quot; to add one.
-              </p>
+              <div style={{ textAlign: 'center' }}>
+
+                <p style={{ color: 'var(--plum-light)', fontFamily: 'var(--font-josefin)', fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+                  No {labels.plural.toLowerCase()} yet.
+                </p>
+                <button onClick={handleAddSection} className="chip" style={{ cursor: 'pointer', marginTop: '3rem' }}>
+                  New Chapter
+                </button>
+              </div>
             )}
           </>
         )}
