@@ -1,3 +1,6 @@
+// /writing top level page should be a list of current projects and the ability to add new ones
+// no delete needed on the card, delete will be hidden within project settings
+
 'use client';
 
 import { useEffect, useState } from 'react';

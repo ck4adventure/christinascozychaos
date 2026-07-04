@@ -1,3 +1,4 @@
+// /writing/projectID oroject overview page, 
 'use client';
 
 import { useEffect, useState, use } from 'react';
@@ -177,7 +178,7 @@ export default function ProjectPage({ params }: { params: Promise<{ projectId: s
       ))}
 
       <div className="writing-page-topnav">
-        <Link href="/writing" className="chip" style={{ textDecoration: 'none' }}>
+        <Link href={`/writing`} className="chip" style={{ textDecoration: 'none' }}>
           ← Projects
         </Link>
       </div>

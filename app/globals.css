@@ -180,6 +180,7 @@ body {
     radial-gradient(ellipse 40% 40% at 50% 50%, rgba(42,14,48,0.8) 0%, transparent 100%),
     radial-gradient(ellipse 70% 40% at 80% 10%, rgba(123,63,110,0.3) 0%, transparent 60%);
   z-index: 0;
+  pointer-events: none;
 }
 
 /* Floating orbs */
@@ -1867,6 +1868,8 @@ body {
 
 /* ---- Page-level top nav (fixed beside theme toggle on desktop) ---- */
 .writing-page-topnav {
+  position: relative;
+  z-index: 10;
   display: flex;
   align-items: center;
   gap: 0.5rem;
