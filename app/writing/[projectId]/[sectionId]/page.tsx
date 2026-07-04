@@ -144,6 +144,11 @@ export default function SectionEditorPage({
     setNotes((prev) => prev.filter((n) => n.id !== id));
   }
 
+  function handleManualSave() {
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    if (editor) saveContent(editor.getJSON());
+  }
+
   async function handleAddSection() {
     const newSection = await addSection();
     if (newSection) {
@@ -228,11 +233,6 @@ export default function SectionEditorPage({
           </div>
 
           <div className="writing-editor-topbar-right">
-            <span className={`writing-save-indicator writing-save-indicator--${saveState}`}>
-              {saveState === 'saving' && 'Saving…'}
-              {saveState === 'saved' && 'Saved'}
-              {saveState === 'error' && 'Save failed'}
-            </span>
             {/* Desktop-only notes toggle */}
             <button
               onClick={() => setNotesOpen((o) => !o)}
@@ -296,6 +296,25 @@ export default function SectionEditorPage({
                 {nextSection.title} →
               </Link>
             )}
+          </div>
+        )}
+
+        {/* Save bar — fixed at the bottom of the writing area, centered */}
+        {mobileTab === 'write' && (
+          <div className="writing-save-bar">
+            <button
+              onClick={handleManualSave}
+              disabled={saveState === 'saving'}
+              className="btn btn--outline"
+              style={{ fontSize: '0.65rem', padding: '0.4rem 0.9rem' }}
+            >
+              Save
+            </button>
+            <span className={`writing-save-indicator writing-save-indicator--${saveState}`}>
+              {saveState === 'saving' && 'Saving…'}
+              {saveState === 'saved' && 'Saved'}
+              {saveState === 'error' && 'Save failed'}
+            </span>
           </div>
         )}
       </main>
