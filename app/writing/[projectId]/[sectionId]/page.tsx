@@ -32,6 +32,10 @@ export default function SectionEditorPage({
   const [titleValue, setTitleValue] = useState('');
   const [notesOpen, setNotesOpen] = useState(false);
   const [mobileTab, setMobileTab] = useState<MobileTab>('write');
+  // Content resolved by the fetch, waiting to be applied once the editor is ready.
+  // Kept as state (not a ref) so the apply-effect below reliably fires no matter
+  // which of "editor ready" / "content fetched" happens to resolve first.
+  const [pendingContent, setPendingContent] = useState<unknown>(null);
 
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const latestContent = useRef<unknown>(null);
@@ -79,9 +83,11 @@ export default function SectionEditorPage({
       saveTimer.current = setTimeout(() => saveContent(content), AUTOSAVE_DELAY);
     },
     onBlur: () => flushSave(),
-  });
+  }, [sectionId]);
 
   useEffect(() => {
+    latestContent.current = null;
+    setPendingContent(null);
     fetchSection();
     return () => flushSave();
   }, [sectionId]);
@@ -121,17 +127,18 @@ export default function SectionEditorPage({
       if ((!content || (typeof content === 'object' && Object.keys(content as object).length === 0)) && lsContent) {
         try { content = JSON.parse(lsContent); } catch { /* keep db content */ }
       }
-      if (editor && content && typeof content === 'object' && Object.keys(content as object).length > 0) {
-        editor.commands.setContent(content);
-      }
+      setPendingContent((content && typeof content === 'object' && Object.keys(content as object).length > 0) ? content : null);
     }
   }
 
+  // Applies whatever fetchSection last resolved. Depends on both editor and
+  // pendingContent so it fires correctly regardless of which one resolves
+  // first — the editor becoming ready, or the content fetch completing.
   useEffect(() => {
-    if (editor && section?.content && typeof section.content === 'object' && Object.keys(section.content as object).length > 0) {
-      editor.commands.setContent(section.content);
+    if (editor && pendingContent) {
+      editor.commands.setContent(pendingContent);
     }
-  }, [editor]);
+  }, [editor, pendingContent]);
 
   async function handleTitleSave() {
     if (!titleValue.trim() || titleValue === section?.title) {
