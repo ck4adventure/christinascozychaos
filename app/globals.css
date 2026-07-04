@@ -2144,10 +2144,9 @@ body {
 
 .writing-sidebar-section {
   display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  padding: 0.5rem 1.1rem;
-  text-decoration: none;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem 0.5rem 1.1rem;
   transition: background 0.15s ease;
   border-left: 2px solid transparent;
 }
@@ -2157,6 +2156,15 @@ body {
 .writing-sidebar-section--active {
   background: rgba(232, 160, 32, 0.08);
   border-left-color: rgba(232, 160, 32, 0.5);
+}
+
+.writing-sidebar-section-link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+  text-decoration: none;
 }
 
 .writing-sidebar-section-num {
@@ -2181,6 +2189,10 @@ body {
 .writing-sidebar-section--active .writing-sidebar-section-name { color: var(--cream-light); }
 
 .writing-sidebar-new {
+  background: none;
+  border: none;
+  border-top: 1px solid rgba(232, 160, 32, 0.1);
+  cursor: pointer;
   margin: 0.75rem 1.1rem 0;
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.6rem;
@@ -2189,8 +2201,8 @@ body {
   color: var(--plum-light);
   text-decoration: none;
   padding: 0.4rem 0;
-  border-top: 1px solid rgba(232, 160, 32, 0.1);
   display: block;
+  text-align: left;
   transition: color 0.2s ease;
 }
 

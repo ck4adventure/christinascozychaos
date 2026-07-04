@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { ApiSection, ApiNote, ApiProject } from '@/lib/writing';
-import { sectionLabel } from '@/lib/sectionLabels';
+import { ApiSection, ApiNote } from '@/lib/writing';
+import { useProjectShell } from '@/components/writing/ProjectShellContext';
 
 const AUTOSAVE_DELAY = 1500;
 const LS_KEY = (id: string) => `writing_section_${id}`;
@@ -21,10 +21,9 @@ export default function SectionEditorPage({
 }) {
   const { projectId, sectionId } = use(params);
   const router = useRouter();
+  const { project, sections, labels, addSection, renameSection } = useProjectShell();
 
-  const [project, setProject] = useState<ApiProject | null>(null);
   const [section, setSection] = useState<ApiSection | null>(null);
-  const [sections, setSections] = useState<ApiSection[]>([]);
   const [notes, setNotes] = useState<ApiNote[]>([]);
   const [saveState, setSaveState] = useState<SaveState>('idle');
   const [noteInput, setNoteInput] = useState('');
@@ -33,14 +32,9 @@ export default function SectionEditorPage({
   const [titleValue, setTitleValue] = useState('');
   const [notesOpen, setNotesOpen] = useState(false);
   const [mobileTab, setMobileTab] = useState<MobileTab>('write');
-  const [mounted, setMounted] = useState(false);
 
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const latestContent = useRef<unknown>(null);
-
-  const labels = project
-    ? sectionLabel[project.type]
-    : { singular: 'Section', plural: 'Sections', newLabel: '+ New Section' };
 
   const saveContent = useCallback(
     async (content: unknown) => {
@@ -79,23 +73,19 @@ export default function SectionEditorPage({
   });
 
   useEffect(() => {
-    setMounted(true);
-    fetchData();
+    fetchSection();
     return () => {
       if (saveTimer.current) clearTimeout(saveTimer.current);
     };
   }, [sectionId]);
 
-  async function fetchData() {
-    const [sectionRes, projectRes] = await Promise.all([
-      fetch(`/api/sections/${sectionId}`),
-      fetch(`/api/projects/${projectId}`),
-    ]);
+  async function fetchSection() {
+    const res = await fetch(`/api/sections/${sectionId}`);
 
-    if (sectionRes.status === 404) { router.push(`/writing/${projectId}`); return; }
+    if (res.status === 404) { router.push(`/writing/${projectId}`); return; }
 
-    if (sectionRes.ok) {
-      const data: ApiSection & { notes: ApiNote[] } = await sectionRes.json();
+    if (res.ok) {
+      const data: ApiSection & { notes: ApiNote[] } = await res.json();
       setSection(data);
       setTitleValue(data.title);
       setNotes(data.notes ?? []);
@@ -108,12 +98,6 @@ export default function SectionEditorPage({
       if (editor && content && typeof content === 'object' && Object.keys(content as object).length > 0) {
         editor.commands.setContent(content);
       }
-    }
-
-    if (projectRes.ok) {
-      const data = await projectRes.json();
-      setProject(data);
-      setSections(data.sections ?? []);
     }
   }
 
@@ -135,7 +119,7 @@ export default function SectionEditorPage({
       body: JSON.stringify({ title: titleValue.trim() }),
     });
     setSection((prev) => prev ? { ...prev, title: titleValue.trim() } : prev);
-    setSections((prev) => prev.map((s) => s.id === sectionId ? { ...s, title: titleValue.trim() } : s));
+    renameSection(sectionId, titleValue.trim());
     setEditingTitle(false);
   }
 
@@ -158,6 +142,14 @@ export default function SectionEditorPage({
   async function handleDeleteNote(id: string) {
     await fetch(`/api/notes/${id}`, { method: 'DELETE' });
     setNotes((prev) => prev.filter((n) => n.id !== id));
+  }
+
+  async function handleAddSection() {
+    const newSection = await addSection();
+    if (newSection) {
+      router.push(`/writing/${projectId}/${newSection.id}`);
+      setMobileTab('write');
+    }
   }
 
   const currentIndex = sections.findIndex((s) => s.id === sectionId);
@@ -200,36 +192,7 @@ export default function SectionEditorPage({
   );
 
   return (
-    <div className={`writing-editor-shell ${mounted ? 'mounted' : ''}`}>
-
-      {/* ── Desktop sidebar ── */}
-      <aside className="writing-sidebar">
-        <div className="writing-sidebar-brand">
-          <Link href="/writing" className="writing-sidebar-back">← Projects</Link>
-          {project && (
-            <Link href={`/writing/${projectId}`} className="writing-sidebar-project-title">
-              {project.title}
-            </Link>
-          )}
-        </div>
-        <div className="writing-sidebar-sections">
-          <p className="writing-sidebar-label">{labels.plural}</p>
-          {sections.map((s, i) => (
-            <Link
-              key={s.id}
-              href={`/writing/${projectId}/${s.id}`}
-              className={`writing-sidebar-section ${s.id === sectionId ? 'writing-sidebar-section--active' : ''}`}
-            >
-              <span className="writing-sidebar-section-num">{i + 1}</span>
-              <span className="writing-sidebar-section-name">{s.title}</span>
-            </Link>
-          ))}
-          <Link href={`/writing/${projectId}`} className="writing-sidebar-new">
-            {labels.newLabel}
-          </Link>
-        </div>
-      </aside>
-
+    <>
       {/* ── Main area ── */}
       <main className="writing-editor-main">
 
@@ -286,9 +249,9 @@ export default function SectionEditorPage({
           <div className="writing-mobile-panel writing-mobile-only">
             <div className="writing-mobile-panel-header">
               <span className="writing-sidebar-label">{labels.plural}</span>
-              <Link href={`/writing/${projectId}`} className="writing-sidebar-new" style={{ margin: 0 }}>
+              <button onClick={handleAddSection} className="writing-sidebar-new" style={{ margin: 0 }}>
                 {labels.newLabel}
-              </Link>
+              </button>
             </div>
             <div className="writing-mobile-section-list">
               {sections.map((s, i) => (
@@ -365,6 +328,6 @@ export default function SectionEditorPage({
           </button>
         ))}
       </nav>
-    </div>
+    </>
   );
 }
