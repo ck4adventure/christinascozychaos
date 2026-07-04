@@ -2051,12 +2051,17 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.writing-project-card {
+.writing-project-card,
+.writing-section-row,
+.writing-new-form {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border-card);
+  backdrop-filter: blur(10px);
+}
+
+.writing-project-card {
   border-radius: 14px;
   padding: 1rem 1.25rem;
-  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -2105,11 +2110,8 @@ body {
 }
 
 .writing-section-row {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border-card);
   border-radius: 12px;
   padding: 0.9rem 1.1rem;
-  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -2162,29 +2164,39 @@ body {
 
 /* ---- Shared form elements ---- */
 .writing-new-form {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border-card);
   border-radius: 14px;
   padding: 1.25rem 1.5rem;
-  backdrop-filter: blur(10px);
 }
 
-.writing-input {
+.writing-input,
+.writing-title-input,
+.writing-note-textarea {
   width: 100%;
   background: var(--color-bg-input);
   border: 1px solid var(--color-border-input);
-  border-radius: 8px;
-  padding: 0.6rem 0.9rem;
   color: var(--color-text-body);
   font-family: var(--font-cormorant), serif;
-  font-size: 1rem;
   font-style: italic;
   outline: none;
-  transition: border-color 0.2s ease;
   box-sizing: border-box;
+  transition: border-color 0.2s ease;
 }
 
-.writing-input:focus { border-color: rgba(232, 160, 32, 0.6); }
+.writing-input {
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  font-size: 1rem;
+}
+
+.writing-title-input {
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  font-size: 1.3rem;
+  font-weight: 300;
+}
+
+.writing-input:focus,
+.writing-title-input:focus { border-color: rgba(232, 160, 32, 0.6); }
 
 .writing-type-picker {
   display: flex;
@@ -2482,20 +2494,6 @@ body {
 
 .writing-editor-section-title:hover { color: var(--amber); }
 
-.writing-title-input {
-  background: rgba(42, 14, 48, 0.5);
-  border: 1px solid rgba(232, 160, 32, 0.4);
-  border-radius: 6px;
-  padding: 0.3rem 0.6rem;
-  color: var(--cream-light);
-  font-family: var(--font-cormorant), serif;
-  font-size: 1.3rem;
-  font-style: italic;
-  font-weight: 300;
-  outline: none;
-  width: 100%;
-  box-sizing: border-box;
-}
 
 .writing-editor-topbar-right {
   display: flex;
@@ -2724,19 +2722,12 @@ body {
 }
 
 .writing-note-textarea {
-  width: 100%;
-  background: var(--color-bg-input);
-  border: 1px solid var(--color-border-input);
   border-radius: 8px;
   padding: 0.5rem 0.65rem;
-  color: var(--color-text-body);
-  font-family: var(--font-cormorant), serif;
   font-size: 0.92rem;
+  font-style: normal;
   line-height: 1.5;
-  outline: none;
   resize: vertical;
-  box-sizing: border-box;
-  transition: border-color 0.2s ease;
 }
 
 .writing-note-textarea:focus { border-color: rgba(232, 160, 32, 0.5); }
