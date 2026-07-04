@@ -155,8 +155,8 @@ export default function WritingPage() {
                   {deleteId === project.id ? (
                     <div className="writing-delete-confirm">
                       <span style={{ color: 'var(--cream)', fontFamily: 'var(--font-josefin)', fontSize: '0.65rem', letterSpacing: '0.1em' }}>Delete &quot;{project.title}&quot;?</span>
-                      <button onClick={() => handleDelete(project.id)} className="writing-delete-btn writing-delete-btn--confirm">Yes, delete</button>
-                      <button onClick={() => setDeleteId(null)} className="writing-delete-btn">Cancel</button>
+                      <button onClick={() => handleDelete(project.id)} className="btn btn--danger" style={{ fontSize: '0.6rem', padding: '0.25rem 0.6rem' }}>Yes, delete</button>
+                      <button onClick={() => setDeleteId(null)} className="btn btn--text" style={{ fontSize: '0.6rem', padding: '0.25rem 0.6rem' }}>Cancel</button>
                     </div>
                   ) : (
                     <button onClick={() => setDeleteId(project.id)} className="writing-card-delete" aria-label="Delete project">×</button>
@@ -174,7 +174,7 @@ export default function WritingPage() {
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
                   placeholder="Project title…"
-                  className="writing-input"
+                  className="input"
                   maxLength={120}
                 />
                 <div className="writing-type-picker">
@@ -190,16 +190,16 @@ export default function WritingPage() {
                   ))}
                 </div>
                 <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem' }}>
-                  <button type="submit" disabled={submitting || !newTitle.trim()} className="writing-submit-btn">
+                  <button type="submit" disabled={submitting || !newTitle.trim()} className="btn btn--primary">
                     {submitting ? 'Creating…' : 'Create'}
                   </button>
-                  <button type="button" onClick={() => { setCreating(false); setNewTitle(''); }} className="writing-cancel-btn">
+                  <button type="button" onClick={() => { setCreating(false); setNewTitle(''); }} className="btn btn--text">
                     Cancel
                   </button>
                 </div>
               </form>
             ) : (
-              <button onClick={() => setCreating(true)} className="writing-new-btn">
+              <button onClick={() => setCreating(true)} className="btn btn--outline">
                 + New Project
               </button>
             )}

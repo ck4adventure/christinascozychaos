@@ -54,8 +54,8 @@ function SortableRow({ section, label, projectId, onDelete }: SortableRowProps) 
       </Link>
       {confirmDelete ? (
         <div className="writing-delete-inline">
-          <button onClick={() => onDelete(section.id)} className="writing-delete-btn writing-delete-btn--confirm">Delete</button>
-          <button onClick={() => setConfirmDelete(false)} className="writing-delete-btn">Cancel</button>
+          <button onClick={() => onDelete(section.id)} className="btn btn--danger" style={{ fontSize: '0.6rem', padding: '0.25rem 0.6rem' }}>Delete</button>
+          <button onClick={() => setConfirmDelete(false)} className="btn btn--text" style={{ fontSize: '0.6rem', padding: '0.25rem 0.6rem' }}>Cancel</button>
         </div>
       ) : (
         <button onClick={() => setConfirmDelete(true)} className="writing-card-delete" aria-label={`Delete ${label}`}>×</button>
@@ -224,20 +224,20 @@ export default function ProjectPage({ params }: { params: Promise<{ projectId: s
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
                   placeholder={`${labels.singular} title…`}
-                  className="writing-input"
+                  className="input"
                   maxLength={120}
                 />
                 <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.75rem' }}>
-                  <button type="submit" disabled={submitting || !newTitle.trim()} className="writing-submit-btn">
+                  <button type="submit" disabled={submitting || !newTitle.trim()} className="btn btn--primary">
                     {submitting ? 'Creating…' : 'Create'}
                   </button>
-                  <button type="button" onClick={() => { setAdding(false); setNewTitle(''); }} className="writing-cancel-btn">
+                  <button type="button" onClick={() => { setAdding(false); setNewTitle(''); }} className="btn btn--text">
                     Cancel
                   </button>
                 </div>
               </form>
             ) : (
-              <button onClick={() => setAdding(true)} className="writing-new-btn" style={{ marginTop: sections.length > 0 ? '1.25rem' : '0' }}>
+              <button onClick={() => setAdding(true)} className="btn btn--outline" style={{ marginTop: sections.length > 0 ? '1.25rem' : '0' }}>
                 {labels.newLabel}
               </button>
             )}

@@ -26,7 +26,7 @@ export default function NavBar({ active, onChange }: NavBarProps) {
   };
 
   return (
-    <nav className="blossom-nav">
+    <nav className="nav-tabs blossom-nav">
       <div className="blossom-nav-brand">
         <span className="blossom-nav-brand-icon">🌸</span>
         <span className="blossom-nav-brand-text">Blossom</span>
@@ -36,18 +36,18 @@ export default function NavBar({ active, onChange }: NavBarProps) {
           key={id}
           onClick={() => onChange(id)}
           className={[
-            'blossom-nav-item',
-            active === id ? 'blossom-nav-item--active' : '',
+            'nav-tab blossom-nav-item',
+            active === id ? 'nav-tab--active' : '',
             id === 'add'  ? 'blossom-nav-item--add'    : '',
           ].filter(Boolean).join(' ')}
         >
-          <span className="blossom-nav-icon">{icon}</span>
-          <span className="blossom-nav-label">{label}</span>
+          <span className="nav-tab-icon">{icon}</span>
+          <span>{label}</span>
         </button>
       ))}
-      <button className="blossom-nav-item blossom-nav-item--logout" onClick={handleLogout}>
-        <span className="blossom-nav-icon">↩</span>
-        <span className="blossom-nav-label">Sign out</span>
+      <button className="nav-tab blossom-nav-item blossom-nav-item--logout" onClick={handleLogout}>
+        <span className="nav-tab-icon">↩</span>
+        <span>Sign out</span>
       </button>
     </nav>
   );

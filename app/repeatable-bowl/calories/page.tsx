@@ -148,7 +148,7 @@ export default function CaloriesPage() {
 	return (
 		<div>
 			<div className="bowl-header" style={{ paddingTop: 0, paddingBottom: "1.5rem" }}>
-				<p className="bowl-eyebrow">Daily Nutrition</p>
+				<p className="eyebrow">Daily Nutrition</p>
 				<div className="bowl-grand-total">{grandTotal.toFixed(0)}</div>
 				<p className="bowl-grand-label">kcal total</p>
 			</div>

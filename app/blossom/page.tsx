@@ -60,16 +60,16 @@ export default function TrackerPage() {
       <div className="blossom-ambient" />
 
       <div className="blossom-inner">
-        <Link href="/" className="bowl-back">← Home</Link>
+        <Link href="/" className="btn btn--link" style={{ marginBottom: "2.5rem" }}>← Home</Link>
 
         {/* TODAY VIEW */}
         {tab === 'today' && (
           <div>
             <div className="blossom-header">
-              <p className="blossom-eyebrow">
+              <p className="eyebrow" style={{ marginBottom: '4px' }}>
                 {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
               </p>
-              <h1 className="blossom-heading">Today&apos;s Tasks</h1>
+              <h1 className="title" style={{ fontSize: '2rem', fontStyle: 'italic' }}>Today&apos;s Tasks</h1>
 
               {totalCount > 0 && (
                 <div className="blossom-progress">
@@ -98,20 +98,9 @@ export default function TrackerPage() {
                   <span>Enjoy the quiet. 🌙</span>
                 </p>
                 <button
+                  className="btn btn--outline"
                   onClick={() => setQuickLogOpen(true)}
-                  style={{
-                    marginTop: '16px',
-                    padding: '10px 20px',
-                    borderRadius: '20px',
-                    border: '1px solid rgba(232, 160, 32, 0.35)',
-                    background: 'transparent',
-                    color: 'var(--amber)',
-                    fontFamily: "var(--font-josefin), sans-serif",
-                    fontSize: '0.75rem',
-                    letterSpacing: '0.2em',
-                    textTransform: 'uppercase',
-                    cursor: 'pointer',
-                  }}
+                  style={{ marginTop: '16px' }}
                 >
                   ✦ Log something
                 </button>
@@ -122,22 +111,9 @@ export default function TrackerPage() {
                   <TaskCard key={task.id} task={task} onToggle={toggleTask} />
                 ))}
                 <button
+                  className="btn btn--outline"
                   onClick={() => setQuickLogOpen(true)}
-                  style={{
-                    width: '100%',
-                    padding: '11px',
-                    borderRadius: '12px',
-                    border: '1px solid rgba(232, 160, 32, 0.25)',
-                    background: 'transparent',
-                    color: 'var(--amber)',
-                    fontFamily: "var(--font-josefin), sans-serif",
-                    fontSize: '0.72rem',
-                    letterSpacing: '0.2em',
-                    textTransform: 'uppercase',
-                    cursor: 'pointer',
-                    marginTop: '4px',
-                    transition: 'all 0.2s',
-                  }}
+                  style={{ width: '100%', marginTop: '4px' }}
                 >
                   ✦ Log something extra
                 </button>
@@ -153,8 +129,8 @@ export default function TrackerPage() {
         {tab === 'schedule' && (
           <div>
             <div className="blossom-header">
-              <p className="blossom-eyebrow">All Tasks</p>
-              <h1 className="blossom-heading">Your Schedule</h1>
+              <p className="eyebrow" style={{ marginBottom: '4px' }}>All Tasks</p>
+              <h1 className="title" style={{ fontSize: '2rem', fontStyle: 'italic' }}>Your Schedule</h1>
               <p className="blossom-subtext">
                 Change a task&apos;s frequency to shift it between groups
               </p>

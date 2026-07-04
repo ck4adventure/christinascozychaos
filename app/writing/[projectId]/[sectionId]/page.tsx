@@ -183,16 +183,16 @@ export default function SectionEditorPage({
             value={noteInput}
             onChange={(e) => setNoteInput(e.target.value)}
             placeholder="Add a note…"
-            className="writing-note-textarea"
+            className="input input--textarea"
             rows={3}
           />
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-            <button type="submit" disabled={!noteInput.trim()} className="writing-submit-btn" style={{ fontSize: '0.65rem', padding: '0.35rem 0.75rem' }}>Add</button>
-            <button type="button" onClick={() => { setAddingNote(false); setNoteInput(''); }} className="writing-cancel-btn" style={{ fontSize: '0.65rem', padding: '0.35rem 0.75rem' }}>Cancel</button>
+            <button type="submit" disabled={!noteInput.trim()} className="btn btn--primary" style={{ fontSize: '0.65rem', padding: '0.35rem 0.75rem' }}>Add</button>
+            <button type="button" onClick={() => { setAddingNote(false); setNoteInput(''); }} className="btn btn--text" style={{ fontSize: '0.65rem', padding: '0.35rem 0.75rem' }}>Cancel</button>
           </div>
         </form>
       ) : (
-        <button onClick={() => setAddingNote(true)} className="writing-new-btn" style={{ margin: '0.75rem', fontSize: '0.65rem', padding: '0.4rem 0.9rem' }}>
+        <button onClick={() => setAddingNote(true)} className="btn btn--outline" style={{ margin: '0.75rem', fontSize: '0.65rem', padding: '0.4rem 0.9rem' }}>
           + Add Note
         </button>
       )}
@@ -251,7 +251,7 @@ export default function SectionEditorPage({
                   if (e.key === 'Enter') handleTitleSave();
                   if (e.key === 'Escape') { setEditingTitle(false); setTitleValue(section?.title ?? ''); }
                 }}
-                className="writing-title-input"
+                className="input input--lg"
               />
             ) : (
               <h2
@@ -349,7 +349,7 @@ export default function SectionEditorPage({
       )}
 
       {/* ── Mobile bottom tab bar ── */}
-      <nav className="writing-mobile-tabs writing-mobile-only">
+      <nav className="nav-tabs writing-mobile-only" style={{ height: '56px' }}>
         {([
           { id: 'write', label: 'Write', icon: '✏️' },
           { id: 'sections', label: labels.plural, icon: '☰' },
@@ -358,10 +358,10 @@ export default function SectionEditorPage({
           <button
             key={id}
             onClick={() => setMobileTab(id)}
-            className={`writing-tab-btn ${mobileTab === id ? 'writing-tab-btn--active' : ''}`}
+            className={`nav-tab ${mobileTab === id ? 'nav-tab--active' : ''}`}
           >
-            <span className="writing-tab-icon">{icon}</span>
-            <span className="writing-tab-label">{label}</span>
+            <span className="nav-tab-icon">{icon}</span>
+            <span>{label}</span>
           </button>
         ))}
       </nav>

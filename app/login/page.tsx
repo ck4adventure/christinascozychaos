@@ -50,22 +50,22 @@ export default function LoginPage() {
   return (
     <div className="bowl-page">
       <div className={`bowl-inner${visible ? ' bowl-visible' : ''}`}>
-        <Link href="/" className="bowl-back">← Home</Link>
+        <Link href="/" className="btn btn--link" style={{ marginBottom: "2.5rem" }}>← Home</Link>
 
         <div className="login-header">
-          <p className="login-eyebrow">Welcome back</p>
-          <h1 className="login-title">
+          <p className="eyebrow">Welcome back</p>
+          <h1 className="title" style={{ fontSize: 'clamp(2.2rem, 7vw, 3.5rem)' }}>
             Christina&apos;s<br /><em>Cozy Chaos</em>
           </h1>
         </div>
 
-        <div className="bowl-card login-card">
+        <div className="card login-card">
           <form onSubmit={handleSubmit} className="login-form">
             <div className="login-field">
               <label className="login-label" htmlFor="username">Username</label>
               <input
                 id="username"
-                className="login-input"
+                className="input"
                 type="text"
                 autoComplete="username"
                 value={username}
@@ -78,7 +78,7 @@ export default function LoginPage() {
               <label className="login-label" htmlFor="password">Password</label>
               <input
                 id="password"
-                className="login-input"
+                className="input"
                 type="password"
                 autoComplete="current-password"
                 value={password}
@@ -91,7 +91,7 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              className="login-btn"
+              className="btn btn--outline"
               disabled={loading}
             >
               {loading ? 'Signing in…' : 'Sign in'}
