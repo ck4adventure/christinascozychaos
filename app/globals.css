@@ -421,6 +421,13 @@ body {
   opacity: 1;
 }
 
+/* Per-page back/sign-out links: mobile only — the shared .top-bar covers desktop */
+@media (min-width: 768px) {
+  .mobile-nav-link {
+    display: none !important;
+  }
+}
+
 .btn--danger {
   background: none;
   border: 1px solid var(--color-danger);
@@ -1313,13 +1320,32 @@ body {
   }
 }
 
-/* ─── Theme toggle ──────────────────────────────────────────────────────────── */
+/* ─── Top bar — fixed, right-aligned, vertically centered (shared across every page) ── */
 
-.theme-toggle {
+.top-bar {
   position: fixed;
   top: 1.1rem;
   right: 1.25rem;
   z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Home / Sign out only show once the shared top bar has room for them */
+.top-bar-link {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .top-bar-link {
+    display: inline-flex;
+  }
+}
+
+/* ─── Theme toggle ──────────────────────────────────────────────────────────── */
+
+.theme-toggle {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -1841,10 +1867,6 @@ body {
 
 /* ---- Page-level top nav (fixed beside theme toggle on desktop) ---- */
 .writing-page-topnav {
-  position: fixed;
-  top: 1.1rem;
-  right: 7.75rem; /* clears the theme toggle (~6rem wide at right: 1.25rem) */
-  z-index: 199;
   display: flex;
   align-items: center;
   gap: 0.5rem;

@@ -50,7 +50,7 @@ export default function LoginPage() {
   return (
     <div className="bowl-page">
       <div className={`bowl-inner${visible ? ' bowl-visible' : ''}`}>
-        <Link href="/" className="btn btn--link" style={{ marginBottom: "2.5rem" }}>← Home</Link>
+        <Link href="/" className="btn btn--link mobile-nav-link" style={{ marginBottom: "2.5rem" }}>← Home</Link>
 
         <div className="login-header">
           <p className="eyebrow">Welcome back</p>

@@ -60,7 +60,7 @@ export default function TrackerPage() {
       <div className="blossom-ambient" />
 
       <div className="blossom-inner">
-        <Link href="/" className="btn btn--link" style={{ marginBottom: "2.5rem" }}>← Home</Link>
+        <Link href="/" className="btn btn--link mobile-nav-link" style={{ marginBottom: "2.5rem" }}>← Home</Link>
 
         {/* TODAY VIEW */}
         {tab === 'today' && (

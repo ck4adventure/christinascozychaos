@@ -71,7 +71,7 @@ export default function BowlLayout({
 
 			{/* Hero */}
 			<div className={`prep-inner ${mounted ? "bowl-visible" : ""}`}>
-				<Link href="/" className="btn btn--link" style={{ marginBottom: "2.5rem" }}>← Home</Link>
+				<Link href="/" className="btn btn--link mobile-nav-link" style={{ marginBottom: "2.5rem" }}>← Home</Link>
 				<div className="prep-hero">
 					<p className="eyebrow">2 Meals a Day</p>
 					<h1 className="title" style={{ fontSize: "clamp(2.2rem, 6vw, 3.2rem)", marginBottom: "12px" }}>The Infinitely Repeatable Bowl</h1>

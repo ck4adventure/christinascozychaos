@@ -114,10 +114,10 @@ export default function WritingPage() {
         />
       ))}
 
-      {/* Fixed top-right nav — desktop sits beside the theme toggle, mobile goes inline */}
-      <div className="writing-page-topnav">
-        <Link href="/blossom" className="chip" style={{ textDecoration: 'none' }}>
-          ← Blossom
+      {/* Mobile-only nav — desktop gets Home/Sign out from the shared top bar */}
+      <div className="writing-page-topnav mobile-nav-link">
+        <Link href="/" className="chip" style={{ textDecoration: 'none' }}>
+          ← Home
         </Link>
         <button className="chip" onClick={handleLogout} style={{ cursor: 'pointer' }}>
           Sign out
