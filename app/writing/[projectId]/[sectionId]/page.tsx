@@ -59,6 +59,14 @@ export default function SectionEditorPage({
     [sectionId]
   );
 
+  const flushSave = useCallback(() => {
+    if (saveTimer.current) {
+      clearTimeout(saveTimer.current);
+      saveTimer.current = null;
+      if (latestContent.current) saveContent(latestContent.current);
+    }
+  }, [saveContent]);
+
   const editor = useEditor({
     extensions: [StarterKit],
     editorProps: {
@@ -70,13 +78,31 @@ export default function SectionEditorPage({
       if (saveTimer.current) clearTimeout(saveTimer.current);
       saveTimer.current = setTimeout(() => saveContent(content), AUTOSAVE_DELAY);
     },
+    onBlur: () => flushSave(),
   });
 
   useEffect(() => {
     fetchSection();
-    return () => {
-      if (saveTimer.current) clearTimeout(saveTimer.current);
-    };
+    return () => flushSave();
+  }, [sectionId]);
+
+  // Tab close / reload: localStorage write is synchronous, the fetch uses
+  // keepalive so it has a chance to finish after the page starts unloading.
+  useEffect(() => {
+    function handleBeforeUnload() {
+      if (saveTimer.current && latestContent.current) {
+        clearTimeout(saveTimer.current);
+        localStorage.setItem(LS_KEY(sectionId), JSON.stringify(latestContent.current));
+        fetch(`/api/sections/${sectionId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content: latestContent.current }),
+          keepalive: true,
+        });
+      }
+    }
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [sectionId]);
 
   async function fetchSection() {
