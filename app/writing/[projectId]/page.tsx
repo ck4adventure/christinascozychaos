@@ -39,10 +39,10 @@ export default function ProjectDashboardPage() {
             </h1>
 
             <div className="card" style={{ marginBottom: '3rem' }}>
-              <div style={{ fontFamily: 'var(--font-cormorant), serif', fontSize: '1.6rem', color: 'var(--amber)' }}>
+              <div style={{ fontFamily: 'var(--font-inter), sans-serif', fontSize: '1.6rem', fontWeight: 600, color: 'var(--color-primary)' }}>
                 {sections.length}
               </div>
-              <div style={{ fontFamily: 'var(--font-josefin), sans-serif', fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-text-muted)' }}>
+              <div style={{ fontFamily: 'var(--font-inter), sans-serif', fontSize: '0.75rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-text-muted)' }}>
                 {sections.length === 1 ? labels.singular : labels.plural}
               </div>
             </div>
@@ -54,7 +54,7 @@ export default function ProjectDashboardPage() {
             ) : (
               <div style={{ textAlign: 'center' }}>
 
-                <p style={{ color: 'var(--plum-light)', fontFamily: 'var(--font-josefin)', fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+                <p style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-inter)', fontSize: '0.75rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                   No {labels.plural.toLowerCase()} yet.
                 </p>
                 <button onClick={handleAddSection} className="chip" style={{ cursor: 'pointer', marginTop: '3rem' }}>

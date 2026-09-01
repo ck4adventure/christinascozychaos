@@ -6,15 +6,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { generateSparks, Spark } from '@/app/utils/sparks';
 import { ApiProject, ProjectType } from '@/lib/writing';
-
-const floatingOrbs = [
-  { size: 300, x: 8, y: 12, delay: 0, duration: 20 },
-  { size: 180, x: 75, y: 55, delay: 3, duration: 24 },
-  { size: 130, x: 45, y: 78, delay: 6, duration: 17 },
-  { size: 240, x: 88, y: 8, delay: 1.5, duration: 22 },
-];
 
 const TYPE_LABELS: Record<ProjectType, string> = {
   NOVEL: 'Novel',
@@ -24,7 +16,6 @@ const TYPE_LABELS: Record<ProjectType, string> = {
 export default function WritingPage() {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
-  const [sparks, setSparks] = useState<Spark[]>([]);
   const [projects, setProjects] = useState<ApiProject[]>([]);
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
@@ -35,7 +26,6 @@ export default function WritingPage() {
 
   useEffect(() => {
     setMounted(true);
-    setSparks(generateSparks(20));
     fetchProjects();
   }, []);
 
@@ -84,39 +74,6 @@ export default function WritingPage() {
 
   return (
     <div className="page">
-      <div className="mesh" />
-
-      {floatingOrbs.map((orb, i) => (
-        <div
-          key={i}
-          className="orb"
-          style={{
-            width: orb.size,
-            height: orb.size,
-            left: `${orb.x}%`,
-            top: `${orb.y}%`,
-            background: i % 2 === 0 ? '#7B3F6E' : '#C46A00',
-            animationDelay: `${orb.delay}s`,
-            animationDuration: `${orb.duration}s`,
-          }}
-        />
-      ))}
-
-      {sparks.map((spark) => (
-        <div
-          key={spark.id}
-          className="spark"
-          style={{
-            width: spark.size,
-            height: spark.size,
-            left: `${spark.x}%`,
-            top: `${spark.y}%`,
-            animationDelay: `${spark.delay}s`,
-            animationDuration: `${spark.duration}s`,
-          }}
-        />
-      ))}
-
       {/* Mobile-only nav — desktop gets Home/Sign out from the shared top bar */}
       <div className="writing-page-topnav mobile-nav-link">
         <Link href="/" className="btn btn--outline" style={{ textDecoration: 'none' }}>
@@ -140,7 +97,7 @@ export default function WritingPage() {
         {!loading && (
           <>
             {projects.length === 0 && !creating && (
-              <p style={{ color: 'var(--plum-light)', fontFamily: 'var(--font-josefin)', fontSize: '0.75rem', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>
+              <p style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-inter)', fontSize: '0.75rem', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>
                 No projects yet — start something new.
               </p>
             )}
@@ -157,7 +114,7 @@ export default function WritingPage() {
                   </Link>
                   {deleteId === project.id ? (
                     <div className="writing-delete-confirm">
-                      <span style={{ color: 'var(--cream)', fontFamily: 'var(--font-josefin)', fontSize: '0.65rem', letterSpacing: '0.1em' }}>Delete &quot;{project.title}&quot;?</span>
+                      <span style={{ color: 'var(--color-text-body)', fontFamily: 'var(--font-inter)', fontSize: '0.75rem', letterSpacing: '0.02em' }}>Delete &quot;{project.title}&quot;?</span>
                       <button onClick={() => handleDelete(project.id)} className="btn btn--danger" style={{ fontSize: '0.6rem', padding: '0.25rem 0.6rem' }}>Yes, delete</button>
                       <button onClick={() => setDeleteId(null)} className="btn btn--text" style={{ fontSize: '0.6rem', padding: '0.25rem 0.6rem' }}>Cancel</button>
                     </div>
@@ -209,8 +166,6 @@ export default function WritingPage() {
           </>
         )}
       </div>
-
-      <div className="bottom-rule" />
     </div>
   );
 }

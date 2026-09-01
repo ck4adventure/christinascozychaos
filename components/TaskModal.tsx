@@ -140,12 +140,11 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onDe
         }} />
 
         <h2 style={{
-          fontFamily: "var(--font-cormorant), serif",
-          fontSize: '1.4rem',
-          fontWeight: 400,
+          fontFamily: "var(--font-inter), sans-serif",
+          fontSize: '1.25rem',
+          fontWeight: 600,
           color: 'var(--color-text-body)',
           marginBottom: '18px',
-          fontStyle: 'italic',
         }}>
           {editingTask ? 'Edit Task' : 'Add a Task'}
         </h2>
@@ -407,7 +406,7 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onDe
             </div>
 
             {filteredLibrary.length === 0 ? (
-              <p style={{ fontFamily: "var(--font-cormorant), serif", fontStyle: 'italic', color: 'var(--color-text-muted)', textAlign: 'center', padding: '24px 0' }}>
+              <p style={{ fontFamily: "var(--font-inter), sans-serif", color: 'var(--color-text-muted)', textAlign: 'center', padding: '24px 0' }}>
                 You&apos;ve added everything in this category! 🌸
               </p>
             ) : (

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Geist, Geist_Mono, Josefin_Sans } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
 import TopBar from "@/components/TopBar";
@@ -14,21 +14,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["300", "400", "600"],
-  style: ["normal", "italic"],
-});
-
-const josefin = Josefin_Sans({
-  variable: "--font-josefin",
-  subsets: ["latin"],
-  weight: ["200", "300", "400"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const viewport: Viewport = {
-  themeColor: '#2A0E30',
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#1A1C1E' },
+    { media: '(prefers-color-scheme: light)', color: '#FDFCFF' },
+  ],
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
@@ -66,7 +62,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} ${josefin.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} antialiased`}
       >
         {children}
         <TopBar />

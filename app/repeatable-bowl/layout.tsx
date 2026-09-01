@@ -3,14 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Spark, generateSparks } from "../utils/sparks";
-
-const floatingOrbs = [
-	{ size: 300, x: 8, y: 12, delay: 0, duration: 20 },
-	{ size: 200, x: 72, y: 58, delay: 3, duration: 24 },
-	{ size: 150, x: 42, y: 78, delay: 6, duration: 17 },
-	{ size: 240, x: 86, y: 8, delay: 1.5, duration: 22 },
-];
 
 const tabs = [
 	{ id: "build",    label: "The Bowl", emoji: "🥣", href: "/repeatable-bowl/build" },
@@ -26,49 +18,14 @@ export default function BowlLayout({
 	children: React.ReactNode;
 }>) {
 	const [mounted, setMounted] = useState(false);
-	const [sparks, setSparks] = useState<Spark[]>([]);
 	const pathname = usePathname();
 
 	useEffect(() => {
 		setMounted(true);
-		setSparks(generateSparks(20));
 	}, []);
 
 	return (
 		<div className="bowl-page prep-page">
-			<div className="mesh" />
-
-			{floatingOrbs.map((orb, i) => (
-				<div
-					key={i}
-					className="orb"
-					style={{
-						width: orb.size,
-						height: orb.size,
-						left: `${orb.x}%`,
-						top: `${orb.y}%`,
-						background: i % 2 === 0 ? "#7B3F6E" : "#C46A00",
-						animationDelay: `${orb.delay}s`,
-						animationDuration: `${orb.duration}s`,
-					}}
-				/>
-			))}
-
-			{sparks.map((spark) => (
-				<div
-					key={spark.id}
-					className="spark"
-					style={{
-						width: spark.size,
-						height: spark.size,
-						left: `${spark.x}%`,
-						top: `${spark.y}%`,
-						animationDelay: `${spark.delay}s`,
-						animationDuration: `${spark.duration}s`,
-					}}
-				/>
-			))}
-
 			{/* Hero */}
 			<div className={`prep-inner ${mounted ? "bowl-visible" : ""}`}>
 				<Link href="/" className="btn btn--link mobile-nav-link" style={{ marginBottom: "2.5rem" }}>← Home</Link>
@@ -119,10 +76,6 @@ export default function BowlLayout({
 					);
 				})}
 			</nav>
-
-			<div className="corner corner-tl" />
-			<div className="corner corner-br" />
-			<div className="bottom-rule" />
 		</div>
 	);
 }

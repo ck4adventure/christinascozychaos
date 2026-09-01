@@ -57,7 +57,6 @@ export default function TrackerPage() {
 
   return (
     <div className="blossom-page">
-      <div className="blossom-ambient" />
 
       <div className="blossom-inner">
         <Link href="/" className="btn btn--link mobile-nav-link" style={{ marginBottom: "2.5rem" }}>← Home</Link>
@@ -69,7 +68,7 @@ export default function TrackerPage() {
               <p className="eyebrow" style={{ marginBottom: '4px' }}>
                 {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
               </p>
-              <h1 className="title" style={{ fontSize: '2rem', fontStyle: 'italic' }}>Today&apos;s Tasks</h1>
+              <h1 className="title" style={{ fontSize: '2rem' }}>Today&apos;s Tasks</h1>
 
               {totalCount > 0 && (
                 <div className="blossom-progress">
@@ -130,7 +129,7 @@ export default function TrackerPage() {
           <div>
             <div className="blossom-header">
               <p className="eyebrow" style={{ marginBottom: '4px' }}>All Tasks</p>
-              <h1 className="title" style={{ fontSize: '2rem', fontStyle: 'italic' }}>Your Schedule</h1>
+              <h1 className="title" style={{ fontSize: '2rem' }}>Your Schedule</h1>
               <p className="blossom-subtext">
                 Change a task&apos;s frequency to shift it between groups
               </p>
