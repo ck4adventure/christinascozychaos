@@ -10,7 +10,7 @@ export default function TopBar() {
   const pathname = usePathname();
   const router = useRouter();
   const isHome = pathname === '/';
-  const isAuthed = AUTHED_PREFIXES.some((p) => pathname.startsWith(p));
+  const isAuthed = AUTHED_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + '/'));
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });

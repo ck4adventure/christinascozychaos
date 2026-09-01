@@ -7,6 +7,7 @@ type Tab = 'today' | 'schedule' | 'history' | 'add';
 interface NavBarProps {
   active: Tab;
   onChange: (tab: Tab) => void;
+  demo?: boolean;
 }
 
 const NAV_LINKS: { id: Tab; icon: string; label: string }[] = [
@@ -17,10 +18,14 @@ const NAV_LINKS: { id: Tab; icon: string; label: string }[] = [
 
 const ADD_ITEM = { id: 'add' as Tab, icon: '＋', label: 'Add Task' };
 
-export default function NavBar({ active, onChange }: NavBarProps) {
+export default function NavBar({ active, onChange, demo = false }: NavBarProps) {
   const router = useRouter();
 
   const handleLogout = async () => {
+    if (demo) {
+      router.push('/login');
+      return;
+    }
     await fetch('/api/auth/logout', { method: 'POST' });
     router.push('/login');
   };
@@ -47,7 +52,7 @@ export default function NavBar({ active, onChange }: NavBarProps) {
       ))}
       <button className="nav-tab nav-item--sidebar blossom-nav-item--logout" onClick={handleLogout}>
         <span className="nav-tab-icon">↩</span>
-        <span>Sign out</span>
+        <span>{demo ? 'Exit demo' : 'Sign out'}</span>
       </button>
     </nav>
   );
