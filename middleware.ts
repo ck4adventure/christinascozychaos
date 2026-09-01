@@ -15,7 +15,9 @@ export async function middleware(request: NextRequest) {
       if (isApi) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
       }
-      return NextResponse.redirect(new URL('/login', request.url));
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('from', pathname + request.nextUrl.search);
+      return NextResponse.redirect(loginUrl);
     }
 
     return response;
@@ -24,10 +26,20 @@ export async function middleware(request: NextRequest) {
     if (isApi) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    return NextResponse.redirect(new URL('/login', request.url));
+    const loginUrl = new URL('/login', request.url);
+    loginUrl.searchParams.set('from', pathname + request.nextUrl.search);
+    return NextResponse.redirect(loginUrl);
   }
 }
 
 export const config = {
-  matcher: ['/blossom/:path*', '/api/tasks/:path*', '/api/logs/:path*'],
+  matcher: [
+    '/blossom/:path*',
+    '/writing/:path*',
+    '/api/tasks/:path*',
+    '/api/logs/:path*',
+    '/api/projects/:path*',
+    '/api/sections/:path*',
+    '/api/notes/:path*',
+  ],
 };

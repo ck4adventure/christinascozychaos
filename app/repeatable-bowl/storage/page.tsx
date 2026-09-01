@@ -8,7 +8,7 @@ const safetyNotes = [
 export default function StoragePage() {
 	return (
 		<div>
-			<h2 className="prep-section-title">Storage & Food Safety</h2>
+			<h2 className="card-title prep-section-title">Storage & Food Safety</h2>
 			<p className="prep-intro">
 				Everything you need to know to keep your bowls safe and fresh.
 			</p>

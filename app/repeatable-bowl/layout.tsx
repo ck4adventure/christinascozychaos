@@ -71,10 +71,10 @@ export default function BowlLayout({
 
 			{/* Hero */}
 			<div className={`prep-inner ${mounted ? "bowl-visible" : ""}`}>
-				<Link href="/" className="bowl-back">← Home</Link>
+				<Link href="/" className="btn btn--link mobile-nav-link" style={{ marginBottom: "2.5rem" }}>← Home</Link>
 				<div className="prep-hero">
-					<p className="prep-hero-eyebrow">2 Meals a Day</p>
-					<h1 className="prep-hero-title">The Infinitely Repeatable Bowl</h1>
+					<p className="eyebrow">2 Meals a Day</p>
+					<h1 className="title" style={{ fontSize: "clamp(2.2rem, 6vw, 3.2rem)", marginBottom: "12px" }}>The Infinitely Repeatable Bowl</h1>
 					<p className="prep-hero-tagline">
 						Six nourishing meals, two hours of prep, three days of not thinking about food.
 					</p>
@@ -100,10 +100,10 @@ export default function BowlLayout({
 			</div>
 
 			{/* Nav */}
-			<nav className="prep-nav">
-				<div className="prep-nav-brand">
-					<span className="prep-nav-brand-icon">🥣</span>
-					<span className="prep-nav-brand-text">Infinite Bowl</span>
+			<nav className="nav-tabs nav-tabs--sidebar">
+				<div className="nav-brand">
+					<span className="nav-brand-icon">🥣</span>
+					<span className="nav-brand-text">Infinite Bowl</span>
 				</div>
 				{tabs.map((tab) => {
 					const active = pathname === tab.href || pathname.startsWith(tab.href + "/");
@@ -111,10 +111,10 @@ export default function BowlLayout({
 						<Link
 							key={tab.id}
 							href={tab.href}
-							className={`prep-nav-btn ${active ? "prep-nav-btn--active" : ""}`}
+							className={`nav-tab nav-item--sidebar ${active ? "nav-tab--active" : ""}`}
 						>
-							<span className="prep-nav-icon">{tab.emoji}</span>
-							<span className="prep-nav-label">{tab.label}</span>
+							<span className="nav-tab-icon">{tab.emoji}</span>
+							<span>{tab.label}</span>
 						</Link>
 					);
 				})}

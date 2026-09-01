@@ -370,20 +370,8 @@ export default function TaskModal({ editingTask, existingTaskNames, onSave, onDe
             {onDelete && (
               <button
                 onClick={onDelete}
-                style={{
-                  padding: '11px',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(180, 60, 60, 0.35)',
-                  background: 'transparent',
-                  color: 'rgba(220, 100, 100, 0.75)',
-                  fontFamily: "var(--font-josefin), sans-serif",
-                  fontSize: '0.8rem',
-                  fontWeight: 400,
-                  letterSpacing: '0.2em',
-                  textTransform: 'uppercase',
-                  cursor: 'pointer',
-                  transition: 'all 0.25s',
-                }}
+                className="btn btn--danger"
+                style={{ width: '100%', borderRadius: '12px', fontSize: '0.8rem' }}
               >
                 Delete Task
               </button>

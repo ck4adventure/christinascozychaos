@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Geist, Geist_Mono, Josefin_Sans } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
-import ThemeToggle from "@/components/ThemeToggle";
+import TopBar from "@/components/TopBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -69,7 +69,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} ${josefin.variable} antialiased`}
       >
         {children}
-        <ThemeToggle />
+        <TopBar />
         <Analytics />
       </body>
     </html>

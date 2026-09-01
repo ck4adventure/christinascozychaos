@@ -81,6 +81,7 @@ export default function Home() {
             <Link href="/repeatable-bowl" className="chip">🥣 Infinitely Repeatable Meal</Link>
             <Link href="/blossom" className="chip">🌸 Blossom Chore Tracker</Link>
             <Link href="/cascades" className="chip">Cascades Game 🟪🟪🟦</Link>
+            <Link href="/writing" className="chip">Writing Tool for Authors 🖋️</Link>
             {/* <span className="chip">✨ More Randomness Soon!</span> */}
           </div>
 
