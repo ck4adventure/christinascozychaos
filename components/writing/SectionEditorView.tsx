@@ -72,6 +72,7 @@ export default function SectionEditorView({
 
   const editor = useEditor({
     extensions: [StarterKit],
+    immediatelyRender: false,
     editorProps: {
       attributes: { class: 'writing-editor-body' },
     },
