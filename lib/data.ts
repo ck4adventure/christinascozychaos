@@ -63,3 +63,19 @@ export const TASK_LIBRARY: Omit<Task, 'id' | 'createdAt' | 'flower'>[] = [
   { name: 'Shadow work',         category: 'seeking',  frequency: 'weekly'  },
   { name: 'Nature sit',          category: 'seeking',  frequency: 'weekly'  },
 ];
+
+// Seed data for the browser-only demo tracker (app/blossom-demo) — never touches the server.
+// Weekly tasks cover every day of the week (dayOfWeek 0=Sun … 6=Sat) so the demo always
+// has something to show in Schedule regardless of what day it's viewed.
+export const DEMO_TASKS: Omit<Task, 'id' | 'createdAt' | 'flower'>[] = [
+  { name: 'Shower',            category: 'hygiene', frequency: 'daily'                     },
+  { name: 'Brush teeth',       category: 'hygiene', frequency: 'daily'                     },
+  { name: 'Meal prep',         category: 'home',    frequency: 'weekly', dayOfWeek: 0       },
+  { name: 'Take out trash',    category: 'home',    frequency: 'weekly', dayOfWeek: 1       },
+  { name: 'Do laundry',        category: 'home',    frequency: 'weekly', dayOfWeek: 2       },
+  { name: 'Dust surfaces',     category: 'home',    frequency: 'weekly', dayOfWeek: 3       },
+  { name: 'Water plants',      category: 'home',    frequency: 'weekly', dayOfWeek: 4       },
+  { name: 'Clean bathroom',    category: 'home',    frequency: 'weekly', dayOfWeek: 5       },
+  { name: 'Vacuum',            category: 'home',    frequency: 'weekly', dayOfWeek: 6       },
+  { name: 'Deep clean fridge', category: 'home',    frequency: 'monthly', dayOfMonth: 1     },
+];

@@ -1,0 +1,71 @@
+'use client';
+
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { ProjectType } from '@/lib/writing';
+import { useProjectShell } from '@/components/writing/ProjectShellContext';
+import { useWritingClient } from '@/components/writing/WritingClientContext';
+
+const TYPE_LABELS: Record<ProjectType, string> = {
+  NOVEL: 'Novel',
+  SHORT_STORY_COLLECTION: 'Short Story Collection',
+};
+
+export default function ProjectDashboardView() {
+  const router = useRouter();
+  const { basePath } = useWritingClient();
+  const { projectId, project, sections, loading, labels, addSection } = useProjectShell();
+
+  async function handleAddSection() {
+    const section = await addSection();
+    if (section) router.push(`${basePath}/${projectId}/${section.id}`);
+  }
+
+  const mostRecent = sections.length
+    ? [...sections].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())[0]
+    : null;
+
+  return (
+    <main className="writing-editor-main">
+      <div className="writing-editor-content" style={{ maxWidth: '560px' }}>
+        <Link href={basePath} className="link-subtle mobile-nav-link" style={{ display: 'inline-block', marginBottom: '1.5rem' }}>
+          ← Projects
+        </Link>
+
+        {!loading && project && (
+          <>
+            <p className="eyebrow" style={{ marginBottom: '0.5rem' }}>{TYPE_LABELS[project.type]}</p>
+            <h1 className="title" style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)', marginBottom: '1.5rem' }}>
+              <em>{project.title}</em>
+            </h1>
+
+            <div className="card" style={{ marginBottom: '3rem' }}>
+              <div style={{ fontFamily: 'var(--font-inter), sans-serif', fontSize: '1.6rem', fontWeight: 600, color: 'var(--color-primary)' }}>
+                {sections.length}
+              </div>
+              <div style={{ fontFamily: 'var(--font-inter), sans-serif', fontSize: '0.75rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-text-muted)' }}>
+                {sections.length === 1 ? labels.singular : labels.plural}
+              </div>
+            </div>
+
+            {mostRecent ? (
+              <Link href={`${basePath}/${projectId}/${mostRecent.id}`} className="link-subtle" style={{ display: 'inline-block' }}>
+                Continue with &quot;{mostRecent.title}&quot; →
+              </Link>
+            ) : (
+              <div style={{ textAlign: 'center' }}>
+
+                <p style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-inter)', fontSize: '0.75rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                  No {labels.plural.toLowerCase()} yet.
+                </p>
+                <button onClick={handleAddSection} className="chip" style={{ cursor: 'pointer', marginTop: '3rem' }}>
+                  New Chapter
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </main>
+  );
+}

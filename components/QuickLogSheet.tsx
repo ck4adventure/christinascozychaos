@@ -166,12 +166,11 @@ export default function QuickLogSheet({
         }} />
 
         <h2 style={{
-          fontFamily: "var(--font-cormorant), serif",
-          fontSize: '1.4rem',
-          fontWeight: 400,
+          fontFamily: "var(--font-inter), sans-serif",
+          fontSize: '1.25rem',
+          fontWeight: 600,
           color: 'var(--color-text-body)',
           marginBottom: '18px',
-          fontStyle: 'italic',
         }}>
           Log Something
         </h2>
@@ -446,8 +445,7 @@ export default function QuickLogSheet({
           <div>
             {offScheduleTasks.length === 0 ? (
               <p style={{
-                fontFamily: "var(--font-cormorant), serif",
-                fontStyle: 'italic',
+                fontFamily: "var(--font-inter), sans-serif",
                 color: 'var(--color-text-muted)',
                 textAlign: 'center',
                 padding: '24px 0',

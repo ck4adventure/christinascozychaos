@@ -5,6 +5,13 @@
   --font-mono: var(--font-geist-mono);
 }
 
+:root {
+  /* Compatibility aliases — old font var names kept so page-specific CSS
+     doesn't need per-declaration edits after the Inter switch */
+  --font-cormorant: var(--font-inter);
+  --font-josefin: var(--font-inter);
+}
+
 /* ─── Global resets ─────────────────────────────────────────────────────────── */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -13,131 +20,166 @@
 /* ─── Design tokens ─────────────────────────────────────────────────────────── */
 
 :root {
-  /* Palette */
-  --plum-deep: #2A0E30;
-  --plum-mid: #7B3F6E;
-  --plum-light: #9B6090;
-  --amber: #E8A020;
-  --amber-deep: #C46A00;
-  --cream: #E8D5C4;
-  --cream-light: #F5EAE0;
-  --dark: #1A081E;
+  /* Material 3 baseline blue tonal palette */
+  --md-primary-40: #6750A4;
+  --md-primary-80: #D0BCFF;
+  --md-primary-90: #EADDFF;
+  --md-primary-30: #4F378B;
+  --md-primary-10: #21005D;
+  --md-neutral-99: #FDFCFF;
+  --md-neutral-95: #F1F0F4;
+  --md-neutral-90: #E1E2E6;
+  --md-neutral-50: #75777F;
+  --md-neutral-30: #44464F;
+  --md-neutral-20: #2E3036;
+  --md-neutral-10: #1A1C1E;
+  --md-error-40: #BA1A1A;
+  --md-error-80: #FFB4AB;
+  --md-error-90: #FFDAD6;
+  --md-error-10: #410002;
 
-  /* Semantic tokens — all reference palette vars */
-  --color-bg-card:              color-mix(in srgb, var(--plum-deep) 55%, transparent);
-  --color-border-card:          color-mix(in srgb, var(--amber) 18%, transparent);
-  --color-border-section:       color-mix(in srgb, var(--amber) 10%, transparent);
-  --color-bg-chip:              color-mix(in srgb, var(--amber) 6%, transparent);
-  --color-border-chip:          color-mix(in srgb, var(--amber) 30%, transparent);
-  --color-bg-chip-hover:        color-mix(in srgb, var(--amber) 14%, transparent);
-  --color-border-chip-hover:    color-mix(in srgb, var(--amber) 60%, transparent);
-  --color-track:                color-mix(in srgb, var(--amber) 20%, transparent);
-  --color-border-btn:           color-mix(in srgb, var(--amber) 35%, transparent);
-  --color-border-btn-hover:     color-mix(in srgb, var(--amber) 65%, transparent);
-  --color-focus-ring:           color-mix(in srgb, var(--amber) 60%, transparent);
-  --color-bg-nav-hover:         color-mix(in srgb, var(--amber) 5%, transparent);
-  --color-bg-nav-active:        color-mix(in srgb, var(--amber) 8%, transparent);
-  --color-border-nav-active:    color-mix(in srgb, var(--amber) 50%, transparent);
+  /* Semantic roles (dark, default) */
+  --color-bg:                    var(--md-neutral-10);
+  --color-surface:                #121316;
+  --color-surface-container:      #1E2022;
+  --color-surface-container-high: #292A2D;
+  --color-on-surface:             var(--md-neutral-90);
+  --color-on-surface-variant:     #C4C6D0;
+  --color-outline:                #8E9099;
+  --color-outline-variant:        #44464F;
+  --color-primary:                var(--md-primary-80);
+  --color-on-primary:             var(--md-primary-30);
+  --color-primary-container:      var(--md-primary-30);
+  --color-on-primary-container:   var(--md-primary-90);
+  --color-danger:                 var(--md-error-80);
+  --color-on-danger-container:    var(--md-error-90);
+
+  /* Elevation */
+  --elevation-0: none;
+  --elevation-1: 0 1px 2px rgba(0,0,0,.30), 0 1px 3px 1px rgba(0,0,0,.15);
+  --elevation-2: 0 1px 2px rgba(0,0,0,.30), 0 2px 6px 2px rgba(0,0,0,.15);
+  --elevation-3: 0 1px 3px rgba(0,0,0,.30), 0 4px 8px 3px rgba(0,0,0,.15);
+
+  /* Shape */
+  --radius-xs: 4px; --radius-sm: 8px; --radius-md: 12px;
+  --radius-lg: 16px; --radius-xl: 28px; --radius-full: 999px;
+
+  /* Spacing */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px;
+
+  /* Interaction state layers */
+  --state-hover: 0.08; --state-focus: 0.10; --state-press: 0.10;
+
+  /* Compatibility aliases -- old primitive/token names kept so page-specific
+     CSS and inline TSX styles that reference them repaint without edits */
+  --plum-deep: var(--color-bg);
+  --plum-mid: var(--color-outline);
+  --plum-light: var(--color-on-surface-variant);
+  --amber: var(--color-primary);
+  --amber-deep: var(--color-primary);
+  --cream: var(--color-on-surface);
+  --cream-light: var(--color-on-surface);
+  --dark: var(--color-bg);
+
+  --color-bg-card:              var(--color-surface-container);
+  --color-border-card:          var(--color-outline-variant);
+  --color-border-section:       var(--color-outline-variant);
+  --color-bg-chip:              var(--color-surface-container-high);
+  --color-border-chip:          var(--color-outline-variant);
+  --color-bg-chip-hover:        var(--color-primary-container);
+  --color-border-chip-hover:    var(--color-primary);
+  --color-track:                var(--color-outline-variant);
+  --color-border-btn:           var(--color-outline);
+  --color-border-btn-hover:     var(--color-primary);
+  --color-focus-ring:           var(--color-primary);
+  --color-bg-nav-hover:         color-mix(in srgb, var(--color-primary) 8%, transparent);
+  --color-bg-nav-active:        var(--color-primary-container);
+  --color-border-nav-active:    var(--color-primary);
 
   /* Text hierarchy */
-  --color-text-heading:         var(--cream-light);
-  --color-text-body:            var(--cream);
-  --color-text-muted:           color-mix(in srgb, var(--plum-light) 80%, transparent);
-  --color-text-muted-soft:      color-mix(in srgb, var(--plum-light) 85%, transparent);
-  --color-text-faint:           color-mix(in srgb, var(--cream) 70%, transparent);
-  --color-text-faded:           color-mix(in srgb, var(--cream) 65%, transparent);
+  --color-text-heading:         var(--color-on-surface);
+  --color-text-body:            var(--color-on-surface);
+  --color-text-muted:           var(--color-on-surface-variant);
+  --color-text-muted-soft:      var(--color-on-surface-variant);
+  --color-text-faint:           var(--color-outline);
+  --color-text-faded:           var(--color-outline);
 
   /* Backgrounds */
-  --color-bg-blossom:           linear-gradient(160deg, var(--plum-deep) 0%, var(--dark) 60%, #2A1400 100%);
-  --color-bg-modal-sheet:       linear-gradient(160deg, #3D1A54, var(--plum-deep));
-  --color-bg-input:             color-mix(in srgb, var(--plum-deep) 60%, transparent);
-  --color-bg-library-item:      color-mix(in srgb, var(--plum-deep) 40%, transparent);
-  --color-bg-nav:               linear-gradient(0deg, color-mix(in srgb, var(--dark) 97%, transparent) 0%, color-mix(in srgb, var(--plum-deep) 95%, transparent) 100%);
-  --color-overlay:              color-mix(in srgb, #0a040e 75%, transparent);
-  --color-checkbox-fill:        color-mix(in srgb, var(--amber) 15%, transparent);
-  --color-progress-track:       color-mix(in srgb, var(--plum-mid) 30%, transparent);
-  --color-handle:               color-mix(in srgb, var(--plum-light) 40%, transparent);
-  --color-btn-disabled-bg:      color-mix(in srgb, var(--plum-mid) 25%, transparent);
-  --color-btn-disabled-text:    color-mix(in srgb, var(--cream) 30%, transparent);
-  --color-cta-text:             var(--dark);
+  --color-bg-blossom:           var(--color-bg);
+  --color-bg-modal-sheet:       var(--color-surface-container);
+  --color-bg-input:             var(--color-surface-container-high);
+  --color-bg-library-item:      var(--color-surface-container);
+  --color-bg-nav:               var(--color-surface);
+  --color-overlay:              rgba(0,0,0,0.6);
+  --color-checkbox-fill:        var(--color-primary-container);
+  --color-progress-track:       var(--color-outline-variant);
+  --color-handle:               var(--color-outline);
+  --color-btn-disabled-bg:      var(--color-surface-container-high);
+  --color-btn-disabled-text:    var(--color-outline);
+  --color-cta-text:             var(--color-on-primary);
 
   /* Borders */
-  --color-border-default:       color-mix(in srgb, var(--plum-mid) 60%, transparent);
-  --color-border-active:        color-mix(in srgb, var(--amber) 45%, transparent);
-  --color-border-input:         color-mix(in srgb, var(--plum-mid) 50%, transparent);
+  --color-border-default:       var(--color-outline-variant);
+  --color-border-active:        var(--color-primary);
+  --color-border-input:         var(--color-outline);
 
   /* Misc */
-  --color-danger:               rgba(232, 112, 112, 0.5);
-  --color-slider-glow:          color-mix(in srgb, var(--amber) 40%, transparent);
-  --color-slider-glow-hover:    color-mix(in srgb, var(--amber) 70%, transparent);
+  --color-slider-glow:          color-mix(in srgb, var(--color-primary) 40%, transparent);
+  --color-slider-glow-hover:    color-mix(in srgb, var(--color-primary) 70%, transparent);
 }
 
 /* ─── Light theme ───────────────────────────────────────────────────────────── */
 
 [data-theme="light"] {
-  /* Palette overrides — text/accent classes that reference these get light theme for free */
-  --plum-deep: #ffffff;
-  --plum-light: #C9A8BC;
-  --amber: #C46A00;
-  --amber-deep: #A85A00;
-  --cream: #6B4A5E;
-  --cream-light: #3A2030;
+  --color-bg:                    var(--md-neutral-99);
+  --color-surface:                #FDFCFF;
+  --color-surface-container:      #F1F0F4;
+  --color-surface-container-high: #E9E7EC;
+  --color-on-surface:             var(--md-neutral-10);
+  --color-on-surface-variant:     #44474E;
+  --color-outline:                #74777F;
+  --color-outline-variant:        #C4C6D0;
+  --color-primary:                var(--md-primary-40);
+  --color-on-primary:             #FFFFFF;
+  --color-primary-container:      var(--md-primary-90);
+  --color-on-primary-container:   var(--md-primary-10);
+  --color-danger:                 var(--md-error-40);
+  --color-on-danger-container:    var(--md-error-10);
 
-  /* Semantic overrides — only where auto-derived values don't match design intent */
-  /* Note: --color-text-heading, --color-text-body, --color-border-chip,
-     --color-bg-chip-hover, --color-border-chip-hover, --color-track
-     all auto-derive correctly from the palette overrides above */
+  --elevation-1: 0 1px 2px rgba(0,0,0,.12), 0 1px 3px 1px rgba(0,0,0,.08);
+  --elevation-2: 0 1px 2px rgba(0,0,0,.12), 0 2px 6px 2px rgba(0,0,0,.08);
+  --elevation-3: 0 1px 3px rgba(0,0,0,.12), 0 4px 8px 3px rgba(0,0,0,.08);
 
-  --color-bg-card:              rgba(239, 224, 212, 0.7);
-  --color-border-card:          color-mix(in srgb, var(--plum-mid) 20%, transparent);
-  --color-border-section:       color-mix(in srgb, var(--plum-mid) 10%, transparent);
-  --color-bg-chip:              color-mix(in srgb, var(--amber) 8%, transparent); /* 8% vs dark 6% */
-
-  /* Text — light theme uses darker plum tones not in the overridden palette vars */
-  --color-text-muted:           rgba(106, 74, 94, 0.9);
-  --color-text-muted-soft:      rgba(106, 74, 94, 0.82);
-  --color-text-faint:           rgba(58, 32, 48, 0.6);
-  --color-text-faded:           rgba(58, 32, 48, 0.7);
-
-  /* Backgrounds */
-  --color-bg-blossom:           #ffffff;
-  --color-bg-modal-sheet:       linear-gradient(160deg, #FAF5EF, #ffffff);
-  --color-bg-input:             #ffffff;
-  --color-bg-library-item:      rgba(239, 224, 212, 0.5);
-  --color-bg-nav:               linear-gradient(0deg, rgba(250,243,236,0.97) 0%, rgba(239,224,212,0.95) 100%);
-  --color-overlay:              rgba(58, 32, 48, 0.6);
-  --color-checkbox-fill:        color-mix(in srgb, var(--amber) 12%, transparent); /* 12% vs dark 15% */
-  --color-progress-track:       color-mix(in srgb, var(--plum-mid) 15%, transparent); /* 15% vs dark 30% */
-  --color-handle:               color-mix(in srgb, var(--plum-mid) 30%, transparent);
-  --color-btn-disabled-bg:      color-mix(in srgb, var(--plum-mid) 15%, transparent);
-  --color-btn-disabled-text:    rgba(58, 32, 48, 0.25);
-  --color-cta-text:             #FAF3EC;
-
-  /* Borders */
-  --color-border-default:       color-mix(in srgb, var(--plum-mid) 40%, transparent);
-  --color-border-active:        color-mix(in srgb, var(--amber) 40%, transparent);
-  --color-border-input:         color-mix(in srgb, var(--plum-mid) 35%, transparent);
-
-  --color-danger:               rgba(180, 80, 80, 0.6);
-}
-
-[data-theme="light"] .mesh {
-  background:
-    radial-gradient(ellipse 60% 50% at 15% 20%, rgba(123,63,110,0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 60% at 85% 75%, rgba(196,106,0,0.05) 0%, transparent 65%),
-    radial-gradient(ellipse 70% 40% at 80% 10%, rgba(123,63,110,0.04) 0%, transparent 60%);
-}
-
-[data-theme="light"] .orb {
-  opacity: 0.07;
-}
-
-[data-theme="light"] .page::before {
-  opacity: 0.15;
+  --color-overlay: rgba(0,0,0,0.4);
 }
 
 [data-theme="light"] .blossom-nav-item--logout {
   opacity: 0.65;
+}
+
+/* Mirrors [data-theme="light"] above -- applies before a manual choice is stored */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --color-bg:                    var(--md-neutral-99);
+    --color-surface:                #FDFCFF;
+    --color-surface-container:      #F1F0F4;
+    --color-surface-container-high: #E9E7EC;
+    --color-on-surface:             var(--md-neutral-10);
+    --color-on-surface-variant:     #44474E;
+    --color-outline:                #74777F;
+    --color-outline-variant:        #C4C6D0;
+    --color-primary:                var(--md-primary-40);
+    --color-on-primary:             #FFFFFF;
+    --color-primary-container:      var(--md-primary-90);
+    --color-on-primary-container:   var(--md-primary-10);
+    --color-danger:                 var(--md-error-40);
+    --color-on-danger-container:    var(--md-error-10);
+    --elevation-1: 0 1px 2px rgba(0,0,0,.12), 0 1px 3px 1px rgba(0,0,0,.08);
+    --elevation-2: 0 1px 2px rgba(0,0,0,.12), 0 2px 6px 2px rgba(0,0,0,.08);
+    --elevation-3: 0 1px 3px rgba(0,0,0,.12), 0 4px 8px 3px rgba(0,0,0,.08);
+    --color-overlay: rgba(0,0,0,0.4);
+  }
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────────────── */
@@ -162,63 +204,6 @@ body {
   font-family: var(--font-josefin), sans-serif;
 }
 
-/* Noise texture overlay */
-.page::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
-  opacity: 0.4;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Gradient mesh background */
-.mesh {
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 15% 20%, rgba(123,63,110,0.5) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 60% at 85% 75%, rgba(196,106,0,0.25) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(42,14,48,0.8) 0%, transparent 100%),
-    radial-gradient(ellipse 70% 40% at 80% 10%, rgba(123,63,110,0.3) 0%, transparent 60%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Floating orbs */
-.orb {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: 0;
-  animation: drift linear infinite;
-}
-
-@keyframes drift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, -20px) scale(1.05); }
-  66% { transform: translate(-20px, 25px) scale(0.95); }
-}
-
-/* Sparks */
-.spark {
-  position: fixed;
-  border-radius: 50%;
-  background: var(--amber);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 1;
-  animation: sparkle ease-in-out infinite;
-}
-
-@keyframes sparkle {
-  0%, 100% { opacity: 0; transform: scale(0.5); }
-  50% { opacity: 0.6; transform: scale(1); }
-}
-
 /* Main content — every page's mount-fade wrapper shares this one transition */
 .content {
   position: relative;
@@ -239,7 +224,7 @@ body {
   transform: translateY(0);
 }
 
-/* Shared uppercase Josefin label idiom — eyebrow/subtext/row-labels/etc. compose this, then add their own size/spacing/color */
+/* Shared uppercase label idiom — eyebrow/subtext/row-labels/etc. compose this, then add their own size/spacing/color */
 .label,
 .eyebrow,
 .subtext,
@@ -249,54 +234,54 @@ body {
 .login-label,
 .writing-prev-next,
 .writing-notes-empty {
-  font-family: var(--font-josefin), sans-serif;
+  font-family: var(--font-inter), sans-serif;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .eyebrow {
-  font-size: 0.7rem;
-  letter-spacing: 0.35em;
-  color: var(--amber);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
   margin-bottom: 1.5rem;
 }
 
 .title {
-  font-family: var(--font-cormorant), serif;
-  font-size: clamp(3rem, 8vw, 6.5rem);
-  font-weight: 400;
-  line-height: 1.05;
+  font-family: var(--font-inter), sans-serif;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.1;
   color: var(--color-text-heading);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   margin-bottom: 0.2em;
 }
 
 .title em {
-  font-style: italic;
-  color: var(--amber);
+  font-style: normal;
+  color: var(--color-primary);
 }
 
 /* Sub-level heading used inside cards/sections (bowl-card-title, prep-section-title, etc.) */
 .section-title {
-  font-family: var(--font-cormorant), serif;
+  font-family: var(--font-inter), sans-serif;
   font-size: 1.25rem;
-  font-weight: 300;
-  font-style: italic;
+  font-weight: 600;
+  font-style: normal;
   color: var(--color-text-heading);
 }
 
 .divider {
   width: 60px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--amber), transparent);
+  background: var(--color-outline-variant);
   margin: 2rem auto;
 }
 
 .tagline {
-  font-family: var(--font-cormorant), serif;
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  font-family: var(--font-inter), sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
   font-weight: 400;
-  font-style: italic;
+  font-style: normal;
   color: var(--color-text-body);
   line-height: 1.6;
   margin-bottom: 1rem;
@@ -304,50 +289,39 @@ body {
 }
 
 .subtext {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  color: var(--plum-light);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
   margin-bottom: 3rem;
 }
 
-/* Coming soon chips */
+/* Coming soon chips — single implicit grid column auto-sizes to the widest
+   chip's content, and unstretched items default to filling that column width,
+   so every chip matches the widest one without a hardcoded width */
 .chips {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-	justify-content: center;
-  width: auto;
+  display: grid;
+  grid-template-columns: max-content;
+  justify-content: center;
+  justify-items: stretch;
   gap: 0.75rem;
   margin-bottom: 3.5rem;
 }
 
-@media (min-width: 600px) {
-  .chips {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: auto;
-  }
-  .chip {
-    width: auto;
-  }
-}
-
 .chip {
-  font-family: var(--font-josefin), sans-serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 400;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  font-weight: 500;
   padding: 0.5rem 1.1rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   border: 1px solid var(--color-border-chip);
-  color: var(--amber);
+  color: var(--color-primary);
   background: var(--color-bg-chip);
-  transition: background 0.3s ease, border-color 0.3s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
   cursor: default;
-  width: auto;
+  box-sizing: border-box;
   white-space: nowrap;
   text-align: center;
 }
@@ -360,13 +334,13 @@ body {
 
 /* Signature */
 .signature {
-  font-family: var(--font-cormorant), serif;
+  font-family: var(--font-inter), sans-serif;
   font-size: 0.85rem;
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
-  letter-spacing: 0.1em;
-  color: var(--plum-light);
-  opacity: 0.7;
+  letter-spacing: 0.02em;
+  color: var(--color-text-muted);
+  opacity: 0.8;
 }
 
 /* ─── Shared buttons ────────────────────────────────────────────────────────── */
@@ -376,12 +350,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  font-family: var(--font-josefin), sans-serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  border-radius: 100px;
-  padding: 0.45rem 1.1rem;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  border-radius: var(--radius-full);
+  padding: 0.55rem 1.25rem;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
@@ -391,24 +365,34 @@ body {
   cursor: not-allowed;
 }
 
+.btn:focus-visible,
+.btn-icon:focus-visible,
+.chip:focus-visible,
+.input:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 .btn--primary {
-  background: color-mix(in srgb, var(--amber) 12%, transparent);
-  border: 1px solid var(--color-border-active);
-  color: var(--amber);
+  background: var(--color-primary);
+  border: 1px solid transparent;
+  color: var(--color-on-primary);
 }
 
 .btn--primary:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--amber) 22%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 88%, var(--color-on-primary));
 }
 
 .btn--outline {
   background: none;
   border: 1px solid var(--color-border-btn);
-  color: var(--amber);
+  color: var(--color-primary);
 }
 
 .btn--outline:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--amber) 8%, transparent);
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
   border-color: var(--color-border-btn-hover);
 }
 
@@ -422,12 +406,12 @@ body {
   color: var(--color-text-body);
 }
 
-/* Amber text-only nav link (back links, etc.) */
+/* Text-only nav link (back links, etc.) */
 .btn--link {
   background: none;
   border: 1px solid transparent;
   padding: 0;
-  color: var(--amber);
+  color: var(--color-primary);
   opacity: 0.9;
 }
 
@@ -466,13 +450,19 @@ body {
 .writing-section-row,
 .writing-new-form {
   background: var(--color-bg-card);
-  border: 1px solid var(--color-border-card);
-  backdrop-filter: blur(10px);
+  border: none;
+  box-shadow: var(--elevation-1);
 }
 
 .card {
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   padding: 1.5rem 1.75rem;
+}
+
+.card--outlined {
+  background: transparent;
+  border: 1px solid var(--color-border-card);
+  box-shadow: none;
 }
 
 /* ─── Shared form inputs ────────────────────────────────────────────────────── */
@@ -480,13 +470,14 @@ body {
 .input {
   width: 100%;
   background: var(--color-bg-input);
-  border: 1px solid var(--color-border-input);
-  border-radius: 8px;
+  border: none;
+  border-bottom: 2px solid var(--color-border-input);
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
   padding: 0.6rem 0.9rem;
   color: var(--color-text-body);
-  font-family: var(--font-cormorant), serif;
+  font-family: var(--font-inter), sans-serif;
   font-size: 1rem;
-  font-style: italic;
+  font-style: normal;
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.2s ease;
@@ -497,9 +488,9 @@ body {
 }
 
 .input--lg {
-  border-radius: 6px;
+  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
   font-size: 1.3rem;
-  font-weight: 300;
+  font-weight: 400;
   padding: 0.3rem 0.6rem;
 }
 
@@ -518,7 +509,6 @@ body {
   bottom: 0; left: 0; right: 0;
   background: var(--color-bg-nav);
   border-top: 1px solid var(--color-border-default);
-  backdrop-filter: blur(12px);
   display: flex;
   justify-content: space-around;
   align-items: stretch;
@@ -535,35 +525,30 @@ body {
   gap: 4px;
   background: none;
   border: none;
-  border-top: 2px solid transparent;
   cursor: pointer;
-  padding: 4px 16px;
-  font-family: var(--font-josefin), sans-serif;
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+  padding: 6px 16px;
+  margin: 4px 6px;
+  border-radius: var(--radius-lg);
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
   color: var(--color-text-muted-soft);
   text-decoration: none;
-  transition: color 0.2s ease, background 0.15s ease, border-color 0.2s ease;
+  transition: color 0.2s ease, background 0.15s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .nav-tab--active {
-  color: var(--amber);
-  border-top-color: var(--color-border-active);
-  background: color-mix(in srgb, var(--amber) 6%, transparent);
+  color: var(--color-on-primary-container);
+  background: var(--color-primary-container);
 }
 
 .nav-tab-icon {
   display: block;
   font-size: 1.2rem;
   line-height: 1;
-  transition: filter 0.3s ease;
-}
-
-.nav-tab--active .nav-tab-icon {
-  filter: drop-shadow(0 0 6px rgba(232, 160, 32, 0.7));
 }
 
 /* ─── Shared desktop sidebar nav — .nav-item--sidebar reshapes a .nav-tab into a sidebar row ── */
@@ -578,7 +563,7 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-    padding: 36px 0;
+    padding: 36px 12px;
     border-top: none;
     border-right: 1px solid var(--color-border-default);
     gap: 2px;
@@ -588,8 +573,8 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 0 24px 24px;
-    margin-bottom: 8px;
+    padding: 0 12px 24px;
+    margin: 0 0 8px;
     border-bottom: 1px solid var(--color-border-section);
     flex-shrink: 0;
   }
@@ -597,12 +582,12 @@ body {
   .nav-brand-icon { font-size: 1.3rem; }
 
   .nav-brand-text {
-    font-family: var(--font-cormorant), serif;
-    font-size: 1.35rem;
-    font-weight: 300;
-    font-style: italic;
+    font-family: var(--font-inter), sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-style: normal;
     color: var(--color-text-body);
-    letter-spacing: 0.03em;
+    letter-spacing: -0.01em;
   }
 
   .nav-item--sidebar {
@@ -610,13 +595,13 @@ body {
     align-items: center;
     justify-content: flex-start;
     gap: 14px;
-    padding: 13px 24px;
+    padding: 13px 16px;
+    margin: 0;
     flex: 0 0 auto;
     position: relative;
-    border-radius: 0;
-    border-top-color: transparent;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    letter-spacing: 0.01em;
     transition: background 0.2s ease;
   }
 
@@ -628,15 +613,6 @@ body {
     background: var(--color-bg-nav-active);
   }
 
-  .nav-item--sidebar.nav-tab--active::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: linear-gradient(180deg, var(--amber-deep), var(--amber));
-    border-radius: 0 2px 2px 0;
-  }
-
   .nav-item--sidebar .nav-tab-icon {
     font-size: 1.1rem;
     width: 22px;
@@ -646,52 +622,18 @@ body {
 }
 
 .signature span {
-  color: var(--amber);
+  color: var(--color-primary);
   opacity: 0.9;
 }
-
-/* Bottom decorative line */
-.bottom-rule {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent 0%, var(--amber-deep) 30%, var(--amber) 50%, var(--amber-deep) 70%, transparent 100%);
-  z-index: 10;
-  opacity: 0.6;
-}
-
-/* Corner decorations */
-.corner {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  z-index: 10;
-  opacity: 0.3;
-}
-
-.corner-tl { top: 20px; left: 20px; border-top: 1px solid var(--amber); border-left: 1px solid var(--amber); }
-.corner-br { bottom: 20px; right: 20px; border-bottom: 1px solid var(--amber); border-right: 1px solid var(--amber); }
 
 /* ─── Bowl Tracker page ─────────────────────────────────────────────────────── */
 
 .bowl-page {
   min-height: 100vh;
-  background: var(--plum-deep);
+  background: var(--color-bg);
   position: relative;
   overflow-x: hidden;
   font-family: var(--font-josefin), sans-serif;
-}
-
-.bowl-page::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
-  opacity: 0.4;
-  pointer-events: none;
-  z-index: 1;
 }
 
 .bowl-inner {
@@ -730,7 +672,7 @@ body {
 .bowl-grand-label {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.65rem;
-  letter-spacing: 0.35em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 400;
   color: var(--plum-light);
@@ -801,7 +743,6 @@ body {
 
 .card-title {
   font-family: var(--font-cormorant), serif;
-  font-style: italic;
   color: var(--color-text-heading);
 }
 
@@ -810,7 +751,7 @@ body {
 .bowl-card-total {
   font-family: var(--font-josefin), sans-serif;
   font-size: 1.15rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 400;
   color: var(--amber);
@@ -831,7 +772,7 @@ body {
 
 .bowl-row-name {
   font-size: 0.68rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.08em;
   color: var(--color-text-body);
 }
 
@@ -863,7 +804,7 @@ body {
   border: 1px solid var(--color-border-btn);
   background: color-mix(in srgb, var(--amber) 8%, transparent);
   color: var(--amber);
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
   cursor: pointer;
   font-size: 1rem;
   line-height: 1;
@@ -889,7 +830,7 @@ body {
   text-align: center;
   background: var(--color-bg-input);
   border: 1px solid var(--color-border-btn);
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
   color: var(--amber);
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.75rem;
@@ -939,7 +880,6 @@ body {
 
 .prep-hero-tagline {
   font-family: var(--font-cormorant), serif;
-  font-style: italic;
   font-size: 1.1rem;
   color: var(--color-text-muted);
   max-width: 480px;
@@ -966,7 +906,7 @@ body {
 .prep-stat-label {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.65rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-muted);
   text-align: center;
@@ -982,7 +922,6 @@ body {
 
 .prep-intro {
   font-family: var(--font-cormorant), serif;
-  font-style: italic;
   color: var(--color-text-muted);
   margin-bottom: 28px;
   font-size: 1rem;
@@ -1001,7 +940,7 @@ body {
 .prep-category-label {
   font-size: 0.68rem;
   font-weight: 300;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.08em;
   color: var(--amber);
   margin-bottom: 10px;
   padding-bottom: 8px;
@@ -1019,7 +958,7 @@ body {
   align-items: center;
   gap: 12px;
   padding: 10px 14px;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s, opacity 0.2s;
 }
@@ -1072,7 +1011,6 @@ body {
   font-size: 0.7rem;
   color: var(--color-text-muted);
   margin-left: 6px;
-  font-style: italic;
 }
 
 .prep-item-amount {
@@ -1091,7 +1029,7 @@ body {
 }
 
 .prep-step {
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   transition: background 0.3s, border-color 0.3s;
 }
@@ -1119,7 +1057,7 @@ body {
 .prep-step-number {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.6rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
   color: var(--amber);
   font-weight: 300;
 }
@@ -1139,7 +1077,7 @@ body {
 .prep-step-time {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.68rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--color-text-muted);
 }
 
@@ -1203,7 +1141,7 @@ body {
   border-bottom: 1px solid var(--color-border-section);
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.68rem;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--amber);
 }
@@ -1211,7 +1149,7 @@ body {
 .prep-list-subheader {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.68rem;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--amber);
   margin-bottom: 12px;
@@ -1250,14 +1188,13 @@ body {
 }
 
 .prep-note {
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 16px 18px;
   margin-bottom: 28px;
 }
 
 .prep-note-text {
   font-family: var(--font-cormorant), serif;
-  font-style: italic;
   font-size: 0.95rem;
   /* color: var(--color-text-muted); */
   line-height: 1.65;
@@ -1288,7 +1225,7 @@ body {
   gap: 14px;
   align-items: flex-start;
   padding: 16px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
 }
 
 .prep-storage-label {
@@ -1388,7 +1325,7 @@ body {
 .theme-toggle-label {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.55rem;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 400;
   color: var(--amber);
@@ -1406,16 +1343,6 @@ body {
   position: relative;
 }
 
-.blossom-ambient {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 60% 40% at 80% 90%, rgba(196,106,0,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 50% at 20% 20%, rgba(123,63,110,0.2) 0%, transparent 65%);
-}
-
 .blossom-inner {
   position: relative;
   z-index: 1;
@@ -1429,7 +1356,7 @@ body {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.08em;
   color: var(--color-text-muted-soft);
   margin-top: 8px;
 }
@@ -1450,7 +1377,6 @@ body {
 
 .blossom-empty-text {
   font-family: var(--font-cormorant), serif;
-  font-style: italic;
   font-size: 1.15rem;
   font-weight: 600;
   color: var(--color-text-muted);
@@ -1475,13 +1401,12 @@ body {
   font-weight: bolder;
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.7rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.08em;
   color: var(--color-text-muted);
 }
 
 .blossom-progress-done {
   font-family: var(--font-cormorant), serif;
-  font-style: italic;
   font-size: 0.85rem;
   color: var(--amber);
 }
@@ -1521,7 +1446,7 @@ body {
 .blossom-group-count {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.6rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--amber);
   opacity: 1;
@@ -1533,7 +1458,7 @@ body {
   align-items: center;
   gap: 12px;
   background: var(--color-bg-card);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 11px 14px;
 }
 
@@ -1557,7 +1482,7 @@ body {
 .blossom-task-meta {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.62rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--amber);
   opacity: 0.7;
@@ -1584,7 +1509,6 @@ body {
 
 .blossom-schedule-empty-text {
   font-family: var(--font-cormorant), serif;
-  font-style: italic;
   font-size: 1.15rem;
   color: var(--color-text-muted);
   line-height: 1.6;
@@ -1656,7 +1580,6 @@ body {
 
 .history-empty-text {
   font-family: var(--font-cormorant), serif;
-  font-style: italic;
   font-size: 1.1rem;
   color: var(--color-text-muted);
 }
@@ -1669,7 +1592,7 @@ body {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.68rem;
   font-weight: 400;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-muted);
   margin-bottom: 10px;
@@ -1689,11 +1612,11 @@ body {
 }
 
 .history-task-row--done {
-  border: 1px solid rgba(232, 160, 32, 0.3);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
 }
 
 .history-task-row--pending {
-  border: 1px solid rgba(155, 96, 144, 0.3);
+  border: 1px solid color-mix(in srgb, var(--color-on-surface-variant) 30%, transparent);
 }
 
 .history-task-status {
@@ -1709,7 +1632,7 @@ body {
 }
 
 .history-task-status--pending {
-  border: 1.5px dashed rgba(155, 96, 144, 0.5);
+  border: 1.5px dashed color-mix(in srgb, var(--color-on-surface-variant) 50%, transparent);
 }
 
 .history-task-icon {
@@ -1732,7 +1655,7 @@ body {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.65rem;
   font-weight: 400;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
 }
 
 .history-task-time--done {
@@ -1769,7 +1692,7 @@ body {
 
 .login-label {
   font-size: 0.65rem;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.08em;
   font-weight: 300;
   color: var(--cream);
   opacity: 0.75;
@@ -1778,7 +1701,7 @@ body {
 .login-error {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.7rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--color-danger);
   margin: 0;
 }
@@ -1825,7 +1748,7 @@ body {
 }
 
 .writing-project-card {
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   padding: 1rem 1.25rem;
   display: flex;
   align-items: center;
@@ -1844,7 +1767,7 @@ body {
 .writing-project-type {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.6rem;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--amber);
   font-weight: 300;
@@ -1857,7 +1780,7 @@ body {
 .writing-project-meta {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.6rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--plum-light);
   font-weight: 300;
@@ -1871,7 +1794,7 @@ body {
 }
 
 .writing-section-row {
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 0.9rem 1.1rem;
   display: flex;
   align-items: center;
@@ -1901,7 +1824,7 @@ body {
 .writing-section-label {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.6rem;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--amber);
   font-weight: 300;
@@ -1917,7 +1840,7 @@ body {
 
 /* ---- Shared form elements ---- */
 .writing-new-form {
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   padding: 1.25rem 1.5rem;
 }
 
@@ -1936,7 +1859,7 @@ body {
   color: var(--color-text-body);
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.65rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
   transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
@@ -1967,7 +1890,7 @@ body {
 .writing-card-delete {
   font-size: 1.1rem;
   padding: 0.2rem 0.4rem;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 .writing-delete-confirm {
@@ -1997,7 +1920,7 @@ body {
 .writing-sidebar {
   width: 220px;
   flex-shrink: 0;
-  background: rgba(26, 8, 30, 0.85);
+  background: var(--color-surface);
   border-right: 1px solid var(--color-border-section);
   display: flex;
   flex-direction: column;
@@ -2016,7 +1939,7 @@ body {
 .link-subtle {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.6rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--plum-light);
   text-decoration: none;
@@ -2043,7 +1966,6 @@ body {
   font-family: var(--font-cormorant), serif;
   font-size: 1rem;
   font-weight: 300;
-  font-style: italic;
   color: var(--cream-light);
   text-decoration: none;
   line-height: 1.3;
@@ -2060,7 +1982,7 @@ body {
 
 .writing-sidebar-label {
   font-size: 0.6rem;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.08em;
   color: var(--amber);
   font-weight: 300;
   padding: 0 1.1rem;
@@ -2104,7 +2026,6 @@ body {
 .writing-sidebar-section-name {
   font-family: var(--font-cormorant), serif;
   font-size: 0.9rem;
-  font-style: italic;
   color: var(--cream);
   line-height: 1.3;
   white-space: nowrap;
@@ -2144,7 +2065,6 @@ body {
   border: 1px solid var(--color-border-default);
   border-radius: 100px;
   padding: 0.5rem 1rem;
-  backdrop-filter: blur(12px);
   z-index: 30;
 }
 
@@ -2162,7 +2082,7 @@ body {
   margin-top: 3rem; /* clears the fixed global .top-bar (Home/Sign out/theme toggle) */
   padding: 0.75rem 1.5rem;
   border-bottom: 1px solid var(--color-border-section);
-  background: rgba(26, 8, 30, 0.5);
+  background: color-mix(in srgb, var(--color-surface) 70%, transparent);
   gap: 0.75rem;
   flex-shrink: 0;
 }
@@ -2179,7 +2099,6 @@ body {
   font-family: var(--font-cormorant), serif;
   font-size: 1.3rem;
   font-weight: 300;
-  font-style: italic;
   color: var(--cream-light);
   margin: 0;
   cursor: pointer;
@@ -2201,7 +2120,7 @@ body {
 .writing-save-indicator {
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.6rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   transition: opacity 0.3s ease;
   min-width: 60px;
@@ -2221,7 +2140,7 @@ body {
   color: var(--plum-light);
   font-family: var(--font-josefin), sans-serif;
   font-size: 0.6rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
   transition: border-color 0.2s ease, color 0.2s ease;
@@ -2279,18 +2198,17 @@ body {
 
 .writing-editor-body h1 { font-size: 1.8rem; }
 .writing-editor-body h2 { font-size: 1.4rem; }
-.writing-editor-body h3 { font-size: 1.15rem; font-style: italic; }
+.writing-editor-body h3 { font-size: 1.15rem; }
 
 .writing-editor-body blockquote {
-  border-left: 2px solid rgba(232, 160, 32, 0.4);
+  border-left: 2px solid color-mix(in srgb, var(--color-primary) 40%, transparent);
   margin: 1em 0;
   padding-left: 1.2em;
   color: var(--plum-light);
-  font-style: italic;
 }
 
 .writing-editor-body strong { color: var(--cream-light); font-weight: 600; }
-.writing-editor-body em { font-style: italic; color: var(--cream-light); }
+.writing-editor-body em { color: var(--cream-light); }
 
 .writing-editor-body ul,
 .writing-editor-body ol {
@@ -2302,7 +2220,7 @@ body {
 
 .writing-editor-body hr {
   border: none;
-  border-top: 1px solid rgba(232, 160, 32, 0.2);
+  border-top: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
   margin: 2em 0;
 }
 
@@ -2319,7 +2237,7 @@ body {
 
 .writing-prev-next {
   font-size: 0.6rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.08em;
   color: var(--plum-light);
   text-decoration: none;
   transition: color 0.2s ease;
@@ -2331,7 +2249,7 @@ body {
 .writing-notes-panel {
   width: 260px;
   flex-shrink: 0;
-  background: rgba(26, 8, 30, 0.85);
+  background: var(--color-surface);
   border-left: 1px solid var(--color-border-section);
   display: flex;
   flex-direction: column;
@@ -2369,7 +2287,7 @@ body {
 
 .writing-notes-empty {
   font-size: 0.6rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.08em;
   color: var(--plum-light);
   text-align: center;
   padding: 1rem 0;
@@ -2378,7 +2296,7 @@ body {
 .writing-note {
   background: var(--color-bg-input);
   border: 1px solid var(--color-border-input);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 0.65rem 0.75rem;
   display: flex;
   gap: 0.5rem;

@@ -10,6 +10,9 @@ export default function ThemeToggle() {
     if (saved) {
       setTheme(saved);
       document.documentElement.setAttribute('data-theme', saved);
+    } else {
+      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      setTheme(prefersLight ? 'light' : 'dark');
     }
   }, []);
 

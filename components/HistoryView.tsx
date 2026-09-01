@@ -51,7 +51,7 @@ export default function HistoryView({ logs, tasks, onToggle }: HistoryViewProps)
 
   return (
     <div className="history-root">
-      <h1 className="title" style={{ fontSize: '1.7rem', fontStyle: 'italic', marginBottom: '18px' }}>History</h1>
+      <h1 className="title" style={{ fontSize: '1.7rem', marginBottom: '18px' }}>History</h1>
 
       <div className="history-filters">
         {(['all', ...CATEGORIES] as const).map((c) => (

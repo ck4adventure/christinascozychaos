@@ -59,6 +59,19 @@ export default function LoginPage() {
           </h1>
         </div>
 
+        <div className="card login-card" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+          <p style={{ marginBottom: '0.4rem' }}>Explore the demos</p>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>Sample data, nothing stored on a server — only in this browser.</p>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap', marginTop: '0.75rem' }}>
+            <Link href="/blossom-demo" className="btn btn--outline">
+              Blossom Demo
+            </Link>
+            <Link href="/writing-demo" className="btn btn--outline">
+              Writing Demo
+            </Link>
+          </div>
+        </div>
+
         <div className="card login-card">
           <form onSubmit={handleSubmit} className="login-form">
             <div className="login-field">
