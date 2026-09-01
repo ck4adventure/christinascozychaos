@@ -1,6 +1,6 @@
 # Christina's Cozy Chaos
 
-A personal site + small app suite. Landing page at `/`, with four sub-apps: Cascades (game), the Infinitely Repeatable Bowl (calorie calculator), Blossom (chore tracker), and a Writing tool for authors.
+A personal site + small app suite. Landing page at `/`, with five sub-apps: Cascades (game), the Infinitely Repeatable Bowl (calorie calculator), Blossom (chore tracker), a Writing tool for authors, and a Chord Machine.
 
 ## App Itself
 
@@ -23,6 +23,15 @@ Vitest unit tests, colocated in `__tests__/`. Run with `npm test`.
 - Swapped Cormorant Garamond + Josefin Sans for Inter; removed italic serif treatment and ultra-wide letter-spacing site-wide
 - Rebuilt shared card/button/input/nav primitives on Material elevation + state layers, added missing `:focus-visible` rings
 - Removed the decorative mesh/orb/spark/noise-texture system from every page, including Cascades' own independent copy
+
+---
+
+## Chord Machine
+A diatonic chord/progression generator at `/chord-machine`: builds triads/7ths across major, natural minor, and Phrygian, plays them via Tone.js (Web Audio), and renders hand-drawn SVG staff notation plus a highlighted piano keyboard. Includes a handful of recurring minor-key progressions (trance/DnB/psytrance-flavored) with loop and pedal/moving bass options. Public page, no login required.
+
+### Version History
+#### v1.0 — 2026-09-01
+- Integrated a standalone Claude-Chat-built artifact into the site: ported to TypeScript, wrapped in `next/dynamic` (`ssr: false`) since it touches the Web Audio API, converted its inline styles to a CSS Module restyled onto the site's Material 3 tokens (respects the light/dark toggle), converted chord pads to real `<button>` elements for keyboard/screen-reader access, and added a dispose-on-unmount effect for the audio chain
 
 ---
 
