@@ -1,0 +1,327 @@
+.cmRoot {
+  background: var(--color-bg);
+  min-height: 100dvh;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-inter), sans-serif;
+}
+
+.backLink {
+  align-self: flex-start;
+  margin: 0 auto 1rem;
+  width: 100%;
+  max-width: 720px;
+}
+
+.panel {
+  width: 100%;
+  max-width: 720px;
+  background: var(--color-surface-container);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elevation-2);
+}
+
+.panelHeader {
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--color-outline-variant);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.panelTitle {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text-heading);
+  margin: 0;
+}
+
+.panelSub {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1px;
+  background: var(--color-outline-variant);
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.control {
+  background: var(--color-surface-container);
+  padding: 10px 14px 12px;
+}
+
+.controlLabel {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.seg {
+  display: flex;
+  border: 1px solid var(--color-outline);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.seg button {
+  flex: 1;
+  background: var(--color-surface-container-high);
+  color: var(--color-text-muted);
+  border: none;
+  font-size: 12px;
+  padding: 6px 4px;
+  cursor: pointer;
+  font-family: var(--font-inter), sans-serif;
+  border-right: 1px solid var(--color-outline-variant);
+}
+
+.seg button:last-child { border-right: none; }
+
+.seg button.on {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 600;
+}
+
+.seg button:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.rootSelect {
+  width: 100%;
+  background: var(--color-surface-container-high);
+  color: var(--color-text-body);
+  border: 1px solid var(--color-outline);
+  border-radius: var(--radius-sm);
+  padding: 6px 6px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+}
+
+.transport {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.durationVal {
+  color: var(--color-primary);
+  font-family: var(--font-inter), sans-serif;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: 4px;
+}
+
+.transportRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.durationSlider {
+  flex: 1;
+  accent-color: var(--color-primary);
+  height: 4px;
+  cursor: pointer;
+}
+
+.stopBtn {
+  composes: btn btn--outline from global;
+}
+
+.progressions {
+  padding: 14px 20px 18px;
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.progHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.progToggles {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.check input { accent-color: var(--color-primary); }
+
+.segSmall button { padding: 5px 10px; font-size: 11px; }
+
+.progHint {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin: 8px 0 0;
+}
+
+.progList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.progRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--color-surface-container-high);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+}
+
+.progRowActive {
+  border-color: var(--color-primary);
+  background: var(--color-primary-container);
+}
+
+.progInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.progName {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-heading);
+}
+
+.progDesc {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.progPlay {
+  composes: btn btn--outline from global;
+  white-space: nowrap;
+}
+
+/* Compound selector to reliably out-specify the composed global .btn rule
+   regardless of CSS chunk load order */
+.progPlay:global(.btn) {
+  font-size: 0.7rem;
+  padding: 0.35rem 0.8rem;
+}
+
+.pads {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  padding: 18px 20px;
+}
+
+.pad {
+  background: var(--color-surface-container-high);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-sm);
+  padding: 10px 4px 8px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  font-family: var(--font-inter), sans-serif;
+}
+
+.pad:hover { border-color: var(--color-outline); }
+
+.padActive {
+  border-color: var(--color-primary);
+  background: var(--color-primary-container);
+}
+
+.padRoman {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-heading);
+  display: block;
+}
+
+.padActive .padRoman { color: var(--color-on-primary-container); }
+
+.padName {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 10px;
+  color: var(--color-text-muted);
+  display: block;
+  margin-top: 4px;
+}
+
+.readout { padding: 16px 20px 22px; border-top: 1px solid var(--color-outline-variant); }
+
+.readoutTitle {
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin: 0 0 10px;
+}
+
+.staffWrap {
+  background: var(--color-surface-container-high);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.grandStaff { display: flex; flex-direction: column; }
+.staffSvg { display: block; }
+.staffLine { stroke: var(--color-outline); stroke-width: 1; }
+.ledgerLine { stroke: var(--color-primary); stroke-width: 1.2; opacity: 0.5; }
+.notehead { fill: var(--color-primary); }
+.accidental { fill: var(--color-primary); font-size: 13px; }
+.clefGlyph { fill: var(--color-text-muted); font-size: 28px; }
+.staffLabel {
+  fill: var(--color-text-muted);
+  font-size: 9px;
+  font-family: var(--font-inter), sans-serif;
+  text-transform: uppercase;
+}
+
+.kbWrap {
+  margin-top: 12px;
+  background: var(--color-surface-container-high);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  overflow-x: auto;
+}
+
+.keyboardSvg { display: block; }
+.whiteKey { fill: var(--color-surface-container-high); stroke: var(--color-outline-variant); stroke-width: 0.5; }
+.whiteKey.active { fill: var(--color-primary-container); }
+/* Piano keys aren't theme-inverted — black keys read as dark in both light and dark mode, same as a real piano */
+.blackKey { fill: var(--md-neutral-20); stroke: var(--color-bg); }
+.blackKey.active { fill: var(--color-primary); }

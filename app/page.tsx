@@ -35,6 +35,7 @@ export default function Home() {
             <Link href="/blossom" className="chip">🌸 Blossom Chore Tracker</Link>
             <Link href="/cascades" className="chip">Cascades Game 🟪🟪🟦</Link>
             <Link href="/writing" className="chip">Writing Tool for Authors 🖋️</Link>
+            <Link href="/chord-machine" className="chip">🎹 Chord Machine</Link>
             {/* <span className="chip">✨ More Randomness Soon!</span> */}
           </div>
 
