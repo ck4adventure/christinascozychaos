@@ -21,11 +21,11 @@
 
 :root {
   /* Material 3 baseline blue tonal palette */
-  --md-primary-40: #0061A4;
-  --md-primary-80: #9ECAFF;
-  --md-primary-90: #D1E4FF;
-  --md-primary-30: #00497D;
-  --md-primary-10: #001D36;
+  --md-primary-40: #6750A4;
+  --md-primary-80: #D0BCFF;
+  --md-primary-90: #EADDFF;
+  --md-primary-30: #4F378B;
+  --md-primary-10: #21005D;
   --md-neutral-99: #FDFCFF;
   --md-neutral-95: #F1F0F4;
   --md-neutral-90: #E1E2E6;
@@ -296,27 +296,16 @@ body {
   margin-bottom: 3rem;
 }
 
-/* Coming soon chips */
+/* Coming soon chips — single implicit grid column auto-sizes to the widest
+   chip's content, and unstretched items default to filling that column width,
+   so every chip matches the widest one without a hardcoded width */
 .chips {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-	justify-content: center;
-  width: auto;
+  display: grid;
+  grid-template-columns: max-content;
+  justify-content: center;
+  justify-items: stretch;
   gap: 0.75rem;
   margin-bottom: 3.5rem;
-}
-
-@media (min-width: 600px) {
-  .chips {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: auto;
-  }
-  .chip {
-    width: auto;
-  }
 }
 
 .chip {
@@ -332,7 +321,7 @@ body {
   background: var(--color-bg-chip);
   transition: background 0.2s ease, border-color 0.2s ease;
   cursor: default;
-  width: auto;
+  box-sizing: border-box;
   white-space: nowrap;
   text-align: center;
 }
