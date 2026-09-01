@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 import { useRouter } from 'next/navigation';
 import { ApiProject, ApiSection } from '@/lib/writing';
 import { sectionLabel } from '@/lib/sectionLabels';
+import { useWritingClient } from '@/components/writing/WritingClientContext';
 
 const DEFAULT_LABELS = { singular: 'Section', plural: 'Sections', newLabel: '+ New Section' };
 
@@ -36,23 +37,21 @@ export function ProjectShellProvider({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const { client, basePath } = useWritingClient();
   const [project, setProject] = useState<ApiProject | null>(null);
   const [sections, setSections] = useState<ApiSection[]>([]);
   const [loading, setLoading] = useState(true);
 
   const refetch = useCallback(async () => {
     try {
-      const res = await fetch(`/api/projects/${projectId}`);
-      if (res.status === 404) { router.push('/writing'); return; }
-      if (res.ok) {
-        const data = await res.json();
-        setProject(data);
-        setSections(data.sections ?? []);
-      }
+      const data = await client.getProject(projectId);
+      if (!data) { router.push(basePath); return; }
+      setProject(data);
+      setSections(data.sections ?? []);
     } finally {
       setLoading(false);
     }
-  }, [projectId, router]);
+  }, [projectId, router, client, basePath]);
 
   useEffect(() => {
     setLoading(true);
@@ -62,33 +61,24 @@ export function ProjectShellProvider({
   const labels = project ? sectionLabel[project.type] : DEFAULT_LABELS;
 
   const addSection = useCallback(async (): Promise<ApiSection | null> => {
-    const res = await fetch('/api/sections', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ projectId, title: `Untitled ${labels.singular}` }),
-    });
-    if (!res.ok) return null;
-    const section: ApiSection = await res.json();
+    const section = await client.createSection(projectId, `Untitled ${labels.singular}`);
+    if (!section) return null;
     setSections((prev) => [...prev, section]);
     return section;
-  }, [projectId, labels.singular]);
+  }, [projectId, labels.singular, client]);
 
   const deleteSection = useCallback(async (id: string) => {
-    await fetch(`/api/sections/${id}`, { method: 'DELETE' });
+    await client.deleteSection(id);
     setSections((prev) => prev.filter((s) => s.id !== id));
-  }, []);
+  }, [client]);
 
   const reorderSections = useCallback(async (orderedIds: string[]) => {
     setSections((prev) => {
       const byId = new Map(prev.map((s) => [s.id, s]));
       return orderedIds.map((id) => byId.get(id)).filter((s): s is ApiSection => !!s);
     });
-    await fetch('/api/sections/reorder', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ projectId, orderedIds }),
-    });
-  }, [projectId]);
+    await client.reorderSections(projectId, orderedIds);
+  }, [projectId, client]);
 
   const renameSection = useCallback((id: string, title: string) => {
     setSections((prev) => prev.map((s) => (s.id === id ? { ...s, title } : s)));

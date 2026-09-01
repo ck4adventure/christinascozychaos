@@ -3,7 +3,7 @@
 import { use } from 'react';
 import SectionEditorView from '@/components/writing/SectionEditorView';
 
-export default function SectionEditorPage({
+export default function SectionEditorDemoPage({
   params,
 }: {
   params: Promise<{ projectId: string; sectionId: string }>;

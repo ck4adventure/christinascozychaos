@@ -2,6 +2,6 @@
 
 import ProjectDashboardView from '@/components/writing/ProjectDashboardView';
 
-export default function ProjectDashboardPage() {
+export default function ProjectDashboardDemoPage() {
   return <ProjectDashboardView />;
 }
