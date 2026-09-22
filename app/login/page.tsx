@@ -40,7 +40,7 @@ export default function LoginPage() {
     });
 
     if (res.ok) {
-      router.push(destination);
+      window.location.href = destination;
     } else {
       setError('Invalid username or password.');
       setLoading(false);
