@@ -17,7 +17,8 @@ export default function LoginPage() {
     const params = new URLSearchParams(window.location.search);
     const from = params.get('from') ?? '';
     // Only accept internal paths; reject empty, external, or protocol-relative values
-    const dest = from.startsWith('/') && !from.startsWith('//') ? from : '/blossom';
+    // (browsers normalize a leading "/\" into "//", so backslash must be rejected too)
+    const dest = /^\/(?!\/|\\)/.test(from) ? from : '/blossom';
     setDestination(dest);
 
     fetch('/api/auth/session')
