@@ -36,6 +36,8 @@ export const config = {
   matcher: [
     '/blossom/:path*',
     '/writing/:path*',
+    '/hourly/:path*',
+    '/api/hourly/:path*',
     '/api/tasks/:path*',
     '/api/logs/:path*',
     '/api/projects/:path*',

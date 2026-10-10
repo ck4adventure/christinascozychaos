@@ -26,3 +26,28 @@ export interface TaskWithStatus extends Task {
   completedToday: boolean;
   logId?: string;
 }
+
+export interface HourlyEntry {
+  id: string;
+  message: string;
+  tags: string[];
+  loggedAt: string; // ISO string, the finish time
+  createdAt: string; // ISO string
+  editCount?: number;
+}
+
+export interface HourlyEdit {
+  id: string;
+  entryId: string;
+  prevMessage: string;
+  prevTags: string[];
+  prevLoggedAt: string; // ISO string
+  editedAt: string; // ISO string
+}
+
+export interface HourlyQuickAdd {
+  id: string;
+  label: string;
+  tags: string[];
+  sortOrder: number;
+}

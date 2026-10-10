@@ -60,3 +60,35 @@ model Note {
   body      String   @db.Text
   createdAt DateTime @default(now())
 }
+
+model HourlyEntry {
+  id        String       @id @default(cuid())
+  message   String
+  tags      String[]
+  loggedAt  DateTime     @default(now())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  edits     HourlyEdit[]
+
+  @@index([loggedAt])
+}
+
+// One row per edit, holding the PREVIOUS state; the current state lives on the entry.
+model HourlyEdit {
+  id           String      @id @default(cuid())
+  entryId      String
+  entry        HourlyEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  prevMessage  String
+  prevTags     String[]
+  prevLoggedAt DateTime
+  editedAt     DateTime    @default(now())
+
+  @@index([entryId, editedAt])
+}
+
+model HourlyQuickAdd {
+  id        String   @id @default(cuid())
+  label     String   @unique
+  tags      String[]
+  sortOrder Int
+}
