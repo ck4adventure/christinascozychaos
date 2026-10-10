@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import { HourlyQuickAdd } from '@/types';
-import TagInput from './TagInput';
+import TagPicker from './TagPicker';
 
 interface EntryComposerProps {
   quickAdds: HourlyQuickAdd[];
-  tagSuggestions: string[];
+  tagOptions: string[];
+  onCreateTag: (tag: string) => void;
   onLog: (message: string, tags: string[]) => void;
   onQuickLog: (quickAdd: HourlyQuickAdd) => void;
   onSaveQuickAdd: (label: string, tags: string[]) => void;
@@ -15,7 +16,8 @@ interface EntryComposerProps {
 
 export default function EntryComposer({
   quickAdds,
-  tagSuggestions,
+  tagOptions,
+  onCreateTag,
   onLog,
   onQuickLog,
   onSaveQuickAdd,
@@ -69,7 +71,7 @@ export default function EntryComposer({
           enterKeyHint="send"
           onChange={(e) => setMessage(e.target.value)}
         />
-        <TagInput tags={tags} suggestions={tagSuggestions} onChange={setTags} />
+        <TagPicker selected={tags} options={tagOptions} onChange={setTags} onCreateTag={onCreateTag} direction="up" />
         <div className="hourly-composer-actions">
           <button
             type="button"

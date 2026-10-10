@@ -39,7 +39,7 @@ A diatonic chord/progression generator at `/chord-machine`: builds triads/7ths a
 A mobile-first activity log at `/hourly` (login required). Log short messages as you finish things ("did the dishes", "made dinner") and get a feel for where the day goes without logging start and stop times: each entry's duration is the gap since the previous entry, so the first entry of a day has none. Days start at 4am, so late-night entries count toward the previous day.
 
 - **Quick-add chips:** one-tap logging with pre-filled common activities (dishes, vacuuming, dinner, brushing teeth, and more); save your own or remove ones you don't use
-- **Tags:** add tags to entries, filter the day by tag, and see per-tag time totals in the day summary
+- **Tags:** pick tags from a dropdown (19 presets, plus tags you've used or created), create new ones in a modal, filter the day by tag, and see per-tag time totals in the day summary
 - **Editing:** change an entry's message, tags or finish time (to backdate it); every edit keeps the previous version, and the history view shows a word-level diff
 - **Delete:** removes the entry and its edit history
 - **Browse days:** step back through previous days; the composer appears on today only

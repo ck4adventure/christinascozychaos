@@ -18,6 +18,15 @@ export const DEFAULT_QUICK_ADDS: { label: string; tags: string[] }[] = [
   { label: 'ate lunch', tags: ['food'] },
 ];
 
+/** Tags offered in the picker before anything has been logged. */
+export const DEFAULT_TAGS: string[] = [
+  'home', 'kitchen', 'cleaning', 'food', 'hygiene', 'movement', 'errands', 'work',
+  'self-care', 'rest', 'social', 'learning', 'commute', 'health', 'pets',
+  'practice', 'music', 'dance', 'oboe',
+];
+
+export const MAX_TAG_LENGTH = 30;
+
 function pad(n: number) {
   return String(n).padStart(2, '0');
 }
@@ -100,6 +109,33 @@ export function normalizeTags(raw: string[] | string): string[] {
     if (tag) seen.add(tag);
   }
   return [...seen];
+}
+
+/** Normalizes a single tag: lowercase, no leading #, spaces become hyphens, only letters/numbers/-/_. */
+export function normalizeTag(raw: string): string {
+  return raw
+    .trim()
+    .replace(/^#+/, '')
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\p{L}\p{N}_-]/gu, '')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, MAX_TAG_LENGTH);
+}
+
+/**
+ * Every tag the picker should offer: tags already used (most-used first), then
+ * everything else (presets, chip tags, tags created this session) alphabetically.
+ */
+export function buildTagOptions(used: { tag: string; count: number }[], ...others: string[][]): string[] {
+  const usedTags = [...used]
+    .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag))
+    .map((u) => u.tag);
+  const seen = new Set(usedTags);
+  const rest = normalizeTags(others.flat())
+    .filter((t) => !seen.has(t))
+    .sort((a, b) => a.localeCompare(b));
+  return [...usedTags, ...rest];
 }
 
 export function formatDuration(ms: number): string {

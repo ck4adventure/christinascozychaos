@@ -4,7 +4,9 @@ import { useMemo, useRef, useState } from 'react';
 import { HourlyEntry, HourlyQuickAdd } from '@/types';
 import { useHourly } from '@/app/hooks/useHourly';
 import {
+  buildTagOptions,
   computeDurations,
+  DEFAULT_TAGS,
   formatDuration,
   getDayRange,
   getLogicalDay,
@@ -34,6 +36,7 @@ export default function HourlyApp() {
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [editing, setEditing] = useState<HourlyEntry | null>(null);
   const [historyFor, setHistoryFor] = useState<HourlyEntry | null>(null);
+  const [createdTags, setCreatedTags] = useState<string[]>([]);
   const [toast, setToast] = useState<Toast | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -76,7 +79,12 @@ export default function HourlyApp() {
     setToast(null);
   };
 
-  const tagNames = allTags.map((t) => t.tag);
+  const tagOptions = useMemo(
+    () => buildTagOptions(allTags, DEFAULT_TAGS, quickAdds.flatMap((q) => q.tags), createdTags),
+    [allTags, quickAdds, createdTags]
+  );
+  const registerTag = (tag: string) =>
+    setCreatedTags((prev) => (prev.includes(tag) ? prev : [...prev, tag]));
 
   return (
     <div className="hourly-page">
@@ -148,7 +156,8 @@ export default function HourlyApp() {
       {isToday && (
         <EntryComposer
           quickAdds={quickAdds}
-          tagSuggestions={tagNames}
+          tagOptions={tagOptions}
+          onCreateTag={registerTag}
           onLog={(m, t) => log(m, t)}
           onQuickLog={quickLog}
           onSaveQuickAdd={(label, tags) => {
@@ -169,7 +178,8 @@ export default function HourlyApp() {
       {editing && (
         <EditSheet
           entry={editing}
-          tagSuggestions={tagNames}
+          tagOptions={tagOptions}
+          onCreateTag={registerTag}
           onSave={editEntry}
           onDelete={deleteEntry}
           onShowHistory={(e) => setHistoryFor(e)}

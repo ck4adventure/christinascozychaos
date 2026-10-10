@@ -108,5 +108,5 @@ HourlyQuickAdd { id, label, tags[], sortOrder }
 - Entries are logged when an activity **finishes**. An entry's duration is its `loggedAt` minus the previous entry's, **computed on read, never stored** (`computeDurations` in `lib/hourly.ts`). The first entry of each day has none.
 - The "day" starts at 4am local time (`DAY_START_HOUR`); `getLogicalDay` and `getDayRange` implement this. The client sends day bounds to `GET /api/hourly/entries?from=&to=`.
 - `PATCH /api/hourly/entries/[id]` records an `HourlyEdit` with the previous values in a transaction, only when something changed. Deleting an entry cascades its edits.
-- Tag filtering is client-side and never affects durations. Tags are normalized by `normalizeTags` (lowercase, no `#`, de-duplicated).
+- Tag filtering is client-side and never affects durations. Tags are chosen in `TagPicker` (dropdown + `NewTagModal`) from `buildTagOptions`: used tags first, then `DEFAULT_TAGS`, chip tags and tags created this session. There is no tag table: a tag persists only once an entry or chip uses it. `normalizeTag`/`normalizeTags` lowercase, strip `#`, turn spaces into hyphens and de-duplicate.
 - Default quick-add chips (`DEFAULT_QUICK_ADDS`) are seeded on the first `GET /api/hourly/quick-adds` when the table is empty.

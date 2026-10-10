@@ -2706,47 +2706,13 @@ button.hourly-tag {
 
 /* 16px prevents iOS Safari from zooming on focus */
 .hourly-message,
-.hourly-taginput-field,
+.hourly-newtag-input,
 .hourly-sheet .input {
   font-size: 16px;
 }
 
 .hourly-message {
   min-height: 44px;
-}
-
-.hourly-taginput-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.35rem;
-  min-height: 44px;
-  padding: 0.3rem 0.6rem;
-  background: var(--color-bg-input);
-  border-bottom: 2px solid var(--color-border-input);
-  border-radius: var(--radius-xs) var(--radius-xs) 0 0;
-}
-
-.hourly-taginput-row:focus-within {
-  border-color: var(--color-focus-ring);
-}
-
-.hourly-taginput-field {
-  flex: 1 1 6rem;
-  min-width: 5rem;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--color-text-body);
-  font-family: inherit;
-  padding: 0.35rem 0;
-}
-
-.hourly-suggestions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-top: 0.4rem;
 }
 
 .hourly-composer-actions {
@@ -2782,6 +2748,109 @@ button.hourly-tag {
 .hourly-toast .btn--link {
   color: var(--color-primary-container);
   min-height: 36px;
+}
+
+/* Tag picker (dropdown) */
+.hourly-tagpicker {
+  position: relative;
+}
+
+.hourly-tagpicker-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hourly-tagpicker-trigger {
+  min-height: 44px;
+}
+
+.hourly-tagmenu {
+  position: absolute;
+  left: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 20rem);
+  max-height: min(22rem, 45dvh);
+  background: var(--color-surface-container-high);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elevation-3);
+  overflow: hidden;
+}
+
+.hourly-tagmenu--up { bottom: calc(100% + 6px); }
+.hourly-tagmenu--down { top: calc(100% + 6px); }
+
+.hourly-tagmenu-create,
+.hourly-tagmenu-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 1rem;
+  border: none;
+  background: transparent;
+  color: var(--color-text-body);
+  font-family: inherit;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.hourly-tagmenu-create {
+  flex: none;
+  color: var(--color-primary);
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-border-section);
+}
+
+.hourly-tagmenu-list {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.hourly-tagmenu-option:hover,
+.hourly-tagmenu-create:hover {
+  background: var(--color-bg-nav-hover);
+}
+
+.hourly-tagmenu-option--selected {
+  color: var(--color-primary);
+}
+
+.hourly-tagmenu-check {
+  width: 1rem;
+  text-align: center;
+}
+
+/* Centered modal (above bottom sheets) */
+.hourly-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: var(--color-overlay);
+}
+
+.hourly-modal {
+  width: 100%;
+  max-width: 360px;
+  padding: 1.25rem;
+  background: var(--color-bg-modal-sheet);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elevation-3);
+}
+
+.hourly-newtag-hint {
+  margin-top: 0.5rem;
+  min-height: 1.3em;
 }
 
 /* Bottom sheets */

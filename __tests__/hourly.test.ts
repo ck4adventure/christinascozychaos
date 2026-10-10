@@ -7,6 +7,10 @@ import {
   groupByDay,
   totalsByTag,
   normalizeTags,
+  normalizeTag,
+  buildTagOptions,
+  DEFAULT_TAGS,
+  DEFAULT_QUICK_ADDS,
   formatDuration,
   diffWords,
 } from '@/lib/hourly';
@@ -126,5 +130,42 @@ describe('diffWords', () => {
   });
   it('returns all same for identical text', () => {
     expect(diffWords('a b', 'a b').every((p) => p.type === 'same')).toBe(true);
+  });
+});
+
+describe('normalizeTag', () => {
+  it('lowercases, strips #, and turns spaces into hyphens', () => {
+    expect(normalizeTag('  #Self Care ')).toBe('self-care');
+  });
+  it('drops punctuation and trims stray hyphens', () => {
+    expect(normalizeTag('--oboe!?--')).toBe('oboe');
+  });
+  it('returns an empty string when nothing usable is left', () => {
+    expect(normalizeTag(' #!? ')).toBe('');
+  });
+  it('caps the length', () => {
+    expect(normalizeTag('a'.repeat(80))).toHaveLength(30);
+  });
+});
+
+describe('buildTagOptions', () => {
+  it('lists used tags by count, then the rest alphabetically, without duplicates', () => {
+    const result = buildTagOptions(
+      [{ tag: 'food', count: 1 }, { tag: 'oboe', count: 4 }],
+      ['zebra', 'Food', 'apple'],
+      ['apple']
+    );
+    expect(result).toEqual(['oboe', 'food', 'apple', 'zebra']);
+  });
+});
+
+describe('default tags', () => {
+  it('includes every tag used by the default quick-add chips', () => {
+    const chipTags = DEFAULT_QUICK_ADDS.flatMap((q) => q.tags);
+    for (const tag of chipTags) expect(DEFAULT_TAGS).toContain(tag);
+  });
+  it('are already normalized and unique', () => {
+    expect(DEFAULT_TAGS.map(normalizeTag)).toEqual(DEFAULT_TAGS);
+    expect(new Set(DEFAULT_TAGS).size).toBe(DEFAULT_TAGS.length);
   });
 });

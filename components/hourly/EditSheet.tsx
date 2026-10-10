@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import { HourlyEntry } from '@/types';
 import { normalizeTags } from '@/lib/hourly';
-import TagInput from './TagInput';
+import TagPicker from './TagPicker';
 
 interface EditSheetProps {
   entry: HourlyEntry;
-  tagSuggestions: string[];
+  tagOptions: string[];
+  onCreateTag: (tag: string) => void;
   onSave: (id: string, changes: { message?: string; tags?: string[]; loggedAt?: string }) => Promise<boolean>;
   onDelete: (id: string) => void;
   onShowHistory: (entry: HourlyEntry) => void;
@@ -21,7 +22,7 @@ function toLocalInput(iso: string): string {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-export default function EditSheet({ entry, tagSuggestions, onSave, onDelete, onShowHistory, onClose }: EditSheetProps) {
+export default function EditSheet({ entry, tagOptions, onCreateTag, onSave, onDelete, onShowHistory, onClose }: EditSheetProps) {
   const [message, setMessage] = useState(entry.message);
   const [tags, setTags] = useState(entry.tags);
   const [when, setWhen] = useState(toLocalInput(entry.loggedAt));
@@ -53,7 +54,7 @@ export default function EditSheet({ entry, tagSuggestions, onSave, onDelete, onS
         <input id="hourly-edit-message" className="input" value={message} maxLength={200} onChange={(e) => setMessage(e.target.value)} />
 
         <label className="hourly-field-label">Tags</label>
-        <TagInput tags={tags} suggestions={tagSuggestions} onChange={setTags} />
+        <TagPicker selected={tags} options={tagOptions} onChange={setTags} onCreateTag={onCreateTag} direction="down" />
 
         <label className="hourly-field-label" htmlFor="hourly-edit-time">Finished at</label>
         <input id="hourly-edit-time" className="input" type="datetime-local" value={when} onChange={(e) => setWhen(e.target.value)} />
