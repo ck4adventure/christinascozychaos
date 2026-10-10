@@ -1,6 +1,6 @@
 # Christina's Cozy Chaos
 
-A personal site + small app suite. Landing page at `/`, with five sub-apps: Cascades (game), the Infinitely Repeatable Bowl (calorie calculator), Blossom (chore tracker), a Writing tool for authors, and a Chord Machine.
+A personal site + small app suite. Landing page at `/`, with six sub-apps: Cascades (game), the Infinitely Repeatable Bowl (calorie calculator), Blossom (chore tracker), a Writing tool for authors, a Chord Machine, and Hourly (activity log).
 
 ## App Itself
 
@@ -8,7 +8,7 @@ A personal site + small app suite. Landing page at `/`, with five sub-apps: Casc
 Material 3–inspired design system: neutral blue/gray tonal palette, Inter typography, elevation-based cards, and a user-toggleable light/dark theme that also respects the visitor's system preference on first load. All shared tokens and primitives live in `app/globals.css`.
 
 ### Architecture
-Next.js App Router, mostly client components. Blossom and the Writing tool are backed by Postgres via Prisma; both also ship a fully browser-only **demo mode** (`/blossom-demo`, `/writing-demo`) so visitors can explore either app without an account and without anything touching the server — data lives only in `localStorage`.
+Next.js App Router, mostly client components. Blossom, the Writing tool and Hourly are backed by Postgres via Prisma; both also ship a fully browser-only **demo mode** (`/blossom-demo`, `/writing-demo`) so visitors can explore either app without an account and without anything touching the server — data lives only in `localStorage`.
 
 ### Testing
 Vitest unit tests, colocated in `__tests__/`. Run with `npm test`.
@@ -32,6 +32,31 @@ A diatonic chord/progression generator at `/chord-machine`: builds triads/7ths a
 ### Version History
 #### v1.0 — 2026-09-01
 - Integrated a standalone Claude-Chat-built artifact into the site: ported to TypeScript, wrapped in `next/dynamic` (`ssr: false`) since it touches the Web Audio API, converted its inline styles to a CSS Module restyled onto the site's Material 3 tokens (respects the light/dark toggle), converted chord pads to real `<button>` elements for keyboard/screen-reader access, and added a dispose-on-unmount effect for the audio chain
+
+---
+
+## Hourly
+A mobile-first activity log at `/hourly` (login required). Log short messages as you finish things ("did the dishes", "made dinner") and get a feel for where the day goes without logging start and stop times: each entry's duration is the gap since the previous entry, so the first entry of a day has none. Days start at 4am, so late-night entries count toward the previous day.
+
+- **Quick-add chips:** one-tap logging with pre-filled common activities (dishes, vacuuming, dinner, brushing teeth, and more); save your own or remove ones you don't use
+- **Tags:** add tags to entries, filter the day by tag, and see per-tag time totals in the day summary
+- **Editing:** change an entry's message, tags or finish time (to backdate it); every edit keeps the previous version, and the history view shows a word-level diff
+- **Delete:** removes the entry and its edit history
+- **Browse days:** step back through previous days; the composer appears on today only
+
+Durations are computed when the day is viewed rather than stored, so editing or deleting an entry corrects its neighbors automatically. Pure logic (day boundaries, durations, totals, tags, diffs) lives in `lib/hourly.ts` with tests in `__tests__/hourly.test.ts`.
+
+### Setup
+Apply the migration with `npx prisma migrate deploy` (adds `HourlyEntry`, `HourlyEdit` and `HourlyQuickAdd`).
+
+### Up Next
+- Charts and multi-day summaries of time per tag
+- CSV export
+- Offline logging queue for spotty phone connections
+
+### Version History
+#### v1.0 — 2026-10-06
+- Initial launch: quick-add chips, tags with filtering, gap-based durations with a 4am day boundary, edit history with diffs, delete, per-day summary
 
 ---
 
