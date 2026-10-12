@@ -36,6 +36,7 @@ export default function Home() {
             <Link href="/cascades" className="chip">Cascades Game 🟪🟪🟦</Link>
             <Link href="/writing" className="chip">Writing Tool for Authors 🖋️</Link>
             <Link href="/chord-machine" className="chip">🎹 Chord Machine</Link>
+            <Link href="/hourly" className="chip">⏱️ Hourly Log</Link>
             {/* <span className="chip">✨ More Randomness Soon!</span> */}
           </div>
 

@@ -5,121 +5,108 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev           # Development server
-npm run build         # Production build
+npm run dev           # Development server (Turbopack)
+npm run build         # prisma generate + production build
 npm run lint          # ESLint
 npm run test          # Run tests once (Vitest)
 npm run test:watch    # Watch mode
 npm run test:coverage # Coverage report
+npm run db:migrate    # prisma migrate dev (uses .env.local)
+npm run db:studio     # Prisma Studio (uses .env.local)
 
 # Run a single test file
 npx vitest run __tests__/board.test.ts
 ```
 
+`.env` files point at a hosted Postgres (Neon). Don't run `prisma migrate dev` against it casually; `prisma migrate deploy` applies committed migrations.
+
 ## Architecture
 
-**Next.js App Router** with client-heavy pages (`"use client"` on interactive pages). No database yet — state persists via LocalStorage (`lib/storage.ts`), managed through `app/hooks/useTasks.ts`.
+**Next.js App Router** (Next 16, React 19) with client-heavy pages (`"use client"` on interactive pages). Postgres via **Prisma 5** (`prisma/schema.prisma`, `lib/prisma.ts`) backs Blossom, the Writing tool and Hourly, through route handlers under `app/api/**`.
+
+**Auth:** single-user login using iron-session (`lib/session.ts`, cookie `ccc_session`, `SESSION_SECRET`). `middleware.ts` protects only the paths in its explicit `matcher`: pages return a redirect to `/login?from=...`, API routes return 401. **A new protected page or API route must be added to that matcher**, and page prefixes also go in `AUTHED_PREFIXES` in `components/TopBar.tsx` (shows Sign out). Everything not listed is public.
 
 **Routing:**
-- `/` — Landing page
-- `/repeatable-meal` — Bowl calorie calculator
-- `/blossom` — Self-care task tracker (main feature, v0 in progress)
-- `/projects/cascades` — Match-3 puzzle game
+- `/` — Landing page (chips linking to each app)
+- `/blossom` — Self-care/chore tracker (login required)
+- `/blossom-demo` — Browser-only Blossom demo (localStorage, public)
+- `/writing` — Writing tool for authors (login required)
+- `/writing-demo` — Browser-only writing demo (localStorage, public)
+- `/hourly` — Activity log with durations, tags and edit history (login required)
+- `/repeatable-bowl` — Meal-prep bowl calculator (`build`, `shopping`, `prep`, `calories`, `storage`)
+- `/cascades` — Match-3 puzzle game
+- `/chord-machine` — Chord/progression generator (Tone.js, public, loaded with `next/dynamic` `ssr: false`)
+- `/login` — Login page
 
 **Key directories:**
-- `app/` — Pages + hooks + global styles + sparks utility
-- `components/` — Client components (TaskCard, TaskModal, NavBar, Flower, CascadesGame)
-- `lib/` — Pure logic: `data.ts` (task library), `storage.ts` (localStorage CRUD), `taskFilter.ts` (scheduling), `cascades/board.ts` (match-3 engine)
-- `types/index.ts` — Shared interfaces: `Task`, `TaskLog`, `TaskWithStatus`, `FlowerType`
-- `__tests__/` — Vitest unit tests (colocated by module)
-- `design/` — Product docs and roadmap
+- `app/` — Pages, `api/` route handlers, `hooks/` (`useTasks`, `useDemoTasks`, `useHourly`), `globals.css`
+- `components/` — Client components; subfolders `hourly/`, `writing/`, `cascades/`, `chordmachine/`; Blossom components are at the top level
+- `lib/` — Pure logic and helpers: `data.ts` (task library), `taskFilter.ts` (scheduling), `storage.ts` (localStorage helpers used by demos, plus `generateId`, date helpers), `cascades/board.ts` (match-3 engine), `hourly.ts` (Hourly logic), `hourlyApi.ts` (Hourly API mappers), `writing*.ts` (writing client, swappable between API and demo)
+- `types/index.ts` — Shared interfaces
+- `__tests__/` — Vitest unit tests. Environment is `node` (no DOM), so keep testable logic in pure functions in `lib/`
+- `design/` — Product docs, plans and design assets (some are historical)
+- `prisma/` — Schema and migrations
+
+**Data patterns:**
+- API routes follow `app/api/tasks/route.ts`: Prisma call in try/catch, `NextResponse.json`, a `dbXToApi` mapper that converts `Date` to ISO strings.
+- Client hooks fetch from the API, update state optimistically, and keep a `loading` flag (`useTasks.ts`, `useHourly.ts`).
+- Demo variants swap the data source for localStorage with seed data and never call the server.
+- The repo's ESLint (`react-hooks/set-state-in-effect`) rejects synchronous `setState` in effects; derive state or use callbacks instead.
 
 ## Design System
 
-All styles live in `app/globals.css`. Tailwind CSS 4 is available but custom CSS classes are preferred for anything that matches the established design language. CSS modules are used only for scoped game component styles (`CascadesGame.module.css`).
+The site uses a **Material 3–style** system: neutral/deep-purple tonal palette, Inter typography, elevation-based cards, and a light/dark theme. All shared styles live in `app/globals.css`; Tailwind CSS 4 is available but custom classes are preferred. CSS Modules are used only for `CascadesGame.module.css` and `ChordMachine.module.css`. The earlier plum/amber palette, Cormorant/Josefin fonts and the mesh/orb/spark/noise decoration were removed in the v1.0 redesign; do not reintroduce them.
 
-### Palette
+### Tokens
 
-| Variable | Hex | Use |
-|---|---|---|
-| `--plum-deep` | `#2A0E30` | Page backgrounds, card backgrounds |
-| `--plum-mid` | `#7B3F6E` | Orbs, mesh gradients |
-| `--plum-light` | `#9B6090` | Subtext, secondary labels |
-| `--amber` | `#E8A020` | Primary accent — eyebrows, values, highlights, sparks |
-| `--amber-deep` | `#C46A00` | Amber gradient ends, hover states |
-| `--cream` | `#E8D5C4` | Body text, row labels |
-| `--cream-light` | `#F5EAE0` | Titles, headings |
-| `--dark` | `#1A081E` | Blossom page body background |
+Use the semantic CSS variables, never raw hex values, so both themes work:
+- Color roles: `--color-bg`, `--color-surface-container(-high)`, `--color-on-surface`, `--color-primary`, `--color-primary-container`, `--color-outline(-variant)`, `--color-danger`
+- Text: `--color-text-body`, `--color-text-muted`, `--color-text-faint`
+- Components: `--color-bg-card`, `--color-bg-input`, `--color-border-card`, `--color-border-chip`, `--color-bg-modal-sheet`, `--color-overlay`, `--color-focus-ring`
+- Shape and depth: `--radius-xs|sm|md|lg|xl|full`, `--elevation-1|2|3`, `--space-1…7`
 
-Amber is the primary accent — use it for numbers, labels, interactive highlights, and decorative rules. Cream is for readable body text. Plum tones are structural/atmospheric.
+Dark is the default. Light overrides live under `[data-theme="light"]`, and `ThemeToggle` stores the choice in localStorage (falls back to `prefers-color-scheme`). Legacy aliases (`--amber`, `--plum-deep`, `--cream`, `--font-cormorant`…) still exist so old CSS keeps working; don't use them in new code.
 
 ### Typography
 
-Two fonts, loaded via `next/font/google` in `app/layout.tsx`, available as CSS variables:
+Single font: **Inter** (`--font-inter`, weights 400–700), loaded in `app/layout.tsx`. Eyebrow labels are small (~0.7rem), uppercase with modest letter-spacing, in `--color-primary`. Page titles are regular-to-medium weight, not italic serif.
 
-- **`--font-cormorant`** (Cormorant Garamond, serif) — titles, taglines, large display numbers. Weights 300/400/600. Always `font-weight: 300` unless emphasis needed. Use `font-style: italic` for taglines and card titles.
-- **`--font-josefin`** (Josefin Sans, sans-serif) — eyebrows, labels, chips, UI text. Always uppercase + letter-spacing for labels (`letter-spacing: 0.2em–0.35em`). Weights 200/300/400.
+### Shared primitives (in `globals.css`)
 
-Typical size pattern:
-- Eyebrow label: `0.65–0.7rem`, `letter-spacing: 0.35em`, uppercase, `font-weight: 300`, amber
-- Page title: `clamp(2.5rem, 7vw, 5rem)`, Cormorant, `font-weight: 300`, cream-light. Italicized `<em>` in amber.
-- Large display number: `clamp(3.5rem, 9vw, 6rem)`, Cormorant, amber
-- Card section title: `~1.35rem`, Cormorant italic, cream-light
-- Row label: `0.68rem`, Josefin, uppercase, `letter-spacing: 0.15em`, cream
-- Metadata/value: `0.65rem`, Josefin, amber
+- **Buttons:** `.btn` with `.btn--primary`, `.btn--outline`, `.btn--text`, `.btn--link`, `.btn--danger`; `.btn-icon` has no base style
+- **Cards:** `.card`, `.card--outlined`, `.card-title`
+- **Inputs:** `.input`, `.input--lg`, `.input--textarea` (filled style, 2px bottom border). Use 16px font size on mobile inputs to avoid iOS zoom
+- **Chips:** `.chip`, `.chip--active` (pill shape; base has `cursor: default`, so add `cursor: pointer` for tappable chips)
+- **Navigation:** `.nav-tabs` is a fixed bottom bar with safe-area padding that becomes a 220px left sidebar at 1024px+; `.top-bar` holds Home, Sign out and the theme toggle on every page
+- Page-specific classes use a prefix (`.blossom-*`, `.hourly-*`, `.bowl-*`)
 
-### Page Layout Structure
+### Layout conventions
 
-Every page uses the same layered background stack (z-index order, bottom to top):
+- Mobile-first, designed for ~390px. Use `clamp()` for fluid type. Content is centered with a max width (480px for Blossom/Hourly, 720px on content pages).
+- Use `100dvh`, `env(safe-area-inset-bottom)` for fixed bottom UI, and ≥44px tap targets.
+- Entrance animation: a short CSS `animation` (opacity + `translateY(20px)`) on the page's inner wrapper. Honor `prefers-reduced-motion`.
+- Bottom sheets: fixed backdrop with `--color-overlay`, panel with `--color-bg-modal-sheet` and `--radius-xl` top corners (see `.hourly-sheet`).
 
-1. **Base** — `background: var(--plum-deep)` on the page root
-2. **Mesh** (z-index 0) — `.mesh` class, radial gradient atmospheric glow
-3. **Orbs** (z-index 0) — `.orb` divs, blurred circles in plum/amber with `drift` animation
-4. **Noise overlay** (z-index 1) — `::before` pseudo-element on `.page` / `.bowl-page`, SVG fractalNoise at 40% opacity
-5. **Sparks** (z-index 1) — `.spark` divs, generated via `generateSparks(n)` from `app/utils/sparks.ts`
-6. **Content** (z-index 10) — actual page content, fades in via `.content.visible` or equivalent
-
-When adding a new page, replicate this layering. Use `generateSparks(20)` as a baseline spark count.
-
-Content entrance animation pattern: start `opacity: 0; transform: translateY(20–30px)`, add a `.visible` class after mount (`useEffect` → `setVisible(true)`), transition to `opacity: 1; transform: translateY(0)` over ~0.9s.
-
-### Cards
-
-Glass-morphism card style used across pages:
-```css
-background: rgba(42, 14, 48, 0.55);
-border: 1px solid rgba(232, 160, 32, 0.18);
-border-radius: 16px;
-padding: 1.5rem 1.75rem;
-backdrop-filter: blur(10px);
-```
-Section dividers within cards: `border-bottom: 1px solid rgba(232, 160, 32, 0.1)`.
-
-### Decorative Elements
-
-- **Amber divider line**: `width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--amber), transparent)`
-- **Bottom rule**: full-width 3px gradient bar in amber, fixed to bottom of viewport
-- **Corner accents**: `.corner-tl` / `.corner-br` — 60×60px L-shaped amber borders, `opacity: 0.3`
-- **Chips**: pill-shaped, amber border at 30% opacity, amber text, subtle amber fill on hover. Used for navigation links and feature labels.
-
-### Interactive Controls
-
-Sliders use a custom style: 2px amber track, 14px circular amber thumb with a glow `box-shadow`. See `.bowl-slider` in `globals.css` for the full pattern.
-
-Buttons: no global button style established yet — follow the card border aesthetic (amber border, transparent or low-opacity fill).
-
-### Mobile-First
-
-Design base target is ~390px viewport width. Use `clamp()` for fluid type sizing. Max content width is `720px` centered.
-
-## Self-Care Tracker Data Model
+## Self-Care Tracker (Blossom) Data Model
 
 ```typescript
-Task { id, name, category, frequency, dayOfWeek?, dayOfMonth?, createdAt }
+Task { id, name, category, frequency, dayOfWeek?, dayOfMonth?, emoji?, flower, createdAt }
 TaskLog { id, taskId, completedAt }
-TaskWithStatus extends Task { completedToday, logId?, flower }
+TaskWithStatus extends Task { completedToday, logId? }
 ```
 
-Frequency can be `daily | weekly | monthly | custom`. `taskFilter.ts` determines which tasks are due today. Flower types (rose, daisy, tulip, sunflower, lotus, cherry) are assigned to tasks and animate on completion.
+Categories: `home | hygiene | movement | skills | seeking`. Frequency: `daily | weekly | monthly | once`. `taskFilter.ts` determines which tasks are due on a day. A flower type is assigned to each task at creation (`getFlowerForCategory` in `lib/data.ts`) and animates on completion. Stored in Postgres (`Task`, `TaskLog`) via `/api/tasks` and `/api/logs`; the demo uses localStorage. Roadmap: `design/cozy-chaos-selfcare-plan_v2.md`.
 
-Feature roadmap: `design/cozy-chaos-selfcare-plan_v2.md`. v0 (foundation) is the current target — no auth, no DB, single user.
+## Hourly Data Model and Rules
+
+```typescript
+HourlyEntry { id, message, tags[], loggedAt, createdAt, editCount? }
+HourlyEdit { id, entryId, prevMessage, prevTags[], prevLoggedAt, editedAt }  // previous state, one row per edit
+HourlyQuickAdd { id, label, tags[], sortOrder }
+```
+
+- Entries are logged when an activity **finishes**. An entry's duration is its `loggedAt` minus the previous entry's, **computed on read, never stored** (`computeDurations` in `lib/hourly.ts`). The first entry of each day has none.
+- The "day" starts at 4am local time (`DAY_START_HOUR`); `getLogicalDay` and `getDayRange` implement this. The client sends day bounds to `GET /api/hourly/entries?from=&to=`.
+- `PATCH /api/hourly/entries/[id]` records an `HourlyEdit` with the previous values in a transaction, only when something changed. Deleting an entry cascades its edits.
+- Tag filtering is client-side and never affects durations. Tags are chosen in `TagPicker` (dropdown + `NewTagModal`) from `buildTagOptions`: used tags first, then `DEFAULT_TAGS`, chip tags and tags created this session. There is no tag table: a tag persists only once an entry or chip uses it. `normalizeTag`/`normalizeTags` lowercase, strip `#`, turn spaces into hyphens and de-duplicate.
+- Default quick-add chips (`DEFAULT_QUICK_ADDS`) are seeded on the first `GET /api/hourly/quick-adds` when the table is empty.

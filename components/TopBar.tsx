@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 
-const AUTHED_PREFIXES = ['/blossom', '/writing'];
+const AUTHED_PREFIXES = ['/blossom', '/writing', '/hourly'];
 
 export default function TopBar() {
   const pathname = usePathname();
